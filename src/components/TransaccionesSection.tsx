@@ -13,8 +13,8 @@ interface TransaccionesSectionProps {
 export function TransaccionesSection({ userId, userRole }: TransaccionesSectionProps) {
   const [filtro, setFiltro] = useState<'todos' | 'ingreso' | 'egreso'>('todos');
   const { transacciones, loading } = useListaTransacciones(userId, userRole);
-  const { exportarExcel } = useExportarExcel(userId, userRole);
-  const { exportarPDF } = useExportarPDF(userId, userRole);
+  const { exportarTransacciones } = useExportarExcel();
+  const { exportarTransaccionesPDF } = useExportarPDF();
 
   const transaccionesFiltradas = transacciones.filter(t => {
     if (filtro === 'ingreso') return t.tipo === 'Ingreso';
@@ -77,13 +77,13 @@ export function TransaccionesSection({ userId, userRole }: TransaccionesSectionP
           {/* Exportación */}
           <div className="flex gap-2 ml-auto">
             <button
-              onClick={() => exportarExcel(transaccionesFiltradas)}
+              onClick={() => exportarTransacciones(userId)}
               className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-all text-sm shadow-lg"
             >
               📊 CSV
             </button>
             <button
-              onClick={() => exportarPDF(transaccionesFiltradas)}
+              onClick={() => exportarTransaccionesPDF(userId, userRole)}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all text-sm shadow-lg"
             >
               📄 PDF
