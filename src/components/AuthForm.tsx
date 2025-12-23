@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useTema } from '@/hooks/useTema';
 import { Gem } from 'lucide-react';
 
 export function AuthForm() {
