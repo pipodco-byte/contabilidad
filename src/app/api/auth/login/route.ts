@@ -19,6 +19,7 @@ export async function POST(request: Request) {
       .single();
 
     if (error || !user) {
+      console.error('Usuario no encontrado:', username, error);
       return NextResponse.json(
         { message: 'Usuario o contraseña incorrectos' },
         { status: 401 }
@@ -26,6 +27,7 @@ export async function POST(request: Request) {
     }
 
     if (user.password_hash !== password) {
+      console.error('Contraseña incorrecta para:', username);
       return NextResponse.json(
         { message: 'Usuario o contraseña incorrectos' },
         { status: 401 }
@@ -46,6 +48,7 @@ export async function POST(request: Request) {
       rol: user.rol,
     });
   } catch (error) {
+    console.error('Error en login:', error);
     return NextResponse.json(
       { message: 'Error en el servidor' },
       { status: 500 }
