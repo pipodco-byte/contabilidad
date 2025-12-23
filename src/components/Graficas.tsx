@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Cell,
   AreaChart,
   Area,
   RadarChart,
