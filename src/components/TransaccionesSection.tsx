@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useListaTransacciones } from '@/hooks/useListaTransacciones';
 import { useExportarExcel } from '@/hooks/useExportarExcel';
 import { useExportarPDF } from '@/hooks/useExportarPDF';
-import { useTema } from '@/hooks/useTema';
 
 interface TransaccionesSectionProps {
   userId: string;
@@ -16,7 +15,6 @@ export function TransaccionesSection({ userId, userRole }: TransaccionesSectionP
   const { transacciones, loading } = useListaTransacciones(userId, userRole);
   const { exportarExcel } = useExportarExcel(userId, userRole);
   const { exportarPDF } = useExportarPDF(userId, userRole);
-  const { tema } = useTema();
 
   const transaccionesFiltradas = transacciones.filter(t => {
     if (filtro === 'ingreso') return t.tipo === 'Ingreso';
@@ -36,7 +34,7 @@ export function TransaccionesSection({ userId, userRole }: TransaccionesSectionP
     return new Date(date).toLocaleDateString('es-CO');
   };
 
-  const isDark = tema === 'dark';
+  const isDark = true;
 
   const buttonBase = 'px-4 py-2 rounded-lg font-semibold transition-all text-sm';
   const buttonActive = 'bg-emerald-600 text-white shadow-lg';

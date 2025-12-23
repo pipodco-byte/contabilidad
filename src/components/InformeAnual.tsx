@@ -1,7 +1,6 @@
 'use client';
 
 import { useInformeAnual } from '@/hooks/useInformeAnual';
-import { useTema } from '@/hooks/useTema';
 import {
   LineChart,
   Line,
@@ -20,7 +19,6 @@ interface InformeAnualProps {
 
 export function InformeAnual({ userId, userRole }: InformeAnualProps) {
   const { datosAnuales, loading } = useInformeAnual(userId, userRole);
-  const { tema } = useTema();
 
   if (loading) {
     return <div className="text-center py-8 text-slate-400">Cargando informe anual...</div>;
@@ -51,7 +49,7 @@ export function InformeAnual({ userId, userRole }: InformeAnualProps) {
     }).format(value);
   };
 
-  const isDark = tema === 'dark';
+  const isDark = true;
   const tooltipStyle = {
     backgroundColor: isDark ? '#1e293b' : '#ffffff',
     borderColor: isDark ? '#334155' : '#e2e8f0',

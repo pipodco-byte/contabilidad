@@ -12,7 +12,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { useTema } from '@/hooks/useTema';
 
 interface InformeMensualProps {
   userId: string;
@@ -21,7 +20,6 @@ interface InformeMensualProps {
 
 export function InformeMensual({ userId, userRole }: InformeMensualProps) {
   const { datosMensuales, loading, mes, setMes } = useInformeMensual(userId, userRole);
-  const { tema } = useTema();
   const { enviarReporte, loading: enviando } = useEnviarReporteMensual();
 
   if (loading) {
@@ -45,7 +43,7 @@ export function InformeMensual({ userId, userRole }: InformeMensualProps) {
     }).format(value);
   };
 
-  const isDark = tema === 'dark';
+  const isDark = true;
   const tooltipStyle = {
     backgroundColor: isDark ? '#1e293b' : '#ffffff',
     borderColor: isDark ? '#334155' : '#e2e8f0',

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useListaTransacciones } from '@/hooks/useListaTransacciones';
 import { useExportarExcel } from '@/hooks/useExportarExcel';
 import { useExportarPDF } from '@/hooks/useExportarPDF';
-import { Download, Trash2, Edit2 } from 'lucide-react';
+import { Trash2, Edit2 } from 'lucide-react';
 
 interface ListaTransaccionesProps {
   userId: string;
