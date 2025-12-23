@@ -67,7 +67,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
   };
 
   const categoriaObj = CATEGORIAS[tipo];
-  const subcategorias = categoriaObj[categoria as keyof typeof categoriaObj] || [];
+  const subcategorias: string[] = categoriaObj[categoria as keyof typeof categoriaObj] || [];
 
   return (
     <form onSubmit={handleSubmit} className="bg-zinc-900 dark:bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg space-y-4">
