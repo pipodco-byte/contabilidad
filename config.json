@@ -1,0 +1,295 @@
+{
+  "proyecto": {
+    "nombre": "Pipod Contabilidad",
+    "descripcion": "Sistema de gestión contable para Pipod",
+    "version": "1.0.0",
+    "estado": "Setup completado - Listo para configurar",
+    "ubicacion": "/Users/calderonjosue_/Contabilidad_pipod/pipod-contabilidad"
+  },
+  "supabase": {
+    "url": "https://pjdjalqzmkkdthjqekdm.supabase.co",
+    "proyecto_ref": "pjdjalqzmkkdthjqekdm",
+    "dashboard": "https://app.supabase.com",
+    "tablas": [
+      "transacciones",
+      "configuracion",
+      "categorias",
+      "productos",
+      "plantillas_transacciones"
+    ]
+  },
+  "stack": {
+    "frontend": {
+      "framework": "Next.js 14.0.0",
+      "ui": "React 18.2.0",
+      "lenguaje": "TypeScript 5.2.0",
+      "estilos": "Tailwind CSS 3.3.0"
+    },
+    "backend": {
+      "base_datos": "Supabase (PostgreSQL)",
+      "autenticacion": "Supabase Auth",
+      "validacion": "Zod 3.22.4",
+      "cache": "React Query 5.17.0"
+    },
+    "utilidades": {
+      "graficas": "Recharts 2.10.0",
+      "csv": "PapaParse 5.4.1",
+      "fechas": "date-fns 2.30.0",
+      "iconos": "Lucide React 0.292.0"
+    }
+  },
+  "archivos_configuracion": {
+    "INDICE.md": {
+      "descripcion": "Índice maestro de documentación",
+      "prioridad": 1,
+      "leer_primero": true
+    },
+    "RESUMEN_SETUP.txt": {
+      "descripcion": "Resumen visual del setup",
+      "prioridad": 2,
+      "tipo": "resumen"
+    },
+    "CLAVES_SUPABASE.md": {
+      "descripcion": "Cómo obtener las claves de Supabase",
+      "prioridad": 3,
+      "tipo": "guia"
+    },
+    "SETUP_GUIDE.md": {
+      "descripcion": "Guía paso a paso completa",
+      "prioridad": 4,
+      "tipo": "guia"
+    },
+    "CHECKLIST.md": {
+      "descripcion": "Checklist de configuración",
+      "prioridad": 5,
+      "tipo": "verificacion"
+    },
+    "migrations.sql": {
+      "descripcion": "Migraciones SQL",
+      "prioridad": 2,
+      "tipo": "sql"
+    },
+    ".env.local": {
+      "descripcion": "Variables de entorno",
+      "prioridad": 3,
+      "tipo": "configuracion",
+      "editar": true
+    }
+  },
+  "pasos_configuracion": [
+    {
+      "numero": 1,
+      "titulo": "Obtener Claves de Supabase",
+      "pasos": [
+        "Abre https://app.supabase.com",
+        "Ve a Settings → API",
+        "Copia anon public key",
+        "Copia service_role secret",
+        "Pega en .env.local"
+      ],
+      "duracion_minutos": 5,
+      "guia": "CLAVES_SUPABASE.md"
+    },
+    {
+      "numero": 2,
+      "titulo": "Ejecutar Migraciones SQL",
+      "pasos": [
+        "Abre https://app.supabase.com",
+        "Ve a SQL Editor",
+        "Copia contenido de migrations.sql",
+        "Pega en editor SQL",
+        "Haz clic en Run"
+      ],
+      "duracion_minutos": 5,
+      "guia": "SETUP_GUIDE.md"
+    },
+    {
+      "numero": 3,
+      "titulo": "Iniciar Servidor",
+      "pasos": [
+        "Ejecuta: npm run dev",
+        "Abre: http://localhost:3000",
+        "Verifica que carga sin errores"
+      ],
+      "duracion_minutos": 2,
+      "comando": "npm run dev"
+    }
+  ],
+  "variables_entorno": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://pjdjalqzmkkdthjqekdm.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "<REEMPLAZAR>",
+    "SUPABASE_SERVICE_ROLE_KEY": "<REEMPLAZAR>",
+    "NEXT_PUBLIC_APP_NAME": "Pipod Contabilidad",
+    "NEXT_PUBLIC_CURRENCY": "COP",
+    "NEXT_PUBLIC_BOLD_COMMISSION": "5.0"
+  },
+  "comandos_utiles": {
+    "desarrollo": "npm run dev",
+    "build": "npm run build",
+    "produccion": "npm start",
+    "linting": "npm run lint",
+    "instalar": "npm install",
+    "limpiar_cache": "rm -rf .next && npm run dev"
+  },
+  "funcionalidades": [
+    "Gestión de transacciones (ingresos/egresos)",
+    "Doble asiento automático para Bold (5% comisión)",
+    "Dashboard con datos en tiempo real",
+    "Cálculo de proyección mensual",
+    "Validación de datos robusta",
+    "Exportación a CSV/Excel",
+    "Autenticación segura",
+    "Categorización flexible",
+    "Row Level Security (RLS)",
+    "Plantillas de transacciones"
+  ],
+  "seguridad": {
+    "rls_habilitado": true,
+    "autenticacion": "Supabase Auth",
+    "validacion_server_side": true,
+    "politicas_seguridad": true,
+    "encriptacion": true
+  },
+  "dependencias": {
+    "total": 165,
+    "principales": [
+      "next@14.0.0",
+      "react@18.2.0",
+      "typescript@5.2.0",
+      "tailwindcss@3.3.0",
+      "@supabase/supabase-js@2.38.0",
+      "zod@3.22.4",
+      "@tanstack/react-query@5.17.0",
+      "recharts@2.10.0"
+    ]
+  },
+  "tablas_base_datos": {
+    "transacciones": {
+      "descripcion": "Registro de ingresos y egresos",
+      "campos_principales": [
+        "id",
+        "user_id",
+        "fecha",
+        "descripcion",
+        "monto",
+        "tipo",
+        "categoria",
+        "sub_categoria"
+      ]
+    },
+    "configuracion": {
+      "descripcion": "Configuración por usuario",
+      "campos_principales": [
+        "id",
+        "user_id",
+        "clave",
+        "valor"
+      ]
+    },
+    "categorias": {
+      "descripcion": "Categorías personalizadas",
+      "campos_principales": [
+        "id",
+        "user_id",
+        "tipo",
+        "nombre",
+        "sub_categorias"
+      ]
+    },
+    "productos": {
+      "descripcion": "Inventario básico",
+      "campos_principales": [
+        "id",
+        "user_id",
+        "nombre",
+        "precio_compra",
+        "precio_venta",
+        "stock_actual"
+      ]
+    },
+    "plantillas_transacciones": {
+      "descripcion": "Plantillas de transacciones recurrentes",
+      "campos_principales": [
+        "id",
+        "user_id",
+        "nombre",
+        "descripcion",
+        "monto",
+        "tipo"
+      ]
+    }
+  },
+  "proximas_fases": {
+    "fase_2": {
+      "titulo": "Componentes UI",
+      "tareas": [
+        "Formularios con validación",
+        "Modales y diálogos",
+        "Tablas con paginación",
+        "Gráficas interactivas"
+      ]
+    },
+    "fase_3": {
+      "titulo": "Funcionalidades Avanzadas",
+      "tareas": [
+        "Reportes contables",
+        "Filtros avanzados",
+        "Plantillas recurrentes",
+        "Modo oscuro"
+      ]
+    },
+    "fase_4": {
+      "titulo": "Integraciones",
+      "tareas": [
+        "API de Bold",
+        "Backup automático",
+        "Notificaciones",
+        "PWA completa"
+      ]
+    }
+  },
+  "troubleshooting": {
+    "error_supabase_url": {
+      "causa": "Variables de entorno incorrectas",
+      "solucion": "Verifica .env.local y reinicia npm run dev"
+    },
+    "error_tabla_no_existe": {
+      "causa": "Migraciones SQL no ejecutadas",
+      "solucion": "Ejecuta migrations.sql en Supabase Dashboard"
+    },
+    "puerto_3000_en_uso": {
+      "causa": "Otro proceso usa el puerto",
+      "solucion": "npm run dev -- -p 3001"
+    },
+    "modulo_no_encontrado": {
+      "causa": "Dependencias no instaladas",
+      "solucion": "npm install"
+    }
+  },
+  "recursos": {
+    "documentacion": {
+      "nextjs": "https://nextjs.org/docs",
+      "supabase": "https://supabase.com/docs",
+      "tailwind": "https://tailwindcss.com/docs",
+      "zod": "https://zod.dev",
+      "react_query": "https://tanstack.com/query/latest"
+    },
+    "comunidad": {
+      "supabase_discord": "https://discord.supabase.com/",
+      "nextjs_github": "https://github.com/vercel/next.js"
+    }
+  },
+  "estadisticas": {
+    "lineas_documentacion": 1000,
+    "archivos_configuracion": 8,
+    "tablas_base_datos": 5,
+    "dependencias_instaladas": 165,
+    "tiempo_setup_estimado_minutos": 30
+  },
+  "metadata": {
+    "fecha_creacion": "2025-12-20",
+    "version": "1.0",
+    "estado": "Completo",
+    "ultima_actualizacion": "2025-12-20"
+  }
+}
