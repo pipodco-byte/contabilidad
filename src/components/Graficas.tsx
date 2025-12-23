@@ -65,8 +65,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
   const mesActual = ultimosMeses[1] || { mes: 'Actual', ingresos: 0, egresos: 0, balance: 0 };
   const mesAnterior = ultimosMeses[0] || { mes: 'Anterior', ingresos: 0, egresos: 0, balance: 0 };
 
-  const totalIngresos = datosPorCategoria.reduce((sum, d) => sum + d.ingresos, 0);
-  const totalEgresos = datosPorCategoria.reduce((sum, d) => sum + d.egresos, 0);
+
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
