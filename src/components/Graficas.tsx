@@ -2,7 +2,6 @@
 
 import { useGraficas } from '@/hooks/useGraficas';
 import { useInformeAnual } from '@/hooks/useInformeAnual';
-import { useTema } from '@/hooks/useTema';
 import {
   BarChart,
   Bar,
@@ -12,8 +11,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  PieChart,
-  Pie,
   Cell,
   AreaChart,
   Area,
@@ -34,7 +31,6 @@ interface GraficasProps {
 export function Graficas({ userId, userRole }: GraficasProps) {
   const { datosPorCategoria, loading } = useGraficas(userId, userRole);
   const { datosAnuales, loading: loadingAnual } = useInformeAnual(userId, userRole);
-  const { tema } = useTema();
 
   if (loading || loadingAnual) {
     return <div className="text-center py-8 text-slate-400">Cargando gráficas...</div>;
@@ -97,7 +93,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
     }).format(value);
   };
 
-  const isDark = tema === 'dark';
+  const isDark = true; // Usar tema oscuro por defecto
 
   const tooltipStyle = {
     backgroundColor: isDark ? '#1e293b' : '#ffffff',
