@@ -43,8 +43,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
     );
   }
 
-  const COLORS = ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#8b5cf6'];
-
   // Datos para Scatter Chart (cantidad vs monto)
   const datosScatter = datosPorCategoria.map(d => ({
     categoria: d.categoria,
@@ -69,11 +67,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
   const totalIngresos = datosPorCategoria.reduce((sum, d) => sum + d.ingresos, 0);
   const totalEgresos = datosPorCategoria.reduce((sum, d) => sum + d.egresos, 0);
-
-  const datosResumen = [
-    { name: 'Ingresos', value: totalIngresos, fill: '#10b981' },
-    { name: 'Egresos', value: totalEgresos, fill: '#6366f1' },
-  ];
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
