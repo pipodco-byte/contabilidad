@@ -57,7 +57,6 @@ export function InformeAnual({ userId, userRole }: InformeAnualProps) {
     border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`,
   };
 
-  const gridStroke = isDark ? '#334155' : '#e2e8f0';
   const axisStroke = isDark ? '#64748b' : '#cbd5e1';
   const labelColor = isDark ? '#e2e8f0' : '#1e293b';
 
