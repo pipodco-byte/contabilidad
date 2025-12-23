@@ -15,7 +15,6 @@ export function useInformeMensual(userId: string, userRole: string = 'usuario') 
   useEffect(() => {
     const cargarDatosMensuales = async () => {
       try {
-        const [year, month] = mes.split('-');
         let query = supabase
           .from('transacciones')
           .select('categoria, tipo, monto, fecha');
