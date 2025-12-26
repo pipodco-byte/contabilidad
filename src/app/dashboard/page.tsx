@@ -54,21 +54,32 @@ export default function Dashboard() {
   };
 
   const handleGemaImport = async () => {
-    if (!gemaInput.trim()) {
-      setGemaMessage({ type: 'error', text: 'Por favor pega datos de Gema' });
-      return;
-    }
-
+    console.log('🚀 [DEBUG 1] Iniciando handleGemaImport...');
     setGemaLoading(true);
-    setGemaMessage(null);
 
     try {
+      if (!gemaInput.trim()) {
+        setGemaMessage({ type: 'error', text: 'Por favor pega datos de Gema' });
+        setGemaLoading(false);
+        return;
+      }
+
       const lines = gemaInput.trim().split('\n').filter((l) => l.trim());
+      console.log('📊 [DEBUG 2] Líneas parseadas:', lines.length);
+
       const transacciones = lines.map((line) => {
-        const [fecha, descripcion, categoria, sub_categoria, monto, tipo, medio_pago, estado_iva, comentarios] = line.split(';');
-        const [day, month, year] = fecha.split('/');
+        const parts = line.split(';');
+        const [fecha, descripcion, categoria, sub_categoria, monto, tipo, medio_pago, estado_iva, comentarios] = parts;
+        
+        let formattedFecha = fecha?.trim() || '';
+        
+        if (formattedFecha.includes('/')) {
+          const [day, month, year] = formattedFecha.split('/');
+          formattedFecha = `${year}-${month}-${day}`;
+        }
+        
         return {
-          fecha: `${year}-${month}-${day}`,
+          fecha: formattedFecha,
           descripcion: descripcion?.trim() || '',
           categoria: categoria?.trim() || '',
           sub_categoria: sub_categoria?.trim() || '',
@@ -80,23 +91,46 @@ export default function Dashboard() {
         };
       });
 
-      const response = await fetch('/api/transacciones/import', {
+      console.log('📊 [DEBUG 2] Datos a enviar:', transacciones.length, 'ítems');
+
+      const bodyString = JSON.stringify({ transacciones, userId: user.id });
+      console.log('📦 [DEBUG 3] JSON Stringify completado. Tamaño:', bodyString.length);
+
+      console.log('🌐 [DEBUG 4] Intentando disparar FETCH...');
+
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), 10000);
+
+      const response = await fetch('/api/gema/import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ transacciones, userId: user.id }),
+        body: bodyString,
+        signal: controller.signal,
       });
 
+      clearTimeout(id);
+      console.log('✅ [DEBUG 5] ¡FETCH RESPONDIÓ!', response.status);
+
       const data = await response.json();
+      console.log('🎉 [DEBUG 6] Datos recibidos:', data);
+
       if (!response.ok) throw new Error(data.error || 'Error al importar');
 
       setGemaMessage({ type: 'success', text: `✓ ${data.count} transacciones importadas` });
       setGemaInput('');
       setRefreshKey((k) => k + 1);
       setTimeout(() => setShowGema(false), 2000);
-    } catch (error) {
-      setGemaMessage({ type: 'error', text: error instanceof Error ? error.message : 'Error al importar' });
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        console.error('❌ [ERROR] El fetch tardó más de 10s y fue abortado (Timeout)');
+        setGemaMessage({ type: 'error', text: 'Timeout: El servidor tardó demasiado' });
+      } else {
+        console.error('❌ [ERROR DETECTADO]:', err);
+        setGemaMessage({ type: 'error', text: err instanceof Error ? err.message : 'Error al importar' });
+      }
     } finally {
       setGemaLoading(false);
+      console.log('🏁 [DEBUG 7] Proceso finalizado.');
     }
   };
 
@@ -272,8 +306,6 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
-        {/* KPI Cards */}
 
         {/* Lista de Transacciones - Prominente */}
         <div className="mb-8">
