@@ -8,7 +8,6 @@ import { ListaTransacciones } from '@/components/ListaTransacciones';
 import { Graficas } from '@/components/Graficas';
 import { InformeAnual } from '@/components/InformeAnual';
 import { InformeMensual } from '@/components/InformeMensual';
-import { GemaImporter } from '@/components/GemaImporter';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Wallet, TrendingUp, Scale, LogOut, Moon, Sun, Gem, FileText } from 'lucide-react';
@@ -96,12 +95,36 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Gema Importer */}
-        <div className="mb-8">
-          <GemaImporter />
-        </div>
+        {/* Botones de Acción - Prominentes */}
+        <div className="flex flex-wrap gap-3 mb-8">
+          {/* Botón Gema */}
+          <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-emerald-500/30 dark:hover:shadow-emerald-500/20">
+            <Gem size={20} />
+            Gema
+          </button>
 
-        {/* KPI Cards */}
+          {!showForm && (
+            <button
+              onClick={() => setShowForm(true)}
+              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-emerald-500/30 dark:hover:shadow-emerald-500/20"
+            >
+              ➕ Nueva Transacción
+            </button>
+          )}
+          <button
+            onClick={() => setShowInforme(showInforme === 'anual' ? null : 'anual')}
+            className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-amber-500/30 dark:hover:shadow-amber-500/20 flex items-center gap-2"
+          >
+            <FileText size={20} />
+            Informe Anual
+          </button>
+          <button
+            onClick={() => setShowInforme(showInforme === 'mensual' ? null : 'mensual')}
+            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-500/20"
+          >
+            Informe Mensual
+          </button>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Ingresos */}
           <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 rounded-2xl p-6 hover:border-slate-300/60 dark:hover:border-slate-700 transition-colors shadow-sm dark:shadow-none">
@@ -155,30 +178,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Botones de Acción - Prominentes */}
-        <div className="flex flex-wrap gap-3 mb-8">
-          {!showForm && (
-            <button
-              onClick={() => setShowForm(true)}
-              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-emerald-500/30 dark:hover:shadow-emerald-500/20"
-            >
-              ➕ Nueva Transacción
-            </button>
-          )}
-          <button
-            onClick={() => setShowInforme(showInforme === 'anual' ? null : 'anual')}
-            className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-amber-500/30 dark:hover:shadow-amber-500/20 flex items-center gap-2"
-          >
-            <FileText size={20} />
-            Informe Anual
-          </button>
-          <button
-            onClick={() => setShowInforme(showInforme === 'mensual' ? null : 'mensual')}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-blue-500/30 dark:hover:shadow-blue-500/20"
-          >
-            Informe Mensual
-          </button>
-        </div>
+        {/* KPI Cards */}
 
         {/* Lista de Transacciones - Prominente */}
         <div className="mb-8">
