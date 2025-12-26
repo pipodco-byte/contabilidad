@@ -57,6 +57,14 @@ export function Graficas({ userId, userRole }: GraficasProps) {
   const axisStroke = isDark ? '#64748b' : '#cbd5e1';
   const labelColor = isDark ? '#e2e8f0' : '#1e293b';
 
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   const formatCurrencyCompact = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
