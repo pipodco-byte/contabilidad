@@ -8,6 +8,7 @@ import { ListaTransacciones } from '@/components/ListaTransacciones';
 import { Graficas } from '@/components/Graficas';
 import { InformeAnual } from '@/components/InformeAnual';
 import { InformeMensual } from '@/components/InformeMensual';
+import { GemaImporter } from '@/components/GemaImporter';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Wallet, TrendingUp, Scale, LogOut, Moon, Sun, Gem, FileText } from 'lucide-react';
@@ -94,6 +95,11 @@ export default function Dashboard() {
             </p>
           </div>
         )}
+
+        {/* Gema Importer */}
+        <div className="mb-8">
+          <GemaImporter />
+        </div>
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
