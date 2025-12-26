@@ -19,6 +19,8 @@ export default function Dashboard() {
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [showInforme, setShowInforme] = useState<'anual' | 'mensual' | null>(null);
+  const [showGema, setShowGema] = useState(false);
+  const [gemaInput, setGemaInput] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -98,7 +100,10 @@ export default function Dashboard() {
         {/* Botones de Acción - Prominentes */}
         <div className="flex flex-wrap gap-3 mb-8">
           {/* Botón Gema */}
-          <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-emerald-500/30 dark:hover:shadow-emerald-500/20">
+          <button
+            onClick={() => setShowGema(!showGema)}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-medium transition-all shadow-lg hover:shadow-emerald-500/30 dark:hover:shadow-emerald-500/20"
+          >
             <Gem size={20} />
             Gema
           </button>
@@ -125,6 +130,29 @@ export default function Dashboard() {
             Informe Mensual
           </button>
         </div>
+
+        {/* Gema Input */}
+        {showGema && (
+          <div className="mb-8 flex gap-3 p-4 bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800 rounded-2xl">
+            <textarea
+              value={gemaInput}
+              onChange={(e) => setGemaInput(e.target.value)}
+              placeholder="Pega aquí el output de Gema de Contabilidad..."
+              className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all resize-none"
+              rows={4}
+            />
+            <button
+              onClick={() => {
+                console.log('Importando:', gemaInput);
+                setGemaInput('');
+              }}
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-colors self-start"
+            >
+              Importar
+            </button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Ingresos */}
           <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 rounded-2xl p-6 hover:border-slate-300/60 dark:hover:border-slate-700 transition-colors shadow-sm dark:shadow-none">
