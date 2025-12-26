@@ -3,6 +3,7 @@
 import { useGraficas } from '@/hooks/useGraficas';
 import { useInformeAnual } from '@/hooks/useInformeAnual';
 import { useRadarData } from '@/hooks/useRadarData';
+import { useEvolucionMensual } from '@/hooks/useEvolucionMensual';
 import { useTema } from '@/hooks/useTema';
 import {
   BarChart,
@@ -22,6 +23,7 @@ import {
   Radar,
   ScatterChart,
   Scatter,
+  ReferenceLine,
 } from 'recharts';
 
 interface GraficasProps {
@@ -33,9 +35,10 @@ export function Graficas({ userId, userRole }: GraficasProps) {
   const { datosPorCategoria, loading } = useGraficas(userId, userRole);
   const { datosAnuales, loading: loadingAnual } = useInformeAnual(userId, userRole);
   const { data: datosRadar, loading: loadingRadar } = useRadarData(userId, userRole);
+  const { data: evolucionMensual, loading: loadingEvolucion } = useEvolucionMensual(userId, userRole);
   const { tema } = useTema();
 
-  if (loading || loadingAnual || loadingRadar) {
+  if (loading || loadingAnual || loadingRadar || loadingEvolucion) {
     return <div className="text-center py-8 text-slate-400">Cargando gráficas...</div>;
   }
 
@@ -140,18 +143,54 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
       <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
         <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
-          Volumen vs Diferencia por Categoría
+          Evolución Mensual (Año Actual)
         </h3>
         <ResponsiveContainer width="100%" height={350}>
-          <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+          <AreaChart data={evolucionMensual} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            <defs>
+              <linearGradient id="colorIngresos" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorEgresos" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#a855f7" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#27272a' : '#e2e8f0'} />
-            <XAxis type="number" dataKey="x" name="Volumen Total" stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-            <YAxis type="number" dataKey="y" name="Diferencia" stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
-            <Scatter name="Categorías" data={datosPorCategoria.map(d => ({ x: d.ingresos + d.egresos, y: Math.abs(d.ingresos - d.egresos), categoria: d.categoria }))} fill="#8b5cf6" />
-          </ScatterChart>
+            <XAxis dataKey="mes" stroke={axisStroke} />
+            <YAxis stroke={axisStroke} tickFormatter={(value) => `$${value}M`} />
+            <Tooltip contentStyle={tooltipStyle} formatter={(value) => `$${(value as number).toFixed(1)}M`} />
+            <Legend />
+            <Area type="monotone" dataKey="Ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresos)" name="Ingresos" />
+            <Area type="monotone" dataKey="Egresos" stroke="#a855f7" fillOpacity={1} fill="url(#colorEgresos)" name="Egresos" />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
+
+      {/* Scatter Chart - Volumen vs Margen de Ganancia (Comentado)
+      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+          Volumen vs Margen de Ganancia
+        </h3>
+        <div className="relative">
+          <div className="absolute inset-0 flex">
+            <div className="flex-1 bg-emerald-50 dark:bg-emerald-950/20"></div>
+            <div className="flex-1 bg-red-50 dark:bg-red-950/20"></div>
+          </div>
+          <ResponsiveContainer width="100%" height={350}>
+            <ScatterChart margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#27272a' : '#e2e8f0'} />
+              <XAxis type="number" dataKey="x" name="Volumen Total" stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
+              <YAxis type="number" dataKey="y" name="Margen %" stroke={axisStroke} domain={[-100, 100]} tickFormatter={(value) => `${value}%`} />
+              <ReferenceLine y={0} stroke={isDark ? '#64748b' : '#94a3b8'} strokeWidth={2} />
+              <Tooltip contentStyle={tooltipStyle} formatter={(value, name) => name === 'Margen %' ? `${(value as number).toFixed(1)}%` : formatCurrency(value as number)} />
+              <Scatter name="Categorías" data={datosPorCategoria.map(d => ({ x: d.ingresos + d.egresos, y: d.ingresos > 0 ? ((d.ingresos - d.egresos) / d.ingresos) * 100 : 0, categoria: d.categoria }))} fill="#8b5cf6" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+      */}
 
       {mesActual && mesAnterior && (
         <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
