@@ -153,6 +153,19 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* Formulario */}
+        {showForm && (
+          <div className="mb-8">
+            <TransaccionForm
+              userId={user.id}
+              onSuccess={() => {
+                setShowForm(false);
+                setRefreshKey((k) => k + 1);
+              }}
+            />
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Ingresos */}
           <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 rounded-2xl p-6 hover:border-slate-300/60 dark:hover:border-slate-700 transition-colors shadow-sm dark:shadow-none">
@@ -229,19 +242,6 @@ export default function Dashboard() {
         {showInforme === 'mensual' && (
           <div className="mb-8">
             <InformeMensual userId={user.id} userRole={user.rol} />
-          </div>
-        )}
-
-        {/* Formulario */}
-        {showForm && (
-          <div className="mb-8">
-            <TransaccionForm
-              userId={user.id}
-              onSuccess={() => {
-                setShowForm(false);
-                setRefreshKey((k) => k + 1);
-              }}
-            />
           </div>
         )}
       </main>
