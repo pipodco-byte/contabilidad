@@ -22,6 +22,8 @@ export default function Dashboard() {
   const [showGema, setShowGema] = useState(false);
   const [gemaInput, setGemaInput] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [gemaLoading, setGemaLoading] = useState(false);
+  const [gemaMessage, setGemaMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -49,6 +51,53 @@ export default function Dashboard() {
       currency: 'COP',
       minimumFractionDigits: 0,
     }).format(value);
+  };
+
+  const handleGemaImport = async () => {
+    if (!gemaInput.trim()) {
+      setGemaMessage({ type: 'error', text: 'Por favor pega datos de Gema' });
+      return;
+    }
+
+    setGemaLoading(true);
+    setGemaMessage(null);
+
+    try {
+      const lines = gemaInput.trim().split('\n').filter((l) => l.trim());
+      const transacciones = lines.map((line) => {
+        const [fecha, descripcion, categoria, sub_categoria, monto, tipo, medio_pago, estado_iva, comentarios] = line.split(';');
+        const [day, month, year] = fecha.split('/');
+        return {
+          fecha: `${year}-${month}-${day}`,
+          descripcion: descripcion?.trim() || '',
+          categoria: categoria?.trim() || '',
+          sub_categoria: sub_categoria?.trim() || '',
+          monto: parseFloat(monto) || 0,
+          tipo: tipo?.trim() || '',
+          medio_pago: medio_pago?.trim() || '',
+          estado_iva: estado_iva?.trim() || '',
+          comentarios: comentarios?.trim() || '',
+        };
+      });
+
+      const response = await fetch('/api/transacciones/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transacciones, userId: user.id }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Error al importar');
+
+      setGemaMessage({ type: 'success', text: `✓ ${data.count} transacciones importadas` });
+      setGemaInput('');
+      setRefreshKey((k) => k + 1);
+      setTimeout(() => setShowGema(false), 2000);
+    } catch (error) {
+      setGemaMessage({ type: 'error', text: error instanceof Error ? error.message : 'Error al importar' });
+    } finally {
+      setGemaLoading(false);
+    }
   };
 
   return (
@@ -141,15 +190,20 @@ export default function Dashboard() {
               className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all resize-none"
               rows={4}
             />
-            <button
-              onClick={() => {
-                console.log('Importando:', gemaInput);
-                setGemaInput('');
-              }}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-colors self-start"
-            >
-              Importar
-            </button>
+            <div className="flex flex-col gap-2 self-start">
+              <button
+                onClick={handleGemaImport}
+                disabled={gemaLoading}
+                className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400 text-white rounded-lg font-semibold transition-colors"
+              >
+                {gemaLoading ? 'Importando...' : 'Enviar'}
+              </button>
+              {gemaMessage && (
+                <p className={`text-sm font-medium ${gemaMessage.type === 'success' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
+                  {gemaMessage.text}
+                </p>
+              )}
+            </div>
           </div>
         )}
 
