@@ -70,12 +70,12 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
   const subcategorias: string[] = categoriaObj[categoria as keyof typeof categoriaObj] || [];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-zinc-900 dark:bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-lg space-y-4">
-      <h2 className="text-lg font-bold mb-4 text-white">Nueva Transacción</h2>
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-lg space-y-4">
+      <h2 className="text-lg font-bold mb-4 text-slate-900 dark:text-white">Nueva Transacción</h2>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Tipo</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Tipo</label>
           <select
             value={tipo}
             onChange={(e) => {
@@ -85,7 +85,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
               setCategoria(firstCat);
               setSubCategoria(CATEGORIAS[newTipo][firstCat as keyof typeof CATEGORIAS[typeof newTipo]][0]);
             }}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <option value="Ingreso">Ingreso</option>
             <option value="Egreso">Egreso</option>
@@ -93,31 +93,31 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Fecha</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Fecha</label>
           <input
             type="date"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             required
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2 text-zinc-100">Descripción</label>
+        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Descripción</label>
         <input
           type="text"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           required
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Categoría</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Categoría</label>
           <select
             value={categoria}
             onChange={(e) => {
@@ -125,7 +125,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
               const subs = categoriaObj[e.target.value as keyof typeof categoriaObj];
               setSubCategoria(subs[0]);
             }}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {Object.keys(categoriaObj).map((cat) => (
               <option key={cat} value={cat}>
@@ -136,11 +136,11 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Sub-categoría</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Sub-categoría</label>
           <select
             value={subCategoria}
             onChange={(e) => setSubCategoria(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {subcategorias.map((sub) => (
               <option key={sub} value={sub}>
@@ -153,23 +153,23 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Monto</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Monto</label>
           <input
             type="number"
             value={monto}
             onChange={(e) => setMonto(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Cantidad (opcional)</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Cantidad (opcional)</label>
           <input
             type="number"
             value={cantidad}
             onChange={(e) => setCantidad(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             placeholder="Ej: 5 equipos"
           />
         </div>
@@ -177,11 +177,11 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Medio de Pago</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Medio de Pago</label>
           <select
             value={medioPago}
             onChange={(e) => setMedioPago(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {MEDIOS_PAGO.map((medio) => (
               <option key={medio} value={medio}>
@@ -195,11 +195,11 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-100">Estado IVA</label>
+          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Estado IVA</label>
           <select
             value={estadoIva}
             onChange={(e) => setEstadoIva(e.target.value)}
-            className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             {ESTADOS_IVA.map((estado) => (
               <option key={estado} value={estado}>
@@ -211,11 +211,11 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2 text-zinc-100">Comentarios</label>
+        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Comentarios</label>
         <textarea
           value={comentarios}
           onChange={(e) => setComentarios(e.target.value)}
-          className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           rows={2}
         />
       </div>
