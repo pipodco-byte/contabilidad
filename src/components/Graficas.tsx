@@ -21,9 +21,6 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
-  ScatterChart,
-  Scatter,
-  ReferenceLine,
 } from 'recharts';
 
 interface GraficasProps {
@@ -60,14 +57,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
   const axisStroke = isDark ? '#64748b' : '#cbd5e1';
   const labelColor = isDark ? '#e2e8f0' : '#1e293b';
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
-
   const formatCurrencyCompact = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -76,13 +65,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       maximumFractionDigits: 1,
     }).format(value);
   };
-
-  const datosRadarTransformados = datosPorCategoria.map(d => ({
-    subject: d.categoria.length > 12 ? d.categoria.substring(0, 12) + '...' : d.categoria,
-    Ingresos: Math.round((d.ingresos / 1000000) * 10) / 10,
-    Egresos: Math.round((d.egresos / 1000000) * 10) / 10,
-    fullMark: 160,
-  }));
 
   const mesesOrdenados = [...datosAnuales].sort((a, b) => new Date(a.mes).getTime() - new Date(b.mes).getTime());
   const mesActual = mesesOrdenados[mesesOrdenados.length - 1];
