@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No hay transacciones para importar' }, { status: 400 });
     }
 
-    const { data, error } = await supabase.from('transacciones').insert(
+    const { error } = await supabase.from('transacciones').insert(
       transacciones.map((t) => ({
         user_id: userId,
         fecha: t.fecha,
