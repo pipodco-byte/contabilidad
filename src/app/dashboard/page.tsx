@@ -234,13 +234,15 @@ export default function Dashboard() {
 
         {/* Formulario */}
         {showForm && (
-          <TransaccionForm
-            userId={user.id}
-            onSuccess={() => {
-              setShowForm(false);
-              setRefreshKey((k) => k + 1);
-            }}
-          />
+          <div className="mb-8">
+            <TransaccionForm
+              userId={user.id}
+              onSuccess={() => {
+                setShowForm(false);
+                setRefreshKey((k) => k + 1);
+              }}
+            />
+          </div>
         )}
       </main>
     </div>
