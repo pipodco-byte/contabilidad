@@ -91,15 +91,7 @@ export function AuthForm() {
         </form>
       </div>
 
-      {/* Credenciales */}
-      <div className="bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 rounded-2xl p-4 backdrop-blur-md">
-        <p className="text-blue-700 dark:text-blue-300 text-xs font-semibold mb-3">📋 Usuarios disponibles:</p>
-        <div className="space-y-2 text-xs text-blue-600 dark:text-blue-400">
-          <p>• <span className="font-mono">felipe</span> / <span className="font-mono">password123</span></p>
-          <p>• <span className="font-mono">samuel</span> / <span className="font-mono">password123</span></p>
-          <p>• <span className="font-mono">admin</span> / <span className="font-mono">admin123</span></p>
-        </div>
-      </div>
+
     </div>
   );
 }
