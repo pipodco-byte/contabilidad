@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
   try {
@@ -14,20 +15,11 @@ export async function POST(request: Request) {
 
     const { data: user, error } = await supabase
       .from('usuarios_permitidos')
-      .select('*')
+      .select('id, username, password_hash, nombre, rol, activo')
       .eq('username', username)
       .single();
 
     if (error || !user) {
-      console.error('Usuario no encontrado:', username, error);
-      return NextResponse.json(
-        { message: 'Usuario o contraseña incorrectos' },
-        { status: 401 }
-      );
-    }
-
-    if (user.password_hash !== password) {
-      console.error('Contraseña incorrecta para:', username);
       return NextResponse.json(
         { message: 'Usuario o contraseña incorrectos' },
         { status: 401 }
@@ -37,7 +29,25 @@ export async function POST(request: Request) {
     if (!user.activo) {
       return NextResponse.json(
         { message: 'Usuario desactivado' },
-        { status: 403 }
+        { status: 401 }
+      );
+    }
+
+    // Support both bcryptjs hashes and plain text for migration
+    const isBcryptHash = user.password_hash.startsWith('$2')
+    let isValidPassword = false
+    
+    if (isBcryptHash) {
+      isValidPassword = await bcrypt.compare(password, user.password_hash)
+    } else {
+      // Plain text fallback for migration
+      isValidPassword = user.password_hash === password
+    }
+    
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { message: 'Usuario o contraseña incorrectos' },
+        { status: 401 }
       );
     }
 
