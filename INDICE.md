@@ -13,7 +13,9 @@ Si es tu primera vez, lee en este orden:
 
 ## 📄 DOCUMENTOS DISPONIBLES
 
-### 1. RESUMEN_SETUP.txt
+### 🎯 Comienza Aquí (Setup)
+
+#### 1. RESUMEN_SETUP.txt
 **Propósito:** Resumen visual rápido del setup
 
 **Contiene:**
@@ -29,7 +31,7 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 2. CLAVES_SUPABASE.md
+#### 2. CLAVES_SUPABASE.md
 **Propósito:** Guía visual paso a paso para obtener las claves
 
 **Contiene:**
@@ -42,7 +44,7 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 3. SETUP_GUIDE.md
+#### 3. SETUP_GUIDE.md
 **Propósito:** Guía completa paso a paso
 
 **Contiene:**
@@ -58,7 +60,7 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 4. CHECKLIST.md
+#### 4. CHECKLIST.md
 **Propósito:** Checklist de configuración y verificación
 
 **Contiene:**
@@ -75,7 +77,65 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 5. migrations.sql
+### 📚 Documentación Técnica (SDD Level 2)
+
+#### 5. docs/FUNCIONALIDADES.md ⭐ NUEVO
+**Propósito:** Documentación completa de todas las funcionalidades
+
+**Contiene:**
+- 🗺️ Diagramas de flujo de datos
+- 📦 Todos los módulos (14 detallados)
+- 🔧 Todos los hooks (15 con props/returns)
+- 🎨 Todos los componentes (13 documentados)
+- 🌐 API endpoints con request/response
+- 🗄️ Esquema completo de base de datos
+- 🔗 Matriz de dependencias
+- 📝 Flujos de autenticación y datos
+- 🚀 Roadmap Level 3
+
+**Cuándo leerlo:** Para entender el sistema a profundidad
+
+**Nivel:** SDD Level 2 - Especificación completa
+
+---
+
+#### 6. docs/ARCHITECTURE.md ⭐ NUEVO
+**Propósito:** Documentación de arquitectura técnica
+
+**Contiene:**
+- 🏗️ Diagramas de arquitectura (alto nivel y componentes)
+- 🔲 Capas del sistema (4 capas)
+- 🔐 Análisis de seguridad
+- 🌐 APIs y contratos detallados
+- 🚀 Pipeline de deployment
+- ⚡ Performance y escalabilidad
+- 📝 Decisiones arquitectónicas (ADRs)
+
+**Cuándo leerlo:** Para entender infraestructura y deployment
+
+**Nivel:** SDD Level 2 - Arquitectura
+
+---
+
+#### 7. PROYECTO_COMPLETADO.md ⭐ ACTUALIZADO
+**Propósito:** Estado actual del proyecto
+
+**Contiene:**
+- ✅ Funcionalidades implementadas
+- 📦 Hooks (15) y Componentes (13) listados
+- 🌐 API endpoints
+- 🗄️ Esquema de base de datos
+- 📊 Estadísticas del proyecto
+- 🔄 Flujo de datos
+- 🔧 Roadmap
+
+**Cuándo leerlo:** Para ver el estado general y métricas
+
+---
+
+### 🔧 Configuración y SQL
+
+#### 8. migrations.sql
 **Propósito:** Archivo SQL con todas las migraciones
 
 **Contiene:**
@@ -89,7 +149,41 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 6. .env.local
+#### 9. supabase-init.sql
+**Propósito:** Script de inicialización rápida
+
+**Contiene:**
+- Tabla de usuarios de prueba
+- Datos iniciales
+
+**Cuándo usarlo:** Setup inicial de la BD
+
+---
+
+#### 10. fix-roles.sql
+**Propósito:** Configuración de roles de usuarios
+
+**Contiene:**
+- INSERT de usuarios de prueba
+- Configuración de permisos
+
+**Cuándo usarlo:** Después de crear la tabla usuarios_permitidos
+
+---
+
+#### 11. fix_passwords.sql
+**Propósito:** Reset de passwords de prueba
+
+**Contiene:**
+- UPDATE de passwords a valores conocidos
+
+**Cuándo usarlo:** Para resetear passwords en desarrollo
+
+---
+
+### ⚙️ Configuración del Proyecto
+
+#### 12. .env.local
 **Propósito:** Variables de entorno de la aplicación
 
 **Contiene:**
@@ -101,7 +195,7 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 7. setup.sh
+#### 13. setup.sh
 **Propósito:** Script de configuración automática
 
 **Contiene:**
@@ -113,7 +207,9 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-### 8. README.md
+### 📖 Documentación General
+
+#### 14. README.md
 **Propósito:** Documentación general del proyecto
 
 **Contiene:**
@@ -126,7 +222,45 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-## 🎯 FLUJO DE CONFIGURACIÓN
+#### 15. README_CLIENTE.md
+**Propósito:** Guía para el usuario final
+
+**Contiene:**
+- Cómo usar la aplicación
+- Explicación de funcionalidades
+- FAQ del cliente
+
+**Cuándo leerlo:** Para entregar al cliente/usuario final
+
+---
+
+#### 16. DATABASE.md
+**Propósito:** Configuración de base de datos
+
+**Contiene:**
+- Esquema de tablas
+- Configuración de índices
+- Notas sobre RLS
+
+**Cuándo leerlo:** Para configurar o modificar la BD
+
+---
+
+#### 17. DEPLOYMENT.md
+**Propósito:** Instrucciones de deployment
+
+**Contiene:**
+- Cómo deployar en Vercel
+- Variables de entorno en producción
+- Checklist de deploy
+
+**Cuándo leerlo:** Antes de hacer deploy a producción
+
+---
+
+## 🎯 FLUJO DE CONFIGURACIÓN (Setup Inicial)
+
+### Para Nuevos Desarrolladores
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -148,7 +282,7 @@ Si es tu primera vez, lee en este orden:
                  │
                  ▼
 ┌─────────────────────────────────────────────────────────┐
-│ 4. Ejecutar migrations.sql                             │
+│ 4. Ejecutar migrations.sql + fix-roles.sql             │
 │    (En Supabase Dashboard → SQL Editor)                │
 └────────────────┬────────────────────────────────────────┘
                  │
@@ -171,6 +305,72 @@ Si es tu primera vez, lee en este orden:
 └─────────────────────────────────────────────────────────┘
 ```
 
+### Para Desarrollo y Features
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ 1. Leer docs/FUNCIONALIDADES.md                        │
+│    (Entender el sistema completo)                       │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 2. Leer docs/ARCHITECTURE.md                             │
+│    (Entender arquitectura y APIs)                       │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 3. Revisar PROYECTO_COMPLETADO.md                       │
+│    (Ver estado actual y roadmap)                        │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 4. Desarrollar feature                                  │
+│    (En branch develop)                                  │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 5. Push a origin/develop                                │
+│    (Vercel deploy automático)                           │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 6. Merge a main (producción)                            │
+│    (Cuando esté listo)                                  │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Para DevOps/Deployment
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ 1. Leer DEPLOYMENT.md                                   │
+│    (Instrucciones de deploy)                            │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 2. Configurar variables en Vercel                      │
+│    (NEXT_PUBLIC_SUPABASE_URL, ANON_KEY)                │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 3. Conectar repo de GitHub                             │
+│    (Vercel auto-deploy)                                 │
+└────────────────┬────────────────────────────────────────┘
+                 │
+                 ▼
+┌─────────────────────────────────────────────────────────┐
+│ 4. Verificar deploy                                     │
+│    (https://contabilidad-pipod.vercel.app)             │
+└─────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## 🆘 SOLUCIÓN RÁPIDA DE PROBLEMAS
@@ -186,18 +386,36 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-## 📊 ESTADÍSTICAS
+## 📊 ESTADÍSTICAS DE DOCUMENTACIÓN
 
-| Archivo | Líneas | Propósito |
-|---------|--------|----------|
-| RESUMEN_SETUP.txt | 150+ | Resumen visual |
-| CLAVES_SUPABASE.md | 200+ | Obtener claves |
-| SETUP_GUIDE.md | 180+ | Guía completa |
-| CHECKLIST.md | 250+ | Verificación |
-| migrations.sql | 150+ | Migraciones SQL |
-| .env.local | 10 | Variables |
-| setup.sh | 50 | Script |
-| **TOTAL** | **~1000** | **Documentación completa** |
+| Documento | Líneas | Propósito | Nivel |
+|-----------|--------|-----------|-------|
+| **NUEVO: docs/FUNCIONALIDADES.md** | 800+ | Especificación completa | SDD L2 |
+| **NUEVO: docs/ARCHITECTURE.md** | 700+ | Arquitectura técnica | SDD L2 |
+| **ACTUALIZADO: PROYECTO_COMPLETADO.md** | 200+ | Estado del proyecto | Resumen |
+| RESUMEN_SETUP.txt | 150+ | Resumen visual | Setup |
+| CLAVES_SUPABASE.md | 200+ | Obtener claves | Setup |
+| SETUP_GUIDE.md | 180+ | Guía completa | Setup |
+| CHECKLIST.md | 250+ | Verificación | Setup |
+| README_CLIENTE.md | 150+ | Guía usuario final | Cliente |
+| DATABASE.md | 100+ | Esquema BD | Técnico |
+| DEPLOYMENT.md | 100+ | Deploy | Técnico |
+| migrations.sql | 150+ | Migraciones SQL | Código |
+| supabase-init.sql | 50+ | Init BD | Código |
+| .env.local | 10 | Variables | Config |
+| setup.sh | 50 | Script | Config |
+| **TOTAL DOCUMENTACIÓN** | **~3,000+** | **Documentación SDD Level 2** | ✅ |
+
+### Resumen por Categoría
+
+| Categoría | Archivos | Líneas | Propósito |
+|-----------|----------|--------|-----------|
+| Setup/Inicio | 4 | ~780 | Empezar desde cero |
+| SDD Level 2 | 2 | ~1,500 | Especificación completa |
+| Referencia Técnica | 4 | ~450 | Consulta rápida |
+| Configuración | 3 | ~110 | Setup técnico |
+| Código SQL | 2 | ~200 | Base de datos |
+| **TOTAL** | **15** | **~3,040** | **Completo** |
 
 ---
 
@@ -295,6 +513,7 @@ Si tienes dudas:
 
 ---
 
-**Última actualización:** 2025-12-20
-**Versión:** 1.0
-**Estado:** ✅ Completo
+**Última actualización:** Abril 2025
+**Versión:** 2.0
+**Estado:** ✅ SDD Level 2 Completo
+**Documentación:** 3,000+ líneas | 17 archivos | 2 diagramas
