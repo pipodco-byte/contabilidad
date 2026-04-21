@@ -35,7 +35,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedYear}
         onChange={(e) => onYearChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+        className="px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
       >
         {years.map((year) => (
           <option key={year} value={year}>
@@ -47,7 +47,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedMonth}
         onChange={(e) => onMonthChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+        className="px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
       >
         {MONTHS.map(({ num, label }) => (
           <option key={num} value={num}>
@@ -66,7 +66,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
 
       <button
         onClick={onReset}
-        className="p-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-100 rounded-lg transition-colors"
+        className="p-2 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-900 dark:text-zinc-100 rounded-lg transition-colors"
         title="Deshacer filtros"
       >
         <RotateCcw className="w-4 h-4" />

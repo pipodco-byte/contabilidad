@@ -39,12 +39,12 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 rounded-2xl p-6 space-y-6">
+    <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-6 space-y-6">
       <div>
-        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Año</label>
+        <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">Año</label>
         <div className="flex items-center gap-3">
-          <button onClick={() => scroll(yearScrollRef, 'left')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
-            <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          <button onClick={() => scroll(yearScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
+            <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
           </button>
           <div ref={yearScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 [&::-webkit-scrollbar]:hidden">
             {years.map((year) => (
@@ -54,24 +54,24 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 className={`px-4 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedYear === year
                     ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
                 }`}
               >
                 {year}
               </button>
             ))}
           </div>
-          <button onClick={() => scroll(yearScrollRef, 'right')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
-            <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          <button onClick={() => scroll(yearScrollRef, 'right')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
+            <ChevronRight className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
           </button>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Mes</label>
+        <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">Mes</label>
         <div className="flex items-center gap-3">
-          <button onClick={() => scroll(monthScrollRef, 'left')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
-            <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          <button onClick={() => scroll(monthScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
+            <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
           </button>
           <div ref={monthScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 [&::-webkit-scrollbar]:hidden">
             {MONTHS.map(({ num, label }) => (
@@ -81,15 +81,15 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 className={`px-3 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedMonth === num
                     ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
                 }`}
               >
                 {label}
               </button>
             ))}
           </div>
-          <button onClick={() => scroll(monthScrollRef, 'right')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
-            <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          <button onClick={() => scroll(monthScrollRef, 'right')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
+            <ChevronRight className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
           </button>
         </div>
       </div>

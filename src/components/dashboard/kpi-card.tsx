@@ -73,9 +73,9 @@ export function KPICard({
     >
       <Card
         className={cn(
-          'border-l-4 bg-zinc-950/80 border border-zinc-800/50',
+          'border-l-4 bg-white dark:bg-zinc-950/80 border border-zinc-200/50 dark:border-zinc-800/50',
           'hover:border-violet-500/30 transition-all duration-300',
-          'hover:shadow-lg hover:shadow-black/20',
+          'hover:shadow-lg hover:shadow-black/20 dark:hover:shadow-black/40',
           styles.border,
           styles.glow
         )}

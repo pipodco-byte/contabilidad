@@ -26,7 +26,7 @@ export function Header({ onMenuClick, user }: HeaderProps) {
   const { tema, toggleTema } = useTema()
 
   return (
-    <header className="flex items-center justify-between h-16 px-4 border-b bg-card">
+    <header className="sticky top-0 z-40 flex items-center justify-between h-16 px-4 border-b border-zinc-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-950/80 backdrop-blur-md">
       {/* Left side */}
       <div className="flex items-center gap-4">
         {/* Mobile menu button */}

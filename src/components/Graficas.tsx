@@ -90,8 +90,8 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           Ingresos vs Egresos por Categoría
         </h3>
         <ResponsiveContainer width="100%" height={400}>
@@ -107,8 +107,8 @@ export function Graficas({ userId, userRole }: GraficasProps) {
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           Evolución Temporal
         </h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -124,8 +124,8 @@ export function Graficas({ userId, userRole }: GraficasProps) {
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           Análisis Radar (Millones COP)
         </h3>
         <ResponsiveContainer width="100%" height={400}>
@@ -141,8 +141,8 @@ export function Graficas({ userId, userRole }: GraficasProps) {
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           Evolución Mensual (Año Actual)
         </h3>
         <ResponsiveContainer width="100%" height={350}>
@@ -169,8 +169,8 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       </div>
 
       {/* Scatter Chart - Volumen vs Margen de Ganancia (Comentado)
-      <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           Volumen vs Margen de Ganancia
         </h3>
         <div className="relative">
@@ -193,39 +193,39 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       */}
 
       {mesActual && mesAnterior && (
-        <div className="bg-white dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">Comparativa Mensual</h3>
+        <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+          <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">Comparativa Mensual</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-700">
-                  <th className="text-left py-3 px-4 font-semibold text-slate-900 dark:text-slate-100">Concepto</th>
-                  <th className="text-right py-3 px-4 font-semibold text-slate-900 dark:text-slate-100">Mes Anterior</th>
-                  <th className="text-right py-3 px-4 font-semibold text-slate-900 dark:text-slate-100">Mes Actual</th>
-                  <th className="text-right py-3 px-4 font-semibold text-slate-900 dark:text-slate-100">Variación</th>
+                <tr className="border-b border-zinc-200 dark:border-zinc-700">
+                  <th className="text-left py-3 px-4 font-semibold text-zinc-900 dark:text-zinc-100">Concepto</th>
+                  <th className="text-right py-3 px-4 font-semibold text-zinc-900 dark:text-zinc-100">Mes Anterior</th>
+                  <th className="text-right py-3 px-4 font-semibold text-zinc-900 dark:text-zinc-100">Mes Actual</th>
+                  <th className="text-right py-3 px-4 font-semibold text-zinc-900 dark:text-zinc-100">Variación</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-slate-100 dark:border-slate-800">
-                  <td className="py-3 px-4 text-slate-700 dark:text-slate-300">Ingresos</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100">{formatCurrency(mesAnterior.ingresos)}</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100">{formatCurrency(mesActual.ingresos)}</td>
+                <tr className="border-b border-zinc-100 dark:border-zinc-800">
+                  <td className="py-3 px-4 text-zinc-700 dark:text-zinc-300">Ingresos</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100">{formatCurrency(mesAnterior.ingresos)}</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100">{formatCurrency(mesActual.ingresos)}</td>
                   <td className={`py-3 px-4 text-right font-semibold ${mesActual.ingresos >= mesAnterior.ingresos ? 'text-emerald-600' : 'text-red-500'}`}>
                     {mesAnterior.ingresos > 0 ? `${((mesActual.ingresos - mesAnterior.ingresos) / mesAnterior.ingresos * 100).toFixed(1)}%` : 'N/A'}
                   </td>
                 </tr>
-                <tr className="border-b border-slate-100 dark:border-slate-800">
-                  <td className="py-3 px-4 text-slate-700 dark:text-slate-300">Egresos</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100">{formatCurrency(mesAnterior.egresos)}</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100">{formatCurrency(mesActual.egresos)}</td>
+                <tr className="border-b border-zinc-100 dark:border-zinc-800">
+                  <td className="py-3 px-4 text-zinc-700 dark:text-zinc-300">Egresos</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100">{formatCurrency(mesAnterior.egresos)}</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100">{formatCurrency(mesActual.egresos)}</td>
                   <td className={`py-3 px-4 text-right font-semibold ${mesActual.egresos <= mesAnterior.egresos ? 'text-emerald-600' : 'text-red-500'}`}>
                     {mesAnterior.egresos > 0 ? `${((mesActual.egresos - mesAnterior.egresos) / mesAnterior.egresos * 100).toFixed(1)}%` : 'N/A'}
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-slate-700 dark:text-slate-300 font-semibold">Balance</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold">{formatCurrency(mesAnterior.balance)}</td>
-                  <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold">{formatCurrency(mesActual.balance)}</td>
+                  <td className="py-3 px-4 text-zinc-700 dark:text-zinc-300 font-semibold">Balance</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100 font-semibold">{formatCurrency(mesAnterior.balance)}</td>
+                  <td className="py-3 px-4 text-right text-zinc-900 dark:text-zinc-100 font-semibold">{formatCurrency(mesActual.balance)}</td>
                   <td className={`py-3 px-4 text-right font-bold ${mesActual.balance >= mesAnterior.balance ? 'text-emerald-600' : 'text-red-500'}`}>
                     {mesAnterior.balance !== 0 ? `${((mesActual.balance - mesAnterior.balance) / Math.abs(mesAnterior.balance) * 100).toFixed(1)}%` : 'N/A'}
                   </td>

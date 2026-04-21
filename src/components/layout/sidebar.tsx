@@ -185,6 +185,10 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
           {/* Logout */}
           <button
+            onClick={() => {
+              localStorage.removeItem('auth_user');
+              window.location.href = '/';
+            }}
             className={cn(
               "flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
             )}

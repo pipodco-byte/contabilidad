@@ -52,11 +52,11 @@ export function AuthForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
             <label className="text-zinc-400 uppercase text-xs tracking-wider block">
-              Correo electrónico
+              Usuario
             </label>
             <Input
-              type="email"
-              placeholder="tu@email.com"
+              type="text"
+              placeholder="tu usuario"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-white"

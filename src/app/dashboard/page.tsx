@@ -129,7 +129,7 @@ export default function Dashboard() {
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div id="config" className="flex flex-wrap gap-3 mb-6">
         <Button onClick={() => setShowGema(!showGema)}>
           <Gem className="mr-2 h-4 w-4" />
           Gema
@@ -200,21 +200,19 @@ export default function Dashboard() {
       />
 
       {/* Lista de Transacciones */}
-      <div className="mb-6">
+      <div id="transacciones" className="mb-6 scroll-mt-20">
         <TransactionTable key={refreshKey} userId={user.id} userRole={user.rol} />
       </div>
 
       {/* Gráficas */}
-      <div className="mb-6">
+      <div id="graficas" className="mb-6 scroll-mt-20">
         <Graficas key={refreshKey} userId={user.id} userRole={user.rol} />
       </div>
 
       {/* Informes */}
-      {showInforme && (
-        <div className="mb-6">
-          <ReportsTabs userId={user.id} userRole={user.rol} />
-        </div>
-      )}
+      <div id="informes" className="mb-6 scroll-mt-20">
+        <ReportsTabs userId={user.id} userRole={user.rol} />
+      </div>
     </AppShell>
   );
 }
