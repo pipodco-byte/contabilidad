@@ -1,0 +1,38 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Next.js 14 + React 18 + TypeScript + Tailwind CSS
+  Architecture: App Router, Server Components, Client Components
+  UI Library: Lucide React (icons), Recharts (charts), shadcn/ui patterns
+  Styling: Tailwind CSS with mobile-first approach
+  State: React Query (TanStack Query) for server state
+  Database: Supabase (PostgreSQL)
+  
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules/packages
+    - Reference Astro-Ecommerce patterns for mobile responsiveness
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+    - Include mobile breakpoint scenarios (480px, 768px, 1024px)
+  design:
+    - Include component hierarchy diagrams
+    - Document responsive breakpoint strategy
+    - Reference Astro-Ecommerce hamburger menu and drawer patterns
+  tasks:
+    - Group tasks by phase (infrastructure, sidebar, tables, testing)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+    - Keep tasks small enough to complete in one session
+  apply:
+    - Follow existing code patterns from Astro-Ecommerce
+    - Use Tailwind responsive classes (sm:, md:, lg:)
+    - Maintain TypeScript types for all new components
+  verify:
+    - Test on actual mobile devices or Chrome DevTools
+    - Verify all breakpoints (480px, 768px, 1024px)
+    - Check touch targets are minimum 44x44px
+  archive:
+    - Warn before merging destructive deltas (large removals)
+    - Document lessons learned for future mobile implementations

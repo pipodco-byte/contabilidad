@@ -1,0 +1,56 @@
+# STATE: UI Boutique Refactor
+
+**Change:** ui-boutique-refactor
+**Version:** 1.0.0
+**Created:** 2025-04-20
+**Status:** ready
+
+## Dependency Graph
+
+```
+proposal ──→ spec ──→ design ──→ tasks ──→ apply ──→ verify ──→ archive
+```
+
+## Phases Status
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| proposal | ✅ Complete | Located in openspec/changes/ui-boutique-refactor/ |
+| spec | ✅ Complete | SPEC.md created |
+| design | ✅ Complete | DESIGN.md created |
+| tasks | ✅ Complete | TASKS.md created - 45 tasks, ~20-26h |
+| apply | ⏳ Pending | Not started |
+| verify | ⏳ Pending | Not started |
+| archive | ⏳ Pending | Not started |
+
+## Key Decisions
+
+| Decision | Value |
+|----------|-------|
+| Color scheme | Obsidian + Violet (#8b5cf6) |
+| Sidebar | Collapsible (240px → 64px) |
+| Motion | Framer Motion |
+| Command Palette | CMD+K with cmdk |
+| Empty States | Custom SVG minimalista |
+| Blocks | 01, 02, 03, 05 (settings ref) |
+
+## Critical Paths
+
+1. Phase 1 → Phase 2 → Phase 3 → Phase 8 → Phase 9 → Phase 10
+2. Phase 1 → Phase 4 (can parallel)
+3. Phase 1 → Phase 5 (can parallel after Phase 3)
+
+## Risks
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Breaking existing UI | High | Test each phase incrementally |
+| Bundle size increase | Medium | Tree-shake unused components |
+| Performance regression | Medium | Lighthouse check in verify |
+
+## Next Recommended Action
+
+Start Phase 1: Setup & Foundation
+- Run `npx shadcn@latest init`
+- Configure CSS variables in globals.css
+- Install core components: button, input, card
