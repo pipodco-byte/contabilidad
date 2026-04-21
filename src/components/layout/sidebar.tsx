@@ -3,6 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { motion, useReducedMotion } from "framer-motion"
 import {
   LayoutDashboard,
   Receipt,
@@ -25,6 +26,13 @@ import {
 interface SidebarProps {
   collapsed: boolean
   onToggle: () => void
+}
+
+const springTransition = {
+  type: "spring" as const,
+  damping: 20,
+  stiffness: 300,
+  mass: 0.8,
 }
 
 const navItems = [
@@ -60,12 +68,15 @@ const bottomNavItems = [
 
 export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname()
+  const prefersReducedMotion = useReducedMotion()
 
   return (
     <TooltipProvider delayDuration={0}>
-      <aside
+      <motion.aside
+        animate={{ width: collapsed ? 64 : 240 }}
+        transition={prefersReducedMotion ? { duration: 0 } : springTransition}
         className={cn(
-          "flex flex-col h-screen bg-card border-r transition-all duration-200 ease-out",
+          "flex flex-col h-screen bg-card border-r",
           collapsed ? "w-16" : "w-60"
         )}
       >
@@ -203,7 +214,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             {!collapsed && <span className="ml-2">Colapsar</span>}
           </Button>
         </div>
-      </aside>
+      </motion.aside>
     </TooltipProvider>
   )
 }

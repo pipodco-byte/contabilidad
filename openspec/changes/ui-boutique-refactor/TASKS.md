@@ -244,9 +244,9 @@ export function cn(...inputs: ClassValue[]) {
 - `src/app/dashboard/page.tsx`
 
 **Verify:**
-- [ ] Dashboard renderiza dentro de AppShell
-- [ ] Sidebar + Header presentes
-- [ ] Contenido principal visible
+- [x] Dashboard renderiza dentro de AppShell
+- [x] Sidebar + Header presentes
+- [x] Contenido principal visible
 
 **Riesgo:** Medio - Integración
 
@@ -262,7 +262,7 @@ npx shadcn add tabs tooltip sheet
 ```
 
 **Verify:**
-- [ ] Componentes instalados
+- [x] Componentes instalados (tabs, tooltip, sheet)
 
 **Riesgo:** Bajo
 
@@ -287,10 +287,10 @@ npx shadcn add tabs tooltip sheet
 - framer-motion (para animación)
 
 **Verify:**
-- [ ] CMD+K abre palette
-- [ ] Búsqueda funciona
-- [ ] Acciones ejecutan correctamente
-- [ ] Escape cierra
+- [x] CMD+K abre palette
+- [x] Búsqueda funciona
+- [x] Acciones ejecutan correctamente
+- [x] Escape cierra
 
 **Riesgo:** Medio - Componente nuevo con lógica
 
@@ -310,8 +310,8 @@ npx shadcn add tabs tooltip sheet
 - `src/components/ui/card.tsx`
 
 **Verify:**
-- [ ] Card tiene border-radius correcto (0.75rem)
-- [ ] Shadows funcionan
+- [x] Card tiene border-radius correcto (0.75rem)
+- [x] Shadows funcionan
 
 **Riesgo:** Bajo
 
@@ -342,9 +342,9 @@ interface KPICardProps {
 ```
 
 **Verify:**
-- [ ] Card renderiza con datos
-- [ ] Colores semánticos correctos
-- [ ] Trend muestra flecha + porcentaje
+- [x] Card renderiza con datos
+- [x] Colores semánticos correctos
+- [x] Trend muestra flecha + porcentaje
 
 **Riesgo:** Bajo - Componente nuevo
 
@@ -363,9 +363,9 @@ interface KPICardProps {
 - `src/app/dashboard/page.tsx`
 
 **Verify:**
-- [ ] Cards muestran Ingresos, Egresos, Balance
-- [ ] Formato de número correcto (font-mono tabular-nums)
-- [ ] Colores semánticos
+- [x] Cards muestran Ingresos, Egresos, Balance
+- [x] Formato de número correcto (font-mono tabular-nums)
+- [x] Colores semánticos
 
 **Riesgo:** Medio - Reemplazo
 
@@ -383,8 +383,8 @@ interface KPICardProps {
 - `src/components/kpi-card.tsx`
 
 **Verify:**
-- [ ] Cards entran con stagger animation
-- [ ] Suave al cargar
+- [x] Cards entran con stagger animation
+- [x] Suave al cargar
 
 **Riesgo:** Bajo
 
@@ -399,9 +399,9 @@ interface KPICardProps {
 2. Ajustar grid si necesario
 
 **Verify:**
-- [ ] Mobile: 1 columna
-- [ ] Tablet: 3 columnas
-- [ ] Desktop: 3 columnas
+- [x] Mobile: 1 columna
+- [x] Tablet: 3 columnas
+- [x] Desktop: 3 columnas
 
 **Riesgo:** Bajo
 
@@ -419,7 +419,7 @@ npx shadcn add form select calendar popover switch
 ```
 
 **Verify:**
-- [ ] Componentes instalados
+- [x] Componentes instalados
 
 **Riesgo:** Bajo
 
@@ -439,9 +439,9 @@ npx shadcn add form select calendar popover switch
 - `src/components/auth-form.tsx`
 
 **Verify:**
-- [ ] Login funciona igual
-- [ ] Estilo actualizado
-- [ ] Focus states correctos
+- [x] Login funciona igual
+- [x] Estilo actualizado
+- [x] Focus states correctos
 
 **Riesgo:** Medio - Migración
 
@@ -462,9 +462,9 @@ npx shadcn add form select calendar popover switch
 - `src/components/transaccion-form.tsx`
 
 **Verify:**
-- [ ] Formulario funciona igual
-- [ ] Selects con shadcn style
-- [ ] Validation visual correcta
+- [x] Formulario funciona igual
+- [x] Selects con shadcn style
+- [x] Validation visual correcta
 
 **Riesgo:** Medio - Migración
 
@@ -481,7 +481,7 @@ npx shadcn add form select calendar popover switch
 **Nota:** Si el date input actual funciona bien, mantenerlo. El cambio a Calendar es opcional.
 
 **Verify:**
-- [ ] Date selection funciona
+- [x] Date selection funciona
 
 **Riesgo:** Bajo
 
@@ -499,7 +499,7 @@ npx shadcn add table pagination scroll-area
 ```
 
 **Verify:**
-- [ ] Componentes instalados
+- [x] Componentes instalados
 
 **Riesgo:** Bajo
 
@@ -523,9 +523,9 @@ npx shadcn add table pagination scroll-area
 - lucide-react: icons para acciones
 
 **Verify:**
-- [ ] Tabla renderiza transacciones
-- [ ] Paginación funciona
-- [ ] Filtros funcionan
+- [x] Tabla renderiza transacciones
+- [x] Paginación funciona
+- [x] Filtros funcionan
 
 **Riesgo:** Medio - Componente nuevo
 
@@ -544,8 +544,8 @@ npx shadcn add table pagination scroll-area
 - `src/app/dashboard/page.tsx`
 
 **Verify:**
-- [ ] Tabla visible y funcional
-- [ ] Mismos datos que antes
+- [x] Tabla visible y funcional
+- [x] Mismos datos que antes
 
 **Riesgo:** Medio - Reemplazo
 
@@ -564,8 +564,8 @@ npx shadcn add table pagination scroll-area
 - `src/components/transaction-table.tsx`
 
 **Verify:**
-- [ ] Mobile: cards
-- [ ] Desktop: tabla
+- [x] Mobile: cards
+- [x] Desktop: tabla
 
 **Riesgo:** Medio
 
@@ -598,9 +598,9 @@ interface EmptyStateProps {
 ```
 
 **Verify:**
-- [ ] Empty state se muestra cuando no hay datos
-- [ ] Ilustración visible
-- [ ] CTA funciona
+- [x] Empty state se muestra cuando no hay datos
+- [x] Ilustración visible
+- [x] CTA funciona
 
 **Riesgo:** Bajo
 
@@ -618,7 +618,7 @@ interface EmptyStateProps {
 - `src/components/transaction-table.tsx`
 
 **Verify:**
-- [ ] Empty state visible
+- [x] Empty state visible
 
 **Riesgo:** Bajo
 

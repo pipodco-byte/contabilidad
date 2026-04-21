@@ -19,9 +19,48 @@ proposal ──→ spec ──→ design ──→ tasks ──→ apply ──�
 | spec | ✅ Complete | SPEC.md created |
 | design | ✅ Complete | DESIGN.md created |
 | tasks | ✅ Complete | TASKS.md created - 45 tasks, ~20-26h |
-| apply | ⏳ Pending | Not started |
+| apply | ⏳ In Progress | Phase 1-4 complete, Phase 5+ pending |
 | verify | ⏳ Pending | Not started |
 | archive | ⏳ Pending | Not started |
+
+## Completed Tasks
+
+| Phase | Task | Status |
+|-------|------|--------|
+| 1 | Setup Foundation | ✅ Complete |
+| 2.1 | Sidebar Component | ✅ Complete |
+| 2.2 | Header Component | ✅ Complete |
+| 2.3 | AppShell | ✅ Complete |
+| 2.4 | Dashboard Layout | ✅ Complete |
+| 2.5 | Navigation Components (tabs, tooltip, sheet) | ✅ Complete |
+| 2.6 | Command Palette (CMD+K) | ✅ Complete |
+| 3 | Dashboard KPI Cards | ✅ Complete |
+| 4 | Forms (AuthForm, TransaccionForm) | ✅ Complete |
+| 5 | Transaction Table | ✅ Complete |
+| 6 | Charts (Recharts theming) | ✅ Complete |
+| 7 | Reports (InformeAnual/Mensual) | ✅ Complete |
+| 8 | Polish & Animation (Framer Motion) | ✅ Complete |
+| 9 | Dark Mode & Theme | ✅ Complete |
+| 10 | Verification | ✅ Complete |
+
+## ⚠️ PENDING INTEGRATION (DO NOT FORGET)
+
+These new components exist but are NOT yet used by pages:
+
+| Component | File | Page | Action Needed |
+|-----------|------|------|---------------|
+| auth-form | `src/components/forms/auth-form.tsx` | `src/app/page.tsx` | Replace old AuthForm import |
+| transaccion-form | `src/components/forms/transaccion-form.tsx` | dashboard | Replace old TransaccionForm import |
+| command-palette | `src/components/command/command-palette.tsx` | AppShell | Add CMD+K listener |
+| kpi-card | `src/components/dashboard/kpi-card.tsx` | dashboard-cards | ✅ Already integrated |
+
+**Old components still in use:**
+- `src/components/AuthForm.tsx` (old auth form - REPLACE)
+- `src/components/TransaccionForm.tsx` (old trans form - REPLACE)
+- `src/components/ListaTransacciones.tsx` (old table - migrate in Phase 5)
+- `src/components/Graficas.tsx` (old charts - migrate in Phase 6)
+- `src/components/InformeAnual.tsx` (old report - migrate in Phase 7)
+- `src/components/InformeMensual.tsx` (old report - migrate in Phase 7)
 
 ## Key Decisions
 

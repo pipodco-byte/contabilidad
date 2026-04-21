@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { AuthForm } from '@/components/AuthForm';
+import { AuthForm } from '@/components/forms/auth-form';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useTema } from '@/hooks/useTema';
