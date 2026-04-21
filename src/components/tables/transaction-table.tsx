@@ -135,11 +135,7 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                     onClick={() => setFiltroTipo(tipo)}
                     className={
                       filtroTipo === tipo
-                        ? tipo === 'Todos'
-                          ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200'
-                          : tipo === 'Ingreso'
-                          ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
-                          : 'bg-rose-500 text-white active:scale-95 transition-all duration-200'
+                        ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
                         : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
                     }
                   >
@@ -206,11 +202,7 @@ onYearChange={setSelectedYear}
                   onClick={() => setFiltroTipo(tipo)}
                   className={
                     filtroTipo === tipo
-                      ? tipo === 'Todos'
-                        ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200'
-                        : tipo === 'Ingreso'
-                        ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
-                        : 'bg-rose-500 text-white active:scale-95 transition-all duration-200'
+                      ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
                       : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
                   }
                 >
