@@ -98,18 +98,18 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                   variant="ghost"
                   size="sm"
                   onClick={() => exportarTransacciones(userId)}
-                  className="text-zinc-500 hover:text-violet-400 bg-transparent hover:bg-white/5"
+                  className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                   CSV
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => exportarTransaccionesPDF(userId, userRole)}
-                  className="text-zinc-500 hover:text-violet-400 bg-transparent hover:bg-white/5"
+                  className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
                 >
-                  <FileText className="w-4 h-4 mr-2" />
+                  <FileText className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                   PDF
                 </Button>
               </div>
@@ -169,18 +169,18 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => exportarTransacciones(userId)}
-                className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
               >
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                 CSV
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => exportarTransaccionesPDF(userId, userRole)}
-                className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
               >
-                <FileText className="w-4 h-4 mr-2" />
+                <FileText className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                 PDF
               </Button>
             </div>

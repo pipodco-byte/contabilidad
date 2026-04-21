@@ -41,7 +41,7 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
   return (
     <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-6 space-y-6">
       <div>
-        <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">Año</label>
+        <label className="block text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-medium mb-3">Año</label>
         <div className="flex items-center gap-3">
           <button onClick={() => scroll(yearScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
             <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
@@ -68,7 +68,7 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">Mes</label>
+        <label className="block text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-medium mb-3">Mes</label>
         <div className="flex items-center gap-3">
           <button onClick={() => scroll(monthScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
             <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
