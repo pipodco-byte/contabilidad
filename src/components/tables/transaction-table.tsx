@@ -92,13 +92,13 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
         <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
           <div className="p-6 border-b border-zinc-800/50">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-zinc-100">Transacciones</h2>
+              <h2 className="text-xl font-semibold text-zinc-50 tracking-tight">Transacciones</h2>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => exportarTransacciones(userId)}
-                  className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                  className="text-zinc-500 hover:text-violet-400 bg-transparent hover:bg-white/5"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   CSV
@@ -107,7 +107,7 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                   variant="ghost"
                   size="sm"
                   onClick={() => exportarTransaccionesPDF(userId, userRole)}
-                  className="text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                  className="text-zinc-500 hover:text-violet-400 bg-transparent hover:bg-white/5"
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   PDF
@@ -130,13 +130,17 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                 {(['Todos', 'Ingreso', 'Egreso'] as const).map((tipo) => (
                   <Button
                     key={tipo}
-                    variant={filtroTipo === tipo ? 'outline' : 'ghost'}
+                    variant="ghost"
                     size="sm"
                     onClick={() => setFiltroTipo(tipo)}
                     className={
                       filtroTipo === tipo
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
-                        : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                        ? tipo === 'Todos'
+                          ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200'
+                          : tipo === 'Ingreso'
+                          ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
+                          : 'bg-rose-500 text-white active:scale-95 transition-all duration-200'
+                        : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
                     }
                   >
                     {tipo}
@@ -159,7 +163,7 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
         <div className="p-6 border-b border-zinc-800/50">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-zinc-100">Transacciones</h2>
+            <h2 className="text-xl font-semibold text-zinc-50 tracking-tight">Transacciones</h2>
             <div className="flex gap-2">
               <Button
                 variant="ghost"
@@ -197,13 +201,17 @@ onYearChange={setSelectedYear}
               {(['Todos', 'Ingreso', 'Egreso'] as const).map((tipo) => (
                 <Button
                   key={tipo}
-                  variant={filtroTipo === tipo ? 'outline' : 'ghost'}
+                  variant="ghost"
                   size="sm"
                   onClick={() => setFiltroTipo(tipo)}
                   className={
                     filtroTipo === tipo
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
-                      : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                      ? tipo === 'Todos'
+                        ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200'
+                        : tipo === 'Ingreso'
+                        ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
+                        : 'bg-rose-500 text-white active:scale-95 transition-all duration-200'
+                      : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
                   }
                 >
                   {tipo}

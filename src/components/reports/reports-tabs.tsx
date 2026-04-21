@@ -70,8 +70,8 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
 
   if (datosAnuales.length === 0) {
     return (
-      <Card className="border-zinc-800/50 bg-zinc-900/50">
-        <CardContent className="pt-6 text-center text-zinc-400">
+        <Card className="border-zinc-800/50 bg-zinc-900/50">
+        <CardContent className="pt-6 text-center text-zinc-300 font-medium">
           No hay datos para mostrar el informe anual
         </CardContent>
       </Card>
@@ -323,7 +323,7 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
           <Button
             onClick={() => enviarReporte(mes)}
             disabled={enviando}
-            className="bg-violet-600 hover:bg-violet-500 text-white shadow-[0_0_20px_-5px_rgba(139,92,246,0.3)]"
+            className="bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
           >
             <Send className="h-4 w-4 mr-2" />
             {enviando ? 'Enviando...' : 'Enviar a Felipe'}
@@ -438,7 +438,7 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
         </Card>
       ) : (
         <Card className="border-zinc-800/50 bg-zinc-900/50">
-          <CardContent className="pt-6 text-center text-zinc-400">
+          <CardContent className="pt-6 text-center text-zinc-300 font-medium">
             No hay datos para este mes
           </CardContent>
         </Card>

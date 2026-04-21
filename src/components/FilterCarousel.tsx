@@ -53,7 +53,7 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 onClick={() => onYearChange(year)}
                 className={`px-4 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedYear === year
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30'
+                    ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-3px_rgba(139,92,246,0.4)] hover:shadow-[0_0_20px_-3px_rgba(139,92,246,0.5)] transition-all duration-300 border-t border-white/20'
                     : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
                 }`}
               >
@@ -80,7 +80,7 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 onClick={() => onMonthChange(num)}
                 className={`px-3 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedMonth === num
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30'
+                    ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-3px_rgba(139,92,246,0.4)] hover:shadow-[0_0_20px_-3px_rgba(139,92,246,0.5)] transition-all duration-300 border-t border-white/20'
                     : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
                 }`}
               >

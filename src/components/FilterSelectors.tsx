@@ -35,10 +35,10 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedYear}
         onChange={(e) => onYearChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+        className="px-3 py-2 bg-transparent border border-white/10 text-zinc-300 hover:border-violet-500/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
       >
         {years.map((year) => (
-          <option key={year} value={year}>
+          <option key={year} value={year} className="bg-zinc-900 text-zinc-100">
             {year}
           </option>
         ))}
@@ -47,10 +47,10 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedMonth}
         onChange={(e) => onMonthChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+        className="px-3 py-2 bg-transparent border border-white/10 text-zinc-300 hover:border-violet-500/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
       >
         {MONTHS.map(({ num, label }) => (
-          <option key={num} value={num}>
+          <option key={num} value={num} className="bg-zinc-900 text-zinc-100">
             {label}
           </option>
         ))}
@@ -58,7 +58,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
 
       <button
         onClick={onApply}
-        className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
+        className="p-2 text-emerald-500 hover:scale-110 active:scale-95 transition-all duration-200"
         title="Aplicar filtros"
       >
         <Check className="w-4 h-4" />
@@ -66,7 +66,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
 
       <button
         onClick={onReset}
-        className="p-2 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-900 dark:text-zinc-100 rounded-lg transition-colors"
+        className="p-2 text-zinc-500 hover:text-zinc-200 hover:bg-white/5 rounded-lg transition-colors"
         title="Deshacer filtros"
       >
         <RotateCcw className="w-4 h-4" />
