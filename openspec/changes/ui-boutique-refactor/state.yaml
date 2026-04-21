@@ -1,66 +1,98 @@
 # STATE: UI Boutique Refactor
 
 **Change:** ui-boutique-refactor
-**Version:** 1.0.0
+**Version:** 2.0.0
 **Created:** 2025-04-20
-**Status:** ready
+**Updated:** 2025-04-20
+**Status:** ⏳ In Progress (auth fixed, pending user Supabase config)
 
-## Dependency Graph
+---
 
-```
-proposal ──→ spec ──→ design ──→ tasks ──→ apply ──→ verify ──→ archive
-```
+## Summary
+
+UI modernization with "Obsidian Boutique" design system.
+
+### Completed
+- Phase 1-10: All phases complete
+- Auth fix: Shared `usuarios` table with Dashboard-Pipod
+- Visual fix: Login text visibility resolved
+
+### Pending
+- User updates `acceso_contabilidad` flags in Supabase
+- Engram update
+
+---
 
 ## Phases Status
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| proposal | ✅ Complete | Located in openspec/changes/ui-boutique-refactor/ |
-| spec | ✅ Complete | SPEC.md created |
-| design | ✅ Complete | DESIGN.md created |
-| tasks | ✅ Complete | TASKS.md created - 45 tasks, ~20-26h |
-| apply | ⏳ In Progress | Phase 1-4 complete, Phase 5+ pending |
-| verify | ⏳ Pending | Not started |
-| archive | ⏳ Pending | Not started |
+| 1 | ✅ Complete | Setup Foundation |
+| 2 | ✅ Complete | Layout & Navigation |
+| 3 | ✅ Complete | Dashboard KPI Cards |
+| 4 | ✅ Complete | Forms |
+| 5 | ✅ Complete | Transaction Table |
+| 6 | ✅ Complete | Charts |
+| 7 | ✅ Complete | Reports |
+| 8 | ✅ Complete | Polish & Animation |
+| 9 | ✅ Complete | Dark Mode & Theme |
+| 10 | ✅ Complete | Verification |
 
-## Completed Tasks
+---
 
-| Phase | Task | Status |
-|-------|------|--------|
-| 1 | Setup Foundation | ✅ Complete |
-| 2.1 | Sidebar Component | ✅ Complete |
-| 2.2 | Header Component | ✅ Complete |
-| 2.3 | AppShell | ✅ Complete |
-| 2.4 | Dashboard Layout | ✅ Complete |
-| 2.5 | Navigation Components (tabs, tooltip, sheet) | ✅ Complete |
-| 2.6 | Command Palette (CMD+K) | ✅ Complete |
-| 3 | Dashboard KPI Cards | ✅ Complete |
-| 4 | Forms (AuthForm, TransaccionForm) | ✅ Complete |
-| 5 | Transaction Table | ✅ Complete |
-| 6 | Charts (Recharts theming) | ✅ Complete |
-| 7 | Reports (InformeAnual/Mensual) | ✅ Complete |
-| 8 | Polish & Animation (Framer Motion) | ✅ Complete |
-| 9 | Dark Mode & Theme | ✅ Complete |
-| 10 | Verification | ✅ Complete |
+## Auth Fix (auth-usuarios-unificada)
 
-## ⚠️ PENDING INTEGRATION (DO NOT FORGET)
+**Status:** ✅ Complete
 
-These new components exist but are NOT yet used by pages:
+| File | Change |
+|------|--------|
+| `src/app/api/auth/login/route.ts` | Use `usuarios` table + verify `acceso_contabilidad` |
+| `src/components/forms/auth-form.tsx` | Add `text-white` to inputs |
 
-| Component | File | Page | Action Needed |
-|-----------|------|------|---------------|
-| auth-form | `src/components/forms/auth-form.tsx` | `src/app/page.tsx` | Replace old AuthForm import |
-| transaccion-form | `src/components/forms/transaccion-form.tsx` | dashboard | Replace old TransaccionForm import |
-| command-palette | `src/components/command/command-palette.tsx` | AppShell | Add CMD+K listener |
-| kpi-card | `src/components/dashboard/kpi-card.tsx` | dashboard-cards | ✅ Already integrated |
+### Users & Access
 
-**Old components still in use:**
-- `src/components/AuthForm.tsx` (old auth form - REPLACE)
-- `src/components/TransaccionForm.tsx` (old trans form - REPLACE)
-- `src/components/ListaTransacciones.tsx` (old table - migrate in Phase 5)
-- `src/components/Graficas.tsx` (old charts - migrate in Phase 6)
-- `src/components/InformeAnual.tsx` (old report - migrate in Phase 7)
-- `src/components/InformeMensual.tsx` (old report - migrate in Phase 7)
+| Username | acceso_contabilidad | Result |
+|----------|---------------------|--------|
+| josue | true | ✅ Can login |
+| felipe | true | ✅ Can login |
+| samuel | false | ❌ Rejected |
+| marcelo | false | ❌ Rejected |
+
+### Next Step for User
+Run in Supabase SQL Editor:
+```sql
+UPDATE usuarios SET acceso_contabilidad = true WHERE username = 'josue';
+UPDATE usuarios SET acceso_contabilidad = true WHERE username = 'felipe';
+UPDATE usuarios SET acceso_contabilidad = false WHERE username = 'samuel';
+UPDATE usuarios SET acceso_contabilidad = false WHERE username = 'marcelo';
+```
+
+---
+
+## Component Status
+
+### New Components (✅ Done)
+| Component | Path | Integrated? |
+|-----------|------|-------------|
+| Button | `src/components/ui/button.tsx` | ✅ |
+| Input | `src/components/ui/input.tsx` | ✅ |
+| Card | `src/components/ui/card.tsx` | ✅ |
+| Badge | `src/components/ui/badge.tsx` | ✅ |
+| Sidebar | `src/components/layout/sidebar.tsx` | ✅ |
+| Header | `src/components/layout/header.tsx` | ✅ |
+| AppShell | `src/components/layout/app-shell.tsx` | ✅ |
+| DashboardCards | `src/components/dashboard/dashboard-cards.tsx` | ✅ |
+| TransactionTable | `src/components/tables/transaction-table.tsx` | ✅ |
+| ReportsTabs | `src/components/reports/reports-tabs.tsx` | ✅ |
+| AuthForm | `src/components/forms/auth-form.tsx` | ✅ |
+| TransaccionForm | `src/components/forms/transaccion-form.tsx` | ✅ |
+| CommandPalette | `src/components/command/command-palette.tsx` | ⚠️ Not integrated |
+| Skeleton | `src/components/ui/skeleton.tsx` | ✅ |
+
+### Old Components (in `src/components.old/`)
+Moved for backup. Most are still used by pages.
+
+---
 
 ## Key Decisions
 
@@ -69,27 +101,16 @@ These new components exist but are NOT yet used by pages:
 | Color scheme | Obsidian + Violet (#8b5cf6) |
 | Sidebar | Collapsible (240px → 64px) |
 | Motion | Framer Motion |
-| Command Palette | CMD+K with cmdk |
-| Empty States | Custom SVG minimalista |
-| Blocks | 01, 02, 03, 05 (settings ref) |
+| Auth | Shared `usuarios` table with Dashboard-Pipod |
 
-## Critical Paths
+---
 
-1. Phase 1 → Phase 2 → Phase 3 → Phase 8 → Phase 9 → Phase 10
-2. Phase 1 → Phase 4 (can parallel)
-3. Phase 1 → Phase 5 (can parallel after Phase 3)
+## Next Steps
 
-## Risks
+1. [ ] Update `acceso_contabilidad` flags in Supabase (user task)
+2. [ ] Integrate command palette into AppShell (optional)
+3. [ ] Update Engram with current state
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Breaking existing UI | High | Test each phase incrementally |
-| Bundle size increase | Medium | Tree-shake unused components |
-| Performance regression | Medium | Lighthouse check in verify |
+---
 
-## Next Recommended Action
-
-Start Phase 1: Setup & Foundation
-- Run `npx shadcn@latest init`
-- Configure CSS variables in globals.css
-- Install core components: button, input, card
+**Last updated:** 2025-04-20
