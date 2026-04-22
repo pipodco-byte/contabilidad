@@ -26,7 +26,7 @@ El proyecto está completamente funcional y desplegado en Vercel.
 ### 📊 Reportes y Análisis
 - Informe Mensual con selector de mes y envío de reportes
 - Informe Anual con evolución temporal completa
-- 5 tipos de gráficas: Barras, Área, Radar, Área con gradientes, Comparativa
+- 5 tipos de gráficas: Barras, Área, Donut, Línea Balance, Comparativa
 - Exportación a CSV y PDF
 
 ### 📈 Dashboard
@@ -64,8 +64,8 @@ El proyecto está completamente funcional y desplegado en Vercel.
 | `useGraficas.ts` | `userId, userRole` | `{datosPorCategoria, loading}` | Datos barras |
 | `useInformeAnual.ts` | `userId, userRole` | `{datosAnuales, loading}` | Datos anuales |
 | `useInformeMensual.ts` | `userId, userRole` | `{datosMensuales, mes, setMes, loading}` | Datos mensuales |
-| `useRadarData.ts` | `userId, userRole` | `{data, loading}` | Datos radar |
-| `useEvolucionMensual.ts` | `userId, userRole` | `{data, loading}` | Evolución mes a mes |
+| `useRadarData.ts` | `userId, userRole` | `{data, loading}` | ⚠️ Deprecado (no usado) |
+| `useEvolucionMensual.ts` | `userId, userRole` | `{data, loading}` | Evolución mes a mes (fix precisión) |
 | `useExportarExcel.ts` | - | `{exportarTransacciones}` | Export CSV |
 | `useExportarPDF.ts` | - | `{exportarTransaccionesPDF}` | Export PDF |
 | `useEnviarReporteMensual.ts` | - | `{enviarReporte, loading}` | Enviar reporte |
@@ -250,6 +250,29 @@ Dashboard ◄──────────────────────�
 ---
 
 ## 🔧 Próximas Mejoras (Roadmap Level 3)
+
+### ✅ Completado Recientemente
+- [x] Donut Chart (reemplaza Radar)
+- [x] Balance Line Chart con Break-Even
+- [x] Fix precisión useEvolucionMensual (Intl.NumberFormat)
+- [x] Eliminar Radar Chart confuso
+
+### Pendientes
+
+#### Pendiente: Limpieza
+- [ ] Eliminar `src/hooks/useRadarData.ts` (no usado)
+- [ ] Eliminar archivo `src/hooks/useRadarData.ts` después de verificar
+
+#### Pendiente: Metas/Hitos de Negocio
+- [ ] Definir modelo de datos para metas
+- [ ] Visualización de líneas de meta en gráficos
+- [ ] Tipos: Gasto planeado, Ingreso planeado, Meta de balance
+
+#### Pendiente: KPIs Condicionales (Burn Rate, Runway)
+- [ ] Activar solo si ≥3 meses de datos
+- [ ] Profit Margin % (siempre visible)
+- [ ] Burn Rate (condicional ≥3 meses)
+- [ ] Runway (condicional ≥3 meses)
 
 ### Prioridad Alta / Complejidad Baja
 - [ ] Tests unitarios para hooks críticos

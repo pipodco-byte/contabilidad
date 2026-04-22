@@ -51,8 +51,8 @@ export function useEvolucionMensual(userId: string, userRole: string = 'usuario'
 
         const mesData = MESES.map(mes => ({
           mes,
-          Ingresos: Math.round((mapa[mes].Ingresos / 1000000) * 10) / 10 || 0,
-          Egresos: Math.round((mapa[mes].Egresos / 1000000) * 10) / 10 || 0,
+          Ingresos: mapa[mes].Ingresos || 0,
+          Egresos: mapa[mes].Egresos || 0,
         }));
 
         setData(mesData);

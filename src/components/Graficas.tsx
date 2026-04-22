@@ -2,7 +2,6 @@
 
 import { useGraficas } from '@/hooks/useGraficas';
 import { useInformeAnual } from '@/hooks/useInformeAnual';
-import { useRadarData } from '@/hooks/useRadarData';
 import { useEvolucionMensual } from '@/hooks/useEvolucionMensual';
 import { useTema } from '@/hooks/useTema';
 import { ChartSkeleton } from '@/components/ui/skeleton';
@@ -17,11 +16,12 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  ReferenceLine,
 } from 'recharts';
 
 interface GraficasProps {
@@ -32,11 +32,10 @@ interface GraficasProps {
 export function Graficas({ userId, userRole }: GraficasProps) {
   const { datosPorCategoria, loading } = useGraficas(userId, userRole);
   const { datosAnuales, loading: loadingAnual } = useInformeAnual(userId, userRole);
-  const { data: datosRadar, loading: loadingRadar } = useRadarData(userId, userRole);
   const { data: evolucionMensual, loading: loadingEvolucion } = useEvolucionMensual(userId, userRole);
   const { tema } = useTema();
 
-  if (loading || loadingAnual || loadingRadar || loadingEvolucion) {
+  if (loading || loadingAnual || loadingEvolucion) {
     return (
       <div className="space-y-6">
         <ChartSkeleton />
@@ -64,7 +63,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
     color: isDark ? '#e4e4e7' : '#18181b',
   };
   const axisStroke = isDark ? '#52525b' : '#cbd5e1';
-  const labelColor = isDark ? '#a1a1aa' : '#3f3f46';
   const gridStroke = 'rgba(255,255,255,0.05)';
 
   const formatCurrency = (value: number) => {
@@ -126,18 +124,32 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
       <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
         <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
-          Análisis Radar (Millones COP)
+          Distribución de Egresos
         </h3>
         <ResponsiveContainer width="100%" height={400}>
-          <RadarChart data={datosRadar}>
-            <PolarGrid stroke={isDark ? '#475569' : '#cbd5e1'} />
-            <PolarAngleAxis dataKey="subject" tick={{ fontSize: 12, fill: labelColor }} />
-            <PolarRadiusAxis domain={[0, 'auto']} tick={{ fontSize: 10, fill: labelColor }} tickFormatter={(value) => `$${value}M`} />
-            <Radar name="Ingresos" dataKey="Ingresos" stroke="#10b981" fill="#10b981" fillOpacity={0.2} />
-            <Radar name="Egresos" dataKey="Egresos" stroke="#fb7185" fill="#fb7185" fillOpacity={0.2} />
+          <PieChart>
+            <Pie
+              data={datosPorCategoria.filter(d => d.egresos > 0)}
+              cx="50%"
+              cy="50%"
+              innerRadius={80}
+              outerRadius={140}
+              paddingAngle={2}
+              dataKey="egresos"
+              nameKey="categoria"
+            >
+              <Cell fill="#fb7185" />
+              <Cell fill="#f43f5e" />
+              <Cell fill="#e11d48" />
+              <Cell fill="#be123c" />
+              <Cell fill="#9f1239" />
+              <Cell fill="#881337" />
+              <Cell fill="#fbbf24" />
+              <Cell fill="#f59e0b" />
+            </Pie>
+            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
             <Legend />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => `$${(value as number).toFixed(1)}M`} />
-          </RadarChart>
+          </PieChart>
         </ResponsiveContainer>
       </div>
 
@@ -159,12 +171,47 @@ export function Graficas({ userId, userRole }: GraficasProps) {
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="mes" stroke={axisStroke} />
-            <YAxis stroke={axisStroke} tickFormatter={(value) => `$${value}M`} />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => `$${(value as number).toFixed(1)}M`} />
+            <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
+            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
             <Legend />
             <Area type="monotone" dataKey="Ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresos)" name="Ingresos" />
             <Area type="monotone" dataKey="Egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresos)" name="Egresos" />
           </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+          Balance Neto Mensual
+        </h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={mesesOrdenados} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+            <XAxis dataKey="mes" stroke={axisStroke} angle={-45} textAnchor="end" height={60} />
+            <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
+            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Legend />
+            <ReferenceLine
+              y={0}
+              stroke="#8b5cf6"
+              strokeDasharray="5 5"
+              label={{
+                value: 'Punto de equilibrio',
+                position: 'insideTopRight',
+                fill: '#8b5cf6',
+                fontSize: 12,
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="balance"
+              stroke="#8b5cf6"
+              strokeWidth={3}
+              dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
+              activeDot={{ r: 6 }}
+              name="Balance"
+            />
+          </LineChart>
         </ResponsiveContainer>
       </div>
 

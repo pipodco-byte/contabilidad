@@ -13,6 +13,22 @@ Si es tu primera vez, lee en este orden:
 
 ## 📄 DOCUMENTOS DISPONIBLES
 
+### 📊 Estado del Proyecto
+
+#### docs/ESTADO_PROYECTO.md ⭐ NUEVO
+**Propósito:** Tracking de completados y pendientes
+
+**Contiene:**
+- ✅ Completados (histórico)
+- ⏳ En progreso
+- 📋 Pendientes priorizados
+- 🗑️ Archivos para eliminar
+- 📁 SDD activos
+
+**Cuándo leerlo:** Para ver qué falta por hacer
+
+---
+
 ### 🎯 Comienza Aquí (Setup)
 
 #### 1. RESUMEN_SETUP.txt
@@ -79,7 +95,20 @@ Si es tu primera vez, lee en este orden:
 
 ### 📚 Documentación Técnica (SDD Level 2)
 
-#### 5. docs/FUNCIONALIDADES.md ⭐ NUEVO
+#### 5. docs/ESTADO_PROYECTO.md ⭐ NUEVO
+**Propósito:** Tracking de estado del proyecto
+
+**Contiene:**
+- ✅ Completados (histórico)
+- ⏳ En progreso
+- 📋 Pendientes priorizados
+- 🗑️ Archivos para eliminar
+
+**Cuándo leerlo:** Para ver qué falta por hacer
+
+---
+
+#### 6. docs/FUNCIONALIDADES.md ⭐ NUEVO
 **Propósito:** Documentación completa de todas las funcionalidades
 
 **Contiene:**
@@ -99,7 +128,7 @@ Si es tu primera vez, lee en este orden:
 
 ---
 
-#### 6. docs/ARCHITECTURE.md ⭐ NUEVO
+#### 7. docs/ARCHITECTURE.md ⭐ NUEVO
 **Propósito:** Documentación de arquitectura técnica
 
 **Contiene:**
@@ -390,6 +419,7 @@ Si es tu primera vez, lee en este orden:
 
 | Documento | Líneas | Propósito | Nivel |
 |-----------|--------|-----------|-------|
+| **NUEVO: docs/ESTADO_PROYECTO.md** | 150+ | Tracking pendientes | Estado |
 | **NUEVO: docs/FUNCIONALIDADES.md** | 800+ | Especificación completa | SDD L2 |
 | **NUEVO: docs/ARCHITECTURE.md** | 700+ | Arquitectura técnica | SDD L2 |
 | **ACTUALIZADO: PROYECTO_COMPLETADO.md** | 200+ | Estado del proyecto | Resumen |
@@ -514,6 +544,6 @@ Si tienes dudas:
 ---
 
 **Última actualización:** Abril 2025
-**Versión:** 2.0
-**Estado:** ✅ SDD Level 2 Completo
-**Documentación:** 3,000+ líneas | 17 archivos | 2 diagramas
+**Versión:** 2.1
+**Estado:** ✅ Producción + Gráficos v2.1
+**Documentación:** 3,150+ líneas | 18 archivos | 2 diagramas
