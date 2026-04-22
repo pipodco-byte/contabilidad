@@ -115,7 +115,7 @@ export default function Dashboard() {
 
         <Button
           onClick={() => setShowForm(true)}
-          className="bg-emerald-600 hover:bg-emerald-500 text-white"
+          className="bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
         >
           Nueva Transacción
         </Button>
