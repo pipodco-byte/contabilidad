@@ -21,6 +21,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationFirst,
+  PaginationLast,
 } from '@/components/ui/pagination';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { FilterSelectors } from '@/components/FilterSelectors';
@@ -120,7 +122,6 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
                 selectedMonth={selectedMonth}
                 onYearChange={setSelectedYear}
                 onMonthChange={setSelectedMonth}
-                onApply={() => {}}
                 onReset={() => {
                   setSelectedYear(new Date().getFullYear());
                   setSelectedMonth(new Date().getMonth() + 1);
@@ -185,9 +186,8 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
             <FilterSelectors
               selectedYear={selectedYear}
               selectedMonth={selectedMonth}
-onYearChange={setSelectedYear}
-                onMonthChange={setSelectedMonth}
-              onApply={() => {}}
+              onYearChange={setSelectedYear}
+              onMonthChange={setSelectedMonth}
               onReset={() => {
                 setSelectedYear(new Date().getFullYear());
                 setSelectedMonth(new Date().getMonth() + 1);
@@ -362,7 +362,7 @@ onYearChange={setSelectedYear}
         <Pagination className="justify-center">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious
+              <PaginationFirst
                 onClick={firstPage}
                 className={
                   currentPage === 1
@@ -407,7 +407,7 @@ onYearChange={setSelectedYear}
               />
             </PaginationItem>
             <PaginationItem>
-              <PaginationNext
+              <PaginationLast
                 onClick={lastPage}
                 className={
                   currentPage === totalPages

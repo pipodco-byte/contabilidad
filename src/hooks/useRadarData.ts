@@ -8,29 +8,8 @@ interface RadarData {
   fullMark: number;
 }
 
-const CATEGORIAS = [
-  'Venta Equipos Nuevos',
-  'Servicios Técnicos',
-  'Operación',
-  'Nómina',
-  'Venta Accesorios',
-  'Plan Retoma',
-  'Compra Equipos',
-  'Marketing',
-];
-
 const normalizar = (valor: number): number => {
   return Math.round((valor / 1000000) * 10) / 10;
-};
-
-const detectarOutliers = (valores: number[]): number[] => {
-  const valoresNoZero = valores.filter(v => v > 0);
-  if (valoresNoZero.length === 0) return valores;
-  
-  const promedio = valoresNoZero.reduce((a, b) => a + b, 0) / valoresNoZero.length;
-  const umbral = promedio * 10;
-  
-  return valores.map(v => (v > umbral ? promedio : v));
 };
 
 export function useRadarData(userId: string, userRole: string = 'usuario') {
@@ -48,7 +27,13 @@ export function useRadarData(userId: string, userRole: string = 'usuario') {
 
         const { data: transacciones } = await query;
 
-        const mapa = CATEGORIAS.reduce(
+        // B4 FIX: Dynamic categories from data
+        const categoriasUnicas = [...new Set(
+          transacciones?.map(t => t.categoria?.trim() || 'Otros') || []
+        )];
+
+        // B4 FIX: Build map only with actual categories
+        const mapa = categoriasUnicas.reduce(
           (acc, cat) => {
             acc[cat] = { Ingresos: 0, Egresos: 0 };
             return acc;
@@ -69,27 +54,25 @@ export function useRadarData(userId: string, userRole: string = 'usuario') {
           });
         }
 
-        // Detectar outliers
-        const todosValores = Object.values(mapa).flatMap(v => [v.Ingresos, v.Egresos]);
-        const valoresLimpios = detectarOutliers(todosValores);
-        let idx = 0;
-        Object.keys(mapa).forEach(cat => {
-          mapa[cat].Ingresos = valoresLimpios[idx++];
-          mapa[cat].Egresos = valoresLimpios[idx++];
-        });
+        // B3 FIX: Simple fullMark calculation (removed corrupted outlier detection)
+        const mapaValues = Object.values(mapa) as Array<{ Ingresos: number; Egresos: number }>;
+        const maxValor = Math.max(...mapaValues.flatMap(v => [v.Ingresos, v.Egresos]), 0);
+        const fullMark = Math.ceil(normalizar(maxValor) * 1.2) || 1;
 
-        // Calcular fullMark dinámico
-        const maxValor = Math.max(...Object.values(mapa).flatMap(v => [v.Ingresos, v.Egresos]));
-        const fullMark = Math.max(normalizar(maxValor) * 1.15, 1);
-
-        const radarData = CATEGORIAS.map(cat => ({
-          subject: cat,
-          Ingresos: normalizar(mapa[cat].Ingresos) || 0,
-          Egresos: normalizar(mapa[cat].Egresos) || 0,
-          fullMark,
-        }));
+        // B4 FIX: Only categories with data
+        const radarData = categoriasUnicas
+          .filter(cat => mapa[cat].Ingresos > 0 || mapa[cat].Egresos > 0)
+          .map(cat => ({
+            subject: cat,
+            Ingresos: normalizar(mapa[cat].Ingresos) || 0,
+            Egresos: normalizar(mapa[cat].Egresos) || 0,
+            fullMark,
+          }));
 
         setData(radarData);
+      } catch (error) {
+        console.error('Error loading radar data:', error);
+        setData([]);
       } finally {
         setLoading(false);
       }

@@ -186,18 +186,39 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           })}
 
           {/* Logout */}
-          <button
-            onClick={() => {
-              localStorage.removeItem('auth_user');
-              window.location.href = '/';
-            }}
-            className={cn(
-              "flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
-            )}
-          >
-            <LogOut className="h-5 w-5" />
-            {!collapsed && <span className="text-sm font-medium">Cerrar Sesión</span>}
-          </button>
+          {collapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem('auth_user');
+                    window.location.href = '/';
+                  }}
+                  className={cn(
+                    "flex items-center justify-center w-10 h-10 rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+                  )}
+                >
+                  <LogOut className="h-5 w-5" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Cerrar Sesión</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <button
+              onClick={() => {
+                localStorage.removeItem('auth_user');
+                window.location.href = '/';
+              }}
+              className={cn(
+                "flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+              )}
+            >
+              <LogOut className="h-5 w-5" />
+              <span className="text-sm font-medium">Cerrar Sesión</span>
+            </button>
+          )}
         </div>
 
         {/* Toggle Button */}

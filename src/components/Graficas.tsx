@@ -49,7 +49,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
   if (datosPorCategoria.length === 0) {
     return (
-      <div className="bg-zinc-950/80 backdrop-blur-md border border-white/5 rounded-xl p-8 text-center text-zinc-400">
+      <div className="bg-zinc-950/80 backdrop-blur-md border border-white/5 rounded-xl p-8 text-center text-zinc-300 font-medium">
         No hay datos para mostrar gráficas
       </div>
     );

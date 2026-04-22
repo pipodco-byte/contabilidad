@@ -1,13 +1,12 @@
 'use client';
 
-import { RotateCcw, Check } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 
 interface FilterSelectorsProps {
   selectedYear: number;
   selectedMonth: number;
   onYearChange: (year: number) => void;
   onMonthChange: (month: number) => void;
-  onApply: () => void;
   onReset: () => void;
 }
 
@@ -26,7 +25,7 @@ const MONTHS = [
   { num: 12, label: 'Diciembre' },
 ];
 
-export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onMonthChange, onApply, onReset }: FilterSelectorsProps) {
+export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onMonthChange, onReset }: FilterSelectorsProps) {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 2023 }, (_, i) => 2024 + i);
 
@@ -57,17 +56,9 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       </select>
 
       <button
-        onClick={onApply}
-        className="p-2 text-emerald-500 hover:scale-110 active:scale-95 transition-all duration-200"
-        title="Aplicar filtros"
-      >
-        <Check className="w-4 h-4" />
-      </button>
-
-      <button
         onClick={onReset}
         className="p-2 text-zinc-500 hover:text-zinc-200 hover:bg-white/5 rounded-lg transition-colors"
-        title="Deshacer filtros"
+        title="Restablecer filtros"
       >
         <RotateCcw className="w-4 h-4" />
       </button>
