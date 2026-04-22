@@ -43,17 +43,17 @@ const navItems = [
   },
   {
     title: "Transacciones",
-    href: "/dashboard#transacciones",
+    href: "/dashboard/transacciones",
     icon: Receipt,
   },
   {
     title: "Gráficas",
-    href: "/dashboard#graficas",
+    href: "/dashboard/graficas",
     icon: BarChart3,
   },
   {
     title: "Informes",
-    href: "/dashboard#informes",
+    href: "/dashboard/informes",
     icon: FileText,
   },
 ]
@@ -61,7 +61,7 @@ const navItems = [
 const bottomNavItems = [
   {
     title: "Configuración",
-    href: "/dashboard#config",
+    href: "/dashboard/config",
     icon: Settings,
   },
 ]
@@ -95,7 +95,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {/* Navigation */}
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = item.href === '/dashboard'
+              ? pathname === '/dashboard'
+              : pathname.startsWith(item.href)
 
             if (collapsed) {
               return (
@@ -141,7 +143,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {/* Bottom Navigation */}
         <div className="p-3 border-t space-y-1">
           {bottomNavItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = pathname.startsWith(item.href)
 
             if (collapsed) {
               return (
