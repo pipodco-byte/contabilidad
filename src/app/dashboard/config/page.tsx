@@ -14,8 +14,6 @@ export default function ConfigPage() {
 
   if (!user) return null
 
-  const isAdmin = user.rol === 'admin'
-
   const handleGemaImport = async () => {
     setGemaLoading(true)
 
@@ -58,14 +56,6 @@ export default function ConfigPage() {
 
   return (
     <div className="space-y-6">
-      {isAdmin && (
-        <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl">
-          <p className="text-sm text-primary">
-            ✨ Acceso de administrador activado
-          </p>
-        </div>
-      )}
-
       {/* Gema Import */}
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm p-6">
         <h2 className="text-xl font-semibold text-zinc-50 tracking-tight mb-4 flex items-center gap-2">
@@ -75,7 +65,7 @@ export default function ConfigPage() {
 
         <Button
           onClick={() => setShowGema(!showGema)}
-          className="mb-4 bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
+          className="mb-4 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-[0_0_15px_-5px_rgba(99,102,241,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
         >
           <Gem className="mr-2 h-4 w-4" />
           Gema
@@ -94,7 +84,7 @@ export default function ConfigPage() {
               <Button
                 onClick={handleGemaImport}
                 disabled={gemaLoading}
-                className="bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
+                className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-[0_0_15px_-5px_rgba(99,102,241,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
               >
                 {gemaLoading ? 'Importando...' : 'Enviar'}
               </Button>
