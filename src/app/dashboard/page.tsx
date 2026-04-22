@@ -5,14 +5,17 @@ import { useResumen } from '@/hooks/useResumen'
 import { DashboardCards } from '@/components/dashboard/dashboard-cards'
 import { TransaccionForm } from '@/components/forms/transaccion-form'
 import { useState } from 'react'
-import Link from 'next/link'
-import { Receipt, BarChart3, FileText, Settings, Plus } from 'lucide-react'
+import { Gem, FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
   const { resumen } = useResumen(user?.id || '', user?.rol || 'usuario')
   const [showForm, setShowForm] = useState(false)
+  const [showGema, setShowGema] = useState(false)
+  const [gemaInput, setGemaInput] = useState('')
+  const [gemaLoading, setGemaLoading] = useState(false)
+  const [gemaMessage, setGemaMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
   if (loading || !user) {
     return (
@@ -22,8 +25,6 @@ export default function Dashboard() {
     )
   }
 
-  const isAdmin = user.rol === 'admin'
-
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -32,17 +33,76 @@ export default function Dashboard() {
     }).format(value)
   }
 
+  const handleGemaImport = async () => {
+    setGemaLoading(true)
+
+    try {
+      if (!gemaInput.trim()) {
+        setGemaMessage({ type: 'error', text: 'Por favor pega datos de Gema' })
+        setGemaLoading(false)
+        return
+      }
+
+      const lines = gemaInput.trim().split('\n').filter((l) => l.trim())
+
+      const transacciones = lines.map((line) => {
+        const parts = line.split(';')
+        const [fecha, descripcion, categoria, sub_categoria, monto, tipo, medio_pago, estado_iva, comentarios] = parts
+
+        let formattedFecha = fecha?.trim() || ''
+
+        if (formattedFecha.includes('/')) {
+          const [day, month, year] = formattedFecha.split('/')
+          formattedFecha = `${year}-${month}-${day}`
+        }
+
+        return {
+          fecha: formattedFecha,
+          descripcion: descripcion?.trim() || '',
+          categoria: categoria?.trim() || '',
+          sub_categoria: sub_categoria?.trim() || '',
+          monto: parseFloat(monto) || 0,
+          tipo: tipo?.trim() || '',
+          medio_pago: medio_pago?.trim() || '',
+          estado_iva: estado_iva?.trim() || '',
+          comentarios: comentarios?.trim() || '',
+        }
+      })
+
+      const bodyString = JSON.stringify({ transacciones, userId: user.id })
+
+      const controller = new AbortController()
+      const id = setTimeout(() => controller.abort(), 10000)
+
+      const response = await fetch('/api/gema/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: bodyString,
+        signal: controller.signal,
+      })
+
+      clearTimeout(id)
+
+      const data = await response.json()
+
+      if (!response.ok) throw new Error(data.error || 'Error al importar')
+
+      setGemaMessage({ type: 'success', text: `✓ ${data.count} transacciones importadas` })
+      setGemaInput('')
+      setShowGema(false)
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        setGemaMessage({ type: 'error', text: 'Timeout: El servidor tardó demasiado' })
+      } else {
+        setGemaMessage({ type: 'error', text: err instanceof Error ? err.message : 'Error al importar' })
+      }
+    } finally {
+      setGemaLoading(false)
+    }
+  }
+
   return (
     <div className="space-y-8">
-      {/* Admin Badge */}
-      {isAdmin && (
-        <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl">
-          <p className="text-sm text-primary">
-            ✨ Acceso de administrador activado
-          </p>
-        </div>
-      )}
-
       {/* KPI Cards */}
       <DashboardCards
         totalIngresos={resumen.totalIngresos}
@@ -51,61 +111,60 @@ export default function Dashboard() {
         formatCurrency={formatCurrency}
       />
 
-      {/* Quick Actions */}
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-zinc-100">Acciones Rápidas</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link href="/dashboard/transacciones">
-            <Button variant="outline" className="w-full h-20 flex-col gap-2 bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50">
-              <Receipt className="h-6 w-6 text-violet-400" />
-              <span className="text-sm">Transacciones</span>
-            </Button>
-          </Link>
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-3">
+        <Button onClick={() => setShowGema(!showGema)}>
+          <Gem className="mr-2 h-4 w-4" />
+          Gema
+        </Button>
 
-          <Link href="/dashboard/graficas">
-            <Button variant="outline" className="w-full h-20 flex-col gap-2 bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50">
-              <BarChart3 className="h-6 w-6 text-emerald-400" />
-              <span className="text-sm">Gráficas</span>
-            </Button>
-          </Link>
+        <Button onClick={() => setShowForm(true)}>
+          Nueva Transacción
+        </Button>
 
-          <Link href="/dashboard/informes">
-            <Button variant="outline" className="w-full h-20 flex-col gap-2 bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50">
-              <FileText className="h-6 w-6 text-rose-400" />
-              <span className="text-sm">Informes</span>
-            </Button>
-          </Link>
+        <Button variant="outline" onClick={() => window.location.href = '/dashboard/informes'}>
+          <FileText className="mr-2 h-4 w-4" />
+          Informe Anual
+        </Button>
 
-          <Link href="/dashboard/config">
-            <Button variant="outline" className="w-full h-20 flex-col gap-2 bg-zinc-900/50 border-zinc-800/50 hover:bg-zinc-800/50 hover:border-zinc-700/50">
-              <Settings className="h-6 w-6 text-zinc-400" />
-              <span className="text-sm">Config</span>
-            </Button>
-          </Link>
-        </div>
+        <Button variant="outline" onClick={() => window.location.href = '/dashboard/informes'}>
+          <FileText className="mr-2 h-4 w-4" />
+          Informe Mensual
+        </Button>
       </div>
+
+      {/* Gema Import */}
+      {showGema && (
+        <div className="flex gap-3 p-4 border rounded-xl">
+          <textarea
+            value={gemaInput}
+            onChange={(e) => setGemaInput(e.target.value)}
+            placeholder="Pega aquí el output de Gema de Contabilidad..."
+            className="flex-1 px-4 py-3 border rounded-lg resize-none bg-zinc-900 border-zinc-700 text-zinc-100"
+            rows={4}
+          />
+          <div className="flex flex-col gap-2">
+            <Button onClick={handleGemaImport} disabled={gemaLoading}>
+              {gemaLoading ? 'Importando...' : 'Enviar'}
+            </Button>
+            {gemaMessage && (
+              <p className={`text-sm ${gemaMessage.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                {gemaMessage.text}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Nueva Transacción Form */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-zinc-100">Nueva Transacción</h2>
-          {!showForm && (
-            <Button onClick={() => setShowForm(true)} size="sm" className="bg-emerald-600 hover:bg-emerald-500">
-              <Plus className="h-4 w-4 mr-2" />
-              Nueva
-            </Button>
-          )}
-        </div>
-
-        {showForm && (
-          <TransaccionForm
-            userId={user.id}
-            onSuccess={() => {
-              setShowForm(false)
-            }}
-          />
-        )}
-      </div>
+      {showForm && (
+        <TransaccionForm
+          userId={user.id}
+          onSuccess={() => {
+            setShowForm(false)
+          }}
+        />
+      )}
     </div>
   )
 }
