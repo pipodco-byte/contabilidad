@@ -103,22 +103,20 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
-      {/* KPI Cards */}
-      <DashboardCards
-        totalIngresos={resumen.totalIngresos}
-        totalEgresos={resumen.totalEgresos}
-        balance={resumen.balance}
-        formatCurrency={formatCurrency}
-      />
-
-      {/* Action Buttons */}
+      {/* Action Buttons - ARRIBA DE KPI CARDS */}
       <div className="flex flex-wrap gap-3">
-        <Button onClick={() => setShowGema(!showGema)}>
+        <Button
+          onClick={() => setShowGema(!showGema)}
+          className="bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
+        >
           <Gem className="mr-2 h-4 w-4" />
           Gema
         </Button>
 
-        <Button onClick={() => setShowForm(true)}>
+        <Button
+          onClick={() => setShowForm(true)}
+          className="bg-emerald-600 hover:bg-emerald-500 text-white"
+        >
           Nueva Transacción
         </Button>
 
@@ -133,6 +131,14 @@ export default function Dashboard() {
         </Button>
       </div>
 
+      {/* KPI Cards */}
+      <DashboardCards
+        totalIngresos={resumen.totalIngresos}
+        totalEgresos={resumen.totalEgresos}
+        balance={resumen.balance}
+        formatCurrency={formatCurrency}
+      />
+
       {/* Gema Import */}
       {showGema && (
         <div className="flex gap-3 p-4 border rounded-xl">
@@ -144,7 +150,11 @@ export default function Dashboard() {
             rows={4}
           />
           <div className="flex flex-col gap-2">
-            <Button onClick={handleGemaImport} disabled={gemaLoading}>
+            <Button
+              onClick={handleGemaImport}
+              disabled={gemaLoading}
+              className="bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-5px_rgba(139,92,246,0.3)] border-t border-white/20 active:scale-95 transition-all duration-200"
+            >
               {gemaLoading ? 'Importando...' : 'Enviar'}
             </Button>
             {gemaMessage && (

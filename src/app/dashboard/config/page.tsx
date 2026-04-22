@@ -14,8 +14,6 @@ export default function ConfigPage() {
 
   if (!user) return null
 
-  const isAdmin = user.rol === 'admin'
-
   const handleGemaImport = async () => {
     setGemaLoading(true)
 
@@ -58,14 +56,6 @@ export default function ConfigPage() {
 
   return (
     <div className="space-y-6">
-      {isAdmin && (
-        <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl">
-          <p className="text-sm text-primary">
-            ✨ Acceso de administrador activado
-          </p>
-        </div>
-      )}
-
       {/* Gema Import */}
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm p-6">
         <h2 className="text-xl font-semibold text-zinc-50 tracking-tight mb-4 flex items-center gap-2">
