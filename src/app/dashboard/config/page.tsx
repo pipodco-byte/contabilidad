@@ -4,13 +4,13 @@ import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
 import { Gem } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function ConfigPage() {
   const { user } = useAuth()
   const [showGema, setShowGema] = useState(false)
   const [gemaInput, setGemaInput] = useState('')
   const [gemaLoading, setGemaLoading] = useState(false)
-  const [gemaMessage, setGemaMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
   if (!user) return null
 
@@ -19,7 +19,7 @@ export default function ConfigPage() {
 
     try {
       if (!gemaInput.trim()) {
-        setGemaMessage({ type: 'error', text: 'Por favor pega datos de Gema' })
+        toast.error('Por favor pega datos de Gema')
         setGemaLoading(false)
         return
       }
@@ -40,14 +40,14 @@ export default function ConfigPage() {
 
       if (!response.ok) throw new Error(data.error || 'Error al importar')
 
-      setGemaMessage({ type: 'success', text: `✓ ${data.count} transacciones importadas` })
+      toast.success(`${data.count} transacciones importadas`)
       setGemaInput('')
       setTimeout(() => setShowGema(false), 2000)
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
-        setGemaMessage({ type: 'error', text: 'Timeout: El servidor tardó demasiado' })
+        toast.error('Timeout: El servidor tardó demasiado')
       } else {
-        setGemaMessage({ type: 'error', text: err instanceof Error ? err.message : 'Error al importar' })
+        toast.error(err instanceof Error ? err.message : 'Error al importar')
       }
     } finally {
       setGemaLoading(false)
@@ -88,11 +88,6 @@ export default function ConfigPage() {
               >
                 {gemaLoading ? 'Importando...' : 'Enviar'}
               </Button>
-              {gemaMessage && (
-                <p className={`text-sm ${gemaMessage.type === 'success' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                  {gemaMessage.text}
-                </p>
-              )}
             </div>
           </div>
         )}

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTransacciones } from '@/hooks/useTransacciones';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -68,6 +69,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
     });
 
     if (success) {
+      toast.success('Transacción creada exitosamente');
       setDescripcion('');
       setMonto('');
       setCantidad('');
@@ -75,6 +77,10 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
       onSuccess?.();
     }
   };
+
+  if (error) {
+    toast.error(error);
+  }
 
   const categoriaObj = CATEGORIAS[tipo];
   const subcategorias: string[] = categoriaObj[categoria as keyof typeof categoriaObj] || [];
@@ -262,12 +268,6 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
           className="w-full rounded-md border border-zinc-800/50 bg-zinc-900/50 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 focus-visible:border-violet-500/50 resize-none"
         />
       </div>
-
-      {error && (
-        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-          <p className="text-red-400 text-sm">{error}</p>
-        </div>
-      )}
 
       <Button
         type="submit"

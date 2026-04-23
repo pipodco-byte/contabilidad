@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { usePaginatedTransactions } from '@/hooks/usePaginatedTransactions';
 import { useExportarExcel } from '@/hooks/useExportarExcel';
 import { useExportarPDF } from '@/hooks/useExportarPDF';
+import { Transaccion } from '@/hooks/usePaginatedTransactions';
 import {
   Table,
   TableBody,
@@ -33,26 +33,42 @@ import { Trash2, Edit2, Download, FileText } from 'lucide-react';
 interface TransactionTableProps {
   userId: string;
   userRole: string;
+  transacciones: Transaccion[];
+  loading: boolean;
+  selectedYear: number;
+  selectedMonth: number;
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+  setSelectedYear: (year: number) => void;
+  setSelectedMonth: (month: number) => void;
+  nextPage: () => void;
+  prevPage: () => void;
+  goToPage: (page: number) => void;
+  firstPage: () => void;
+  lastPage: () => void;
+  searchQuery?: string;
 }
 
-export function TransactionTable({ userId, userRole }: TransactionTableProps) {
-  const {
-    transacciones,
-    loading,
-    selectedYear,
-    selectedMonth,
-    currentPage,
-    totalPages,
-    totalCount,
-    setSelectedYear,
-    setSelectedMonth,
-    nextPage,
-    prevPage,
-    goToPage,
-    firstPage,
-    lastPage,
-  } = usePaginatedTransactions(userId, userRole);
-
+export function TransactionTable({
+  userId,
+  userRole,
+  transacciones,
+  loading,
+  selectedYear,
+  selectedMonth,
+  currentPage,
+  totalPages,
+  totalCount,
+  setSelectedYear,
+  setSelectedMonth,
+  nextPage,
+  prevPage,
+  goToPage,
+  firstPage,
+  lastPage,
+  searchQuery,
+}: TransactionTableProps) {
   const { exportarTransacciones } = useExportarExcel();
   const { exportarTransaccionesPDF } = useExportarPDF();
   const [filtroTipo, setFiltroTipo] = useState<'Todos' | 'Ingreso' | 'Egreso'>('Todos');
@@ -89,6 +105,7 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
   }
 
   if (transaccionesFiltradas.length === 0) {
+    const isSearching = searchQuery && searchQuery.length > 0;
     return (
       <div className="space-y-6">
         <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
@@ -148,8 +165,8 @@ export function TransactionTable({ userId, userRole }: TransactionTableProps) {
           </div>
         </div>
         <EmptyState
-          title="Sin transacciones aún"
-          description="Comienza a registrar tus ingresos y egresos para ver tu panorama financiero completo."
+          title={isSearching ? "Sin resultados" : "Sin transacciones aún"}
+          description={isSearching ? `No se encontraron transacciones para "${searchQuery}"` : "Comienza a registrar tus ingresos y egresos para ver tu panorama financiero completo."}
         />
       </div>
     );

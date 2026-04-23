@@ -1,17 +1,45 @@
 'use client'
 
 import { useAuth } from '@/hooks/useAuth'
+import { usePaginatedTransactions } from '@/hooks/usePaginatedTransactions'
 import { TransactionTable } from '@/components/tables/transaction-table'
 import { TransaccionForm } from '@/components/forms/transaccion-form'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Search, Plus } from 'lucide-react'
 
 export default function TransaccionesPage() {
   const { user } = useAuth()
   const [showForm, setShowForm] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchInput.trim())
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchInput])
 
   if (!user) return null
+
+  const {
+    transacciones,
+    loading,
+    selectedYear,
+    selectedMonth,
+    currentPage,
+    totalPages,
+    totalCount,
+    setSelectedYear,
+    setSelectedMonth,
+    nextPage,
+    prevPage,
+    goToPage,
+    firstPage,
+    lastPage,
+  } = usePaginatedTransactions(user.id, user.rol, debouncedQuery)
 
   return (
     <div className="space-y-6">
@@ -34,8 +62,38 @@ export default function TransaccionesPage() {
         />
       )}
 
+      {/* Search Input */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+        <Input
+          type="text"
+          placeholder="Buscar por descripción..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          className="pl-10 bg-zinc-900/50 border-zinc-800/50 text-zinc-100 placeholder:text-zinc-500 focus:border-indigo-500/50 focus:ring-indigo-500/20"
+        />
+      </div>
+
       {/* Table */}
-      <TransactionTable userId={user.id} userRole={user.rol} />
+      <TransactionTable
+        userId={user.id}
+        userRole={user.rol}
+        transacciones={transacciones}
+        loading={loading}
+        selectedYear={selectedYear}
+        selectedMonth={selectedMonth}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalCount={totalCount}
+        setSelectedYear={setSelectedYear}
+        setSelectedMonth={setSelectedMonth}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        goToPage={goToPage}
+        firstPage={firstPage}
+        lastPage={lastPage}
+        searchQuery={debouncedQuery}
+      />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Gem } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 export function AuthForm() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,7 @@ export function AuthForm() {
       await signIn(email, password);
     } catch (err: any) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }

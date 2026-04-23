@@ -17,7 +17,7 @@ export interface Transaccion {
 
 const ITEMS_PER_PAGE = 20;
 
-export function usePaginatedTransactions(userId: string, userRole: string) {
+export function usePaginatedTransactions(userId: string, userRole: string, searchQuery?: string) {
   const [transacciones, setTransacciones] = useState<Transaccion[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
@@ -43,6 +43,10 @@ export function usePaginatedTransactions(userId: string, userRole: string) {
           query = query.eq('user_id', userId);
         }
 
+        if (searchQuery && searchQuery.trim()) {
+          query = query.ilike('descripcion', `%${searchQuery.trim()}%`);
+        }
+
         const offset = (currentPage - 1) * ITEMS_PER_PAGE;
         const { data, count, error } = await query.range(offset, offset + ITEMS_PER_PAGE - 1);
 
@@ -59,7 +63,7 @@ export function usePaginatedTransactions(userId: string, userRole: string) {
     };
 
     fetchTransactions();
-  }, [userId, userRole, selectedYear, selectedMonth, currentPage]);
+  }, [userId, userRole, selectedYear, selectedMonth, currentPage, searchQuery]);
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
