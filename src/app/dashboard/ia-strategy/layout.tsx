@@ -3,25 +3,22 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/layout/sidebar'
 import { Header } from '@/components/layout/header'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Toaster } from '@/components/ui/sonner'
-import { AssistantFAB } from '@/components/assistant/AssistantFAB'
-import { AssistantSheet } from '@/components/assistant/AssistantSheet'
+import { StrategyPanel } from '@/components/strategy'
 
-export default function DashboardLayout({
+export default function IAStrategyLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const { user, loading } = useAuth()
   const router = useRouter()
-  const pathname = usePathname()
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -50,10 +47,10 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar - Always collapsed in IA Strategy */}
       <div className="hidden lg:block">
         <Sidebar
-          collapsed={sidebarCollapsed || isAssistantOpen}
+          collapsed={true}
           onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
       </div>
@@ -61,10 +58,7 @@ export default function DashboardLayout({
       {/* Mobile Sidebar (Sheet) */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="p-0 w-64">
-          <Sidebar
-            collapsed={false}
-            onToggle={() => setMobileOpen(false)}
-          />
+          <Sidebar collapsed={false} onToggle={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>
 
@@ -77,19 +71,8 @@ export default function DashboardLayout({
         <Toaster richColors />
       </div>
 
-      {/* Assistant FAB - Solo en /dashboard */}
-      {pathname === '/dashboard' && (
-        <AssistantFAB
-          onClick={() => setIsAssistantOpen(true)}
-          isActive={isAssistantOpen}
-        />
-      )}
-
-      {/* Assistant Sheet */}
-      <AssistantSheet
-        isOpen={isAssistantOpen}
-        onClose={() => setIsAssistantOpen(false)}
-      />
+      {/* Strategy Panel - Always visible in IA Strategy */}
+      <StrategyPanel onClose={() => router.push('/dashboard')} />
     </div>
   )
 }

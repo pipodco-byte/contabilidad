@@ -12,7 +12,7 @@ import {
   Settings,
   ChevronLeft,
   LogOut,
-  Bot,
+  Sparkles,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -27,8 +27,6 @@ import {
 interface SidebarProps {
   collapsed: boolean
   onToggle: () => void
-  onStrategyClick?: () => void
-  isStrategyActive?: boolean
 }
 
 const springTransition = {
@@ -50,6 +48,11 @@ const navItems = [
     icon: Receipt,
   },
   {
+    title: "IA Strategy",
+    href: "/dashboard/ia-strategy",
+    icon: Sparkles,
+  },
+  {
     title: "Gráficas",
     href: "/dashboard/graficas",
     icon: BarChart3,
@@ -69,7 +72,7 @@ const bottomNavItems = [
   },
 ]
 
-export function Sidebar({ collapsed, onToggle, onStrategyClick, isStrategyActive }: SidebarProps) {
+export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname()
   const prefersReducedMotion = useReducedMotion()
 
@@ -142,41 +145,7 @@ export function Sidebar({ collapsed, onToggle, onStrategyClick, isStrategyActive
             )
           })}
 
-          {/* IA Strategy Button */}
-          {collapsed ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={onStrategyClick}
-                  className={cn(
-                    "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
-                    isStrategyActive
-                      ? "bg-accent text-accent-foreground"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  )}
-                >
-                  <Bot className="h-5 w-5" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>IA Strategy</p>
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <button
-              onClick={onStrategyClick}
-              className={cn(
-                "flex items-center gap-3 w-full px-3 py-2 rounded-lg transition-colors",
-                isStrategyActive
-                  ? "bg-accent text-accent-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-              )}
-            >
-              <Bot className="h-5 w-5" />
-              <span className="text-sm font-medium">IA Strategy</span>
-            </button>
-          )}
-        </nav>
+          </nav>
 
         {/* Bottom Navigation */}
         <div className="p-3 border-t space-y-1">

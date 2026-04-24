@@ -12,6 +12,7 @@ import {
 } from '@/lib/strategy-types';
 import { calculateMetrics } from '@/lib/strategy-calculations';
 import { Transaccion } from '@/types';
+import { supabase } from '@/lib/supabase';
 
 const STRATEGY_STORAGE_KEY = 'pipod_strategy';
 const MAX_CHAT_MESSAGES = 40;
@@ -86,11 +87,18 @@ export function useStrategyData(): UseStrategyDataReturn {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const response = await fetch('/api/transacciones?limit=1000');
-        if (response.ok) {
-          const data = await response.json();
-          setTransactions(Array.isArray(data) ? data : []);
-        }
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from('transacciones')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('fecha', { ascending: false })
+          .limit(1000);
+
+        if (error) throw error;
+        setTransactions(data || []);
       } catch (err) {
         console.error('[StrategyData] Fetch transactions error:', err);
       }
