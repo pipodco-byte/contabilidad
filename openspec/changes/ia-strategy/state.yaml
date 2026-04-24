@@ -1,0 +1,58 @@
+state: apply
+created: 2026-04-24
+last_modified: 2026-04-24
+
+artifacts:
+  spec:
+    - spec/README.md
+    - spec/requirements.md
+    - spec/scenarios.md
+  design:
+    - design/README.md
+  tasks:
+    - tasks/README.md
+
+current_phase: apply
+
+completed_tasks:
+  - T1: Schema y tipos TypeScript
+  - T2: Hook useStrategyData
+  - T3: Cálculos de Métricas
+  - T4: StrategySidebarButton
+  - T5: StrategyPanel Layout
+  - T6: MetricsGrid + MetricCard
+  - T7: RunwayBadge
+  - T8: TrendChart
+  - T9: GoalsList + GoalCard
+  - T10: GoalForm Modal
+  - T11: StrategySettingsModal
+  - T12: Strategy Advisor Prompt
+  - T13: API Route /api/strategy/chat
+  - T14: StrategyChat Component
+  - T16: Integration en Sidebar y Dashboard
+  - T17: API Route /api/strategy/calculate (optional)
+  - T18: Build & TypeCheck
+
+pending_tasks:
+  - T15: Prompt Hardening (Security tests) - requires manual testing
+
+dependencies: []
+
+open_questions:
+  - key: business-context
+    question: Información de negocio de Felipe (costos, cash, metas)
+    status: pending
+    response_from: Felipe
+  - key: opencode-api
+    question: API key de OpenCode para minimax 2.7/2
+    status: pending
+    response_from: Felipe
+
+notes: |
+  Regla fundamental: El IA del Dashboard es SOLO para entradas de datos.
+  Copilot = transacciones. IA Strategy = análisis estratégico.
+
+  Build PASSED - 16/18 tasks completed
+  T15 (security tests) requiere testing manual con DeepSeek
+
+  ⏳ Pendiente información de negocio de Felipe para registrar en specs.

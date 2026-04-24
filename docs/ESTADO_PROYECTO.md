@@ -1,7 +1,7 @@
 # 📋 Estado del Proyecto — Pipod Contabilidad
 
-**Última actualización:** Abril 2025
-**Versión:** 2.2
+**Última actualización:** Abril 2026
+**Versión:** 3.0
 
 ---
 
@@ -39,6 +39,19 @@
 - [x] F2: Validación de imports (Zod schema en API Gema)
 - [x] F5: Toast notifications (Sonner reemplazó state messages)
 
+### Copilot V2 (v3.0) — Abril 2026
+- [x] G-IA1: FAB bottom-right (no Command Bar - cambió el diseño)
+- [x] G-IA2: Integración DeepSeek (cambió de Gemini)
+- [x] G-IA3: Parser texto → 9 datos
+- [x] G-IA4: Regla Bold (5% auto-egreso)
+- [x] G-IA5: Output CSV sin headers (formato compatible Gema)
+- [x] G-IA6: Voz → Texto (Web Speech API)
+- [x] V2-1: Image upload (screenshot bancarios)
+- [x] V2-2: localStorage persistence (40 mensajes)
+- [x] V2-3: Delete chat con confirmación
+- [x] V2-4: Auto-reset after INSERT
+- [x] react-markdown para renderizar formato
+
 ---
 
 ## 🔲 En Progreso
@@ -49,33 +62,11 @@ _Nothing currently in progress_
 
 ## ⏳ Pendientes
 
-### IA — Gema (Asistente Contable)
-| Item | Descripción | Prioridad | Status |
-|------|-------------|-----------|--------|
-| G-IA1 | Command Bar UI (CMD+K con tab Gema) | Alta | ⏳ Mañana |
-| G-IA2 | Integración Gemini 1.5 Flash | Alta | ⏳ Mañana |
-| G-IA3 | Parser texto → 9 datos | Alta | ⏳ Mañana |
-| G-IA4 | Regla Bold (5% auto-egreso) | Alta | ⏳ Mañana |
-| G-IA5 | Output CSV sin headers | Alta | ⏳ Mañana |
-| G-IA6 | Voz → Texto (Web Speech API) | Media | V2 |
-
-**Prompt de Gema:**
-```
-ROL: Gema de Contabilidad — asistente de "Amabilidad Ejecutiva"
-REGLAS:
-- 9 Datos obligatorios (fecha, desc, categoria, subcat, monto, tipo, medio_pago, estado_iva, comentarios)
-- Inferencia inteligente (deduce categoria si falta)
-- Doble asiento Bold: si medio="Bold" → genera egreso 5% automático
-- Formato COP sin decimales
-- Output CSV sin headers (punto y coma)
-- Alerta 6:30 PM, bloqueo día siguiente sin cierre
-```
-
-### Limpieza Técnica
+### Funcionalidades Core
 | Item | Descripción | Prioridad |
 |------|-------------|-----------|
-| L1 | Eliminar `src/hooks/useRadarData.ts` | Baja |
-| L2 | Verificar botones indigo en todos los lugares | Media |
+| F3 | Edición inline transacciones | Alta |
+| F4 | Batch actions (select + delete) | Alta |
 
 ### Gráficos — Fase 2
 | Item | Descripción | Prioridad | Condición |
@@ -85,11 +76,11 @@ REGLAS:
 | G5 | Burn Rate | Media | ≥3 meses datos |
 | G6 | Runway | Media | ≥3 meses datos |
 
-### Funcionalidades Core (Remaining)
+### Limpieza Técnica
 | Item | Descripción | Prioridad |
 |------|-------------|-----------|
-| F3 | Edición inline transacciones | Alta |
-| F4 | Batch actions (select + delete) | Alta |
+| L1 | Eliminar `src/hooks/useRadarData.ts` | Baja |
+| L2 | Verificar botones indigo en todos los lugares | Media |
 
 ### Testing
 | Item | Descripción | Prioridad |
@@ -97,6 +88,13 @@ REGLAS:
 | T1 | Tests unitarios hooks | Alta |
 | T2 | Tests de integración API | Media |
 | T3 | Setup Vitest | Media |
+
+### AI / Copilot — Futuras Mejoras
+| Item | Descripción | Prioridad |
+|------|-------------|-----------|
+| AF1 | Historial persistente entre dispositivos (Supabase) | Media |
+| AF2 | Photo OCR más robusto | Media |
+| AF3 | Analytics más avanzados (por categoría, tendencias) | Media |
 
 ---
 
@@ -107,19 +105,19 @@ src/hooks/
 ├── useAuth.ts                    ✅
 ├── useTema.ts                    ✅
 ├── useTransacciones.ts           ✅
-├── usePaginatedTransactions.ts   ✅ (+ searchQuery param)
-├── useResumen.ts                  ✅
-├── useGraficas.ts                 ✅ (Bar + Donut)
-├── useInformeAnual.ts             ✅ (Area + Balance Line)
-├── useInformeMensual.ts           ✅
-├── useEvolucionMensual.ts        ✅ (fix precisión)
-├── useExportarExcel.ts            ✅
-├── useExportarPDF.ts              ✅
-├── useEnviarReporteMensual.ts     ✅
-├── useEditarTransaccion.ts        ✅
-├── useListaTransacciones.ts       ✅
-├── useGemaAI.ts                   ⏳ PENDIENTE (nuevo)
-└── useRadarData.ts               🗑️ DEPRECADO (para eliminar L1)
+├── usePaginatedTransactions.ts   ✅
+├── useResumen.ts                 ✅
+├── useGraficas.ts                ✅ (Bar + Donut)
+├── useInformeAnual.ts           ✅ (Area + Balance Line)
+├── useInformeMensual.ts          ✅
+├── useEvolucionMensual.ts       ✅
+├── useExportarExcel.ts           ✅
+├── useExportarPDF.ts             ✅
+├── useEnviarReporteMensual.ts    ✅
+├── useEditarTransaccion.ts       ✅
+├── useListaTransacciones.ts      ✅
+├── useAssistantChat.ts          ✅ (Copilot V2)
+└── useRadarData.ts              🗑️ DEPRECADO (para eliminar L1)
 ```
 
 ---
@@ -139,7 +137,7 @@ src/hooks/
 | Archivo | Razón |
 |---------|-------|
 | `src/hooks/useRadarData.ts` | Reemplazado por Donut Chart |
-| `src/components/FilterCarousel.tsx` | Reemplazado por FilterSelectors |
+| `src/components.old/` | Carpeta deprecated |
 
 ---
 
@@ -149,17 +147,18 @@ src/hooks/
 openspec/changes/
 ├── chart-enhancements/           ✅ COMPLETO
 ├── button-styling-consistency/   ✅ COMPLETO
-├── dashboard-integration/       ✅ COMPLETO
+├── dashboard-integration/        ✅ COMPLETO
 ├── sidebar-routes/              ✅ COMPLETO
 ├── dashboard-modular/           ✅ COMPLETO
 ├── ui-boutique-refactor/        ✅ COMPLETO
-├── boutique-zinc-refactor/      ✅ COMPLETO
-├── consolidation/               ✅ COMPLETO
+├── boutique-zinc-refactor/     ✅ COMPLETO
+├── consolidation/              ✅ COMPLETO
 ├── radar-fix/                   ✅ COMPLETO
 ├── import-validation/           ✅ COMPLETO (F2)
 ├── transaction-search/          ✅ COMPLETO (F1)
 ├── toast-notifications/         ✅ COMPLETO (F5)
-└── gema-ia/                    ⏳ PENDIENTE (para mañana)
+├── gema-ia/                     ✅ COMPLETO (V1)
+└── copilot-v2/                  ✅ COMPLETO (V2)
 ```
 
 ---
@@ -169,30 +168,7 @@ openspec/changes/
 | Branch | Status | Last Update |
 |--------|--------|-------------|
 | `main` | Producción | F1+F2+F5 merged |
-| `develop` | Desarrollo | Listo para Gema IA |
-
----
-
-## 📝 Notas para Mañana
-
-### Gema IA — Primeros Pasos
-1. Command Palette existente → agregar tab/comando "Gema"
-2. UI: Input texto + botón micrófono
-3. Integrar Vercel AI SDK con Gemini 1.5 Flash
-4. Definir API route `/api/gema/chat`
-5. Implementar parser con el prompt exacto proporcionado
-
-### Prompt Exacto de Felipe (guardado en Gema)
-```
-ROL: Gema de Contabilidad
-PERSONALIDAD: Amabilidad Ejecutiva
-REGLAS:
-- 9 Datos obligatorios
-- Inferencia inteligente
-- Bold 5% auto-egreso
-- Output CSV sin headers
-- Alerta 6:30 PM
-```
+| `develop` | Desarrollo | Copilot V2 completo, pendiente push |
 
 ---
 
@@ -207,4 +183,23 @@ Colores según design system:
 
 ---
 
-_Ultima actualizacion: Post-merge F1/F2/F5, preparado para Gema IA_
+## 📝 Copilot — Resumen de Features
+
+### V1 (Gema original)
+- FAB bottom-right para activar
+- Sheet lateral con chat stateful
+- Sidebar colapsa a 64px cuando activo
+- DeepSeek API
+- react-markdown rendering
+
+### V2 ( Abril 2026)
+- Voice input (Web Speech API)
+- Image upload (screenshot bancarios)
+- CSV generation (compatible Gema import)
+- localStorage persistence (40 mensajes)
+- Delete chat con confirmación
+- Auto-reset after INSERT
+
+---
+
+_Ultima actualizacion: Copilot V2 completo, listo para push_

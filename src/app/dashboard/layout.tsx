@@ -10,6 +10,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Toaster } from '@/components/ui/sonner'
 import { AssistantFAB } from '@/components/assistant/AssistantFAB'
 import { AssistantSheet } from '@/components/assistant/AssistantSheet'
+import { StrategyPanel } from '@/components/strategy'
 
 export default function DashboardLayout({
   children,
@@ -21,6 +22,7 @@ export default function DashboardLayout({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isAssistantOpen, setIsAssistantOpen] = useState(false)
+  const [isStrategyOpen, setIsStrategyOpen] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -52,15 +54,24 @@ export default function DashboardLayout({
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar
-          collapsed={sidebarCollapsed || isAssistantOpen}
+          collapsed={sidebarCollapsed || isAssistantOpen || isStrategyOpen}
           onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+          onStrategyClick={() => setIsStrategyOpen(!isStrategyOpen)}
+          isStrategyActive={isStrategyOpen}
         />
       </div>
 
       {/* Mobile Sidebar (Sheet) */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="p-0 w-64">
-          <Sidebar collapsed={false} onToggle={() => setMobileOpen(false)} />
+          <Sidebar
+            collapsed={false}
+            onToggle={() => setMobileOpen(false)}
+            onStrategyClick={() => {
+              setMobileOpen(false)
+              setIsStrategyOpen(true)
+            }}
+          />
         </SheetContent>
       </Sheet>
 
@@ -84,6 +95,11 @@ export default function DashboardLayout({
         isOpen={isAssistantOpen}
         onClose={() => setIsAssistantOpen(false)}
       />
+
+      {/* Strategy Panel */}
+      {isStrategyOpen && (
+        <StrategyPanel onClose={() => setIsStrategyOpen(false)} />
+      )}
     </div>
   )
 }

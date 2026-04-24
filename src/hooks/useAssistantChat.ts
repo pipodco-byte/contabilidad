@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { TransaccionData } from '@/lib/assistant-tools'
 
@@ -21,6 +21,55 @@ interface UseAssistantChatReturn {
   handleConfirm: () => Promise<void>
   handleCorrect: () => void
   reset: () => void
+  clearHistory: () => void
+  requestCSV: () => Promise<void>
+}
+
+const ANALYTICS_KEYWORDS = ['resumen', 'total', 'mes', 'año', 'balance', 'ventas', 'egresos', 'gastos']
+const CSV_KEYWORDS = ['csv', 'dame el csv', 'genera csv', 'descargar csv', 'exportar csv']
+const LOCALSTORAGE_KEY = 'copilot_history'
+const MAX_MESSAGES = 40
+
+function saveToLocalStorage(messages: Message[]) {
+  if (typeof window === 'undefined') return
+  try {
+    const sliced = messages.slice(-MAX_MESSAGES)
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(sliced))
+  } catch (err) {
+    console.error('[History] Save error:', err)
+  }
+}
+
+function loadFromLocalStorage(): Message[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const stored = localStorage.getItem(LOCALSTORAGE_KEY)
+    if (stored) {
+      return JSON.parse(stored)
+    }
+  } catch (err) {
+    console.error('[History] Load error:', err)
+  }
+  return []
+}
+
+function clearLocalStorage() {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.removeItem(LOCALSTORAGE_KEY)
+  } catch (err) {
+    console.error('[History] Clear error:', err)
+  }
+}
+
+function detectAnalytics(text: string): boolean {
+  const lower = text.toLowerCase()
+  return ANALYTICS_KEYWORDS.some(keyword => lower.includes(keyword))
+}
+
+function detectCSV(text: string): boolean {
+  const lower = text.toLowerCase()
+  return CSV_KEYWORDS.some(keyword => lower.includes(keyword))
 }
 
 export function useAssistantChat(): UseAssistantChatReturn {
@@ -31,6 +80,19 @@ export function useAssistantChat(): UseAssistantChatReturn {
   const [pendingTransaction, setPendingTransaction] = useState<TransaccionData | null>(null)
   const [error, setError] = useState<string | null>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
+
+  useEffect(() => {
+    const loaded = loadFromLocalStorage()
+    if (loaded.length > 0) {
+      setMessages(loaded)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      saveToLocalStorage(messages)
+    }
+  }, [messages])
 
   const handleSend = useCallback(
     async (text?: string) => {
@@ -43,6 +105,23 @@ export function useAssistantChat(): UseAssistantChatReturn {
 
       const userMessage: Message = { role: 'user', content: textToSend }
       setMessages((prev) => [...prev, userMessage])
+
+      if (detectCSV(textToSend)) {
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: 'Consultando transacciones...' }
+        ])
+        requestCSV()
+        return
+      }
+
+      if (detectAnalytics(textToSend)) {
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: 'Consultando analytics...' }
+        ])
+        return
+      }
 
       setIsLoading(true)
 
@@ -129,11 +208,13 @@ export function useAssistantChat(): UseAssistantChatReturn {
         throw new Error(result.message)
       }
 
+      const successMessage = `✅ ${result.message}\n\nTransacción #${result.transaction.id.slice(0, 8)} registrada exitosamente.\n\n¿Nueva transacción?`
+
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: `✅ ${result.message}\n\nTransacción #${result.transaction.id.slice(0, 8)} registrada exitosamente.`,
+          content: successMessage,
         },
       ])
 
@@ -165,6 +246,54 @@ export function useAssistantChat(): UseAssistantChatReturn {
     abortControllerRef.current?.abort()
   }, [])
 
+  const clearHistory = useCallback(() => {
+    setMessages([])
+    clearLocalStorage()
+  }, [])
+
+  const requestCSV = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch('/api/transacciones?limit=1000')
+      if (!response.ok) throw new Error('Error al obtener transacciones')
+
+      const transacciones = await response.json()
+      const today = new Date().toISOString().split('T')[0]
+
+      const todayTransactions = transacciones.filter(
+        (t: any) => t.fecha && t.fecha.startsWith(today)
+      )
+
+      const csvLines = todayTransactions.map((t: any) => {
+        const fecha = t.fecha.split('T')[0].split('-').reverse().join('/')
+        const descripcion = t.descripcion || ''
+        const categoria = t.categoria || ''
+        const sub_categoria = t.sub_categoria || ''
+        const monto = t.monto?.toString() || '0'
+        const tipo = t.tipo || ''
+        const medio_pago = t.medio_pago || ''
+        const estado_iva = t.estado_iva || 'N/A'
+        const comentarios = t.comentarios || ''
+
+        return `${fecha};${descripcion};${categoria};${sub_categoria};${monto};${tipo};${medio_pago};${estado_iva}${comentarios ? ';' + comentarios : ''}`
+      })
+
+      const csvContent = csvLines.join('\n')
+
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { role: 'assistant', content: `Aquí está el CSV de hoy:\n\n\`\`\`\n${csvContent}\n\`\`\`\n\nCopia y pega en el botón Gema para importar.` }
+      ])
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { role: 'assistant', content: 'Error al obtener transacciones. Intenta de nuevo.' }
+      ])
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
   return {
     messages,
     input,
@@ -177,5 +306,7 @@ export function useAssistantChat(): UseAssistantChatReturn {
     handleConfirm,
     handleCorrect,
     reset,
+    clearHistory,
+    requestCSV,
   }
 }

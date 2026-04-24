@@ -1,11 +1,15 @@
 'use client'
 
-import { useEffect } from 'react'
-import { X, Send } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { X, Send, Trash2 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useAssistantChat } from '@/hooks/useAssistantChat'
 import { TransaccionData } from '@/lib/assistant-tools'
+import { AssistantMicButton } from './AssistantMicButton'
+import { ImageUpload } from './ImageUpload'
+import { extractDataFromText } from '@/lib/image-extract'
+import { toast } from 'sonner'
 
 interface AssistantSheetProps {
   isOpen: boolean
@@ -93,6 +97,9 @@ const markdownComponents: Record<string, React.ComponentType<any>> = {
 }
 
 export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantSheetProps) {
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [attachedImage, setAttachedImage] = useState<string | null>(null)
+
   const {
     messages,
     setMessages,
@@ -103,7 +110,22 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
     handleSend,
     handleConfirm,
     handleCorrect,
+    clearHistory,
   } = useAssistantChat()
+
+  const handleTranscript = (text: string) => {
+    setInput(text)
+  }
+
+  const handleImageSelected = (base64: string) => {
+    setAttachedImage(base64)
+    const extracted = extractDataFromText(base64)
+    const montoStr = extracted.monto ? extracted.monto.toLocaleString('es-CO') : '[monto]'
+    const fechaStr = extracted.fecha || '[fecha]'
+
+    const userMessage = `Screenshot: ${fechaStr}, ${montoStr}, ${extracted.medio_pago || '[medio_pago]'}, Ref: ${extracted.referencia || 'N/A'}`
+    setInput(userMessage)
+  }
 
   useEffect(() => {
     if (initialMessage && initialMessage.trim()) {
@@ -137,12 +159,21 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
             </div>
             <h2 className="text-lg font-semibold text-zinc-100">Copilot</h2>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-lg transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="p-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-lg transition-colors"
+              aria-label="Borrar historial"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -189,6 +220,30 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
 
         <div className="p-4 border-t border-zinc-800">
           <form onSubmit={(e) => { e.preventDefault(); handleSend() }} className="flex items-center gap-2">
+            <AssistantMicButton
+              onTranscript={handleTranscript}
+              disabled={isLoading}
+            />
+            <ImageUpload
+              onImageSelected={handleImageSelected}
+              disabled={isLoading}
+            />
+            {attachedImage && (
+              <div className="relative">
+                <img
+                  src={attachedImage}
+                  alt="Attached"
+                  className="w-10 h-10 object-cover rounded border border-zinc-700"
+                />
+                <button
+                  type="button"
+                  onClick={() => setAttachedImage(null)}
+                  className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white rounded-full text-xs flex items-center justify-center"
+                >
+                  ×
+                </button>
+              </div>
+            )}
             <input
               type="text"
               value={input}
@@ -204,8 +259,35 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
             >
               <Send className="w-5 h-5" />
             </button>
-          </form>
+</form>
         </div>
+
+        {showDeleteConfirm && (
+          <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-50">
+            <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4">
+              <h3 className="text-lg font-semibold text-zinc-100 mb-2">¿Borrar historial?</h3>
+              <p className="text-sm text-zinc-400 mb-4">Se eliminará toda la conversación.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  className="flex-1 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-100 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => {
+                    clearHistory()
+                    setShowDeleteConfirm(false)
+                    toast('Historial eliminado')
+                  }}
+                  className="flex-1 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Borrar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   )
