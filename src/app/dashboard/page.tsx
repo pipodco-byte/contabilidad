@@ -4,7 +4,6 @@ import { useAuth } from '@/hooks/useAuth'
 import { useResumen } from '@/hooks/useResumen'
 import { DashboardCards } from '@/components/dashboard/dashboard-cards'
 import { TransaccionForm } from '@/components/forms/transaccion-form'
-import { GemaBottomBar } from '@/components/gema'
 import { useState } from 'react'
 import { FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -31,7 +30,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-8 pb-20">
+    <div className="space-y-8">
       {/* Action Buttons - ARRIBA DE KPI CARDS */}
       <div className="flex flex-wrap gap-3">
         <Button
@@ -69,9 +68,6 @@ export default function Dashboard() {
           }}
         />
       )}
-
-      {/* Gema Bottom Bar */}
-      <GemaBottomBar />
     </div>
   )
 }

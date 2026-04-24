@@ -1,82 +1,74 @@
-# Design: Gema IA — Technical Architecture
+# Design: Copilot Assistant — Technical Architecture
 
 ## Technical Approach
 
-Implementar Gema como asistente contable con Vercel AI SDK, Gemini Flash, y Zod para type-safe Tool Calling. La UI es un fixed bottom bar que expande a un sheet lateral con chat stateful.
+Implementar asistente contable con FAB + Sheet + Sidebar collapse. UX: Floating Action Button bottom-right activa panel lateral con chat stateful.
 
 ## Architecture Decisions
 
-### Decision: Vercel AI SDK over raw API
+### Decision: FAB over Inline Input
 
-**Choice:** Vercel AI SDK for all AI interactions
+**Choice:** FAB (Floating Action Button) bottom-right
+**Alternatives:** Bottom bar, inline input, modal
 **Rationale:**
-- Streaming responses out-of-box
-- Built-in Tool Calling support
-- Zod integration for schema validation
-- Unified API for future model swaps
+- No ocupa espacio permanente
+- Minimalista y no invasivo
+- Patrón UX conocido (apps móvil)
 
-### Decision: Zod + Tool Calling as contract
+### Decision: Sidebar Collapse
 
-**Choice:** Define `registrar_transaccion` tool with Zod schema
-**Alternatives:** Regex parsing, string manipulation
+**Choice:** Sidebar collapses to 64px when assistant active
+**Alternatives:** Full overlay, modal
 **Rationale:**
-- Type safety from Gemini output to Supabase INSERT
-- Validation at the boundary (firewall)
-- Self-documenting schema
+- Dashboard context still visible
+- More space for chat panel
+- Smooth animation (300ms)
 
-### Decision: Sheet over Modal
+### Decision: Sheet over Modal Centrado
 
-**Choice:** Sheet (right side drawer)
-**Alternatives:** Modal centrado, full-page
+**Choice:** Sheet lateral (derecha)
+**Alternatives:** Modal centrado, full page
 **Rationale:**
-- Context visible (dashboard KPIs)
+- Context visible (KPIs, charts)
 - Feels like tool panel, not popup
-- Easier to close and continue working
+- Easy to close and continue
 
 ### Decision: Stateless API, Stateful Client
 
 **Choice:** API doesn't store conversation, client does
 **Rationale:**
-- Simpler API (stateless)
+- Simpler API
 - Conversation persists only while sheet open
 - No DB complexity for temp data
-- Privacy: conversations not stored server-side
 
 ## Data Flow
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         CLIENT                                    │
-│  ┌──────────────┐    ┌──────────────────────────────────────┐ │
-│  │ Bottom Bar   │───▶│ Sheet (GemaChat)                      │ │
-│  │ (collapsed)  │    │  ┌──────────────────────────────────┐ │ │
-│  └──────────────┘    │  │ Messages[] (stateful)             │ │ │
+│  ┌──────────┐    ┌──────────────────────────────────────┐ │
+│  │ FAB      │───▶│ Sheet (ChatPanel)                     │ │
+│  │(bottom-r)│    │  ┌──────────────────────────────────┐ │ │
+│  └──────────┘    │  │ Messages[] (stateful)             │ │ │
 │                       │  │ ─────────────────────────────────│ │ │
-│                       │  │ PreVizCard (confirmar/corregir)  │ │ │
+│                       │  │ PreVizCard (confirmar/corregir)│ │ │
 │                       │  │ ─────────────────────────────────│ │ │
-│                       │  │ Input + Send                      │ │ │
+│                       │  │ Input + Send                    │ │ │
 │                       │  └──────────────────────────────────┘ │ │
 │                       └──────────────┬───────────────────────────┘ │
 └───────────────────────────────────────┼───────────────────────────┘
                                         │
-                                        ▼ POST /api/gema/chat
+                                        ▼ POST /api/assistant/chat
 ┌─────────────────────────────────────────────────────────────────┐
 │                         API ROUTE                                 │
 │  ┌─────────────────────────────────────────────────────────────┐│
 │  │ Vercel AI SDK                                               ││
 │  │  - messages[] (from client)                               ││
-│  │  - system: GEMA_PROMPT (personality only)                  ││
+│  │  - system: ASSISTANT_PROMPT (personality)                  ││
 │  │  - tools: [registrar_transaccion]                          ││
 │  └─────────────────────────────────────────────────────────────┘│
 │                              │                                    │
-│              ┌───────────────┴───────────────┐                 │
-│              ▼                               ▼                   │
-│  ┌─────────────────────┐         ┌─────────────────────────┐  │
-│  │ Gemini Tool Call    │         │ Text Response           │  │
-│  │ { typed object }   │         │ (micro-feedback, etc)   │  │
-│  └─────────┬───────────┘         └─────────────────────────┘  │
-│            │                                                      │
-│            ▼                                                      │
+│                              ▼                                    │
 │  ┌─────────────────────┐                                        │
 │  │ Zod Validation      │ ◀── FIREWALL                          │
 │  │ (parse, validate)   │                                        │
@@ -96,28 +88,72 @@ Implementar Gema como asistente contable con Vercel AI SDK, Gemini Flash, y Zod 
 src/
 ├── app/
 │   ├── dashboard/
-│   │   └── page.tsx              # Modified: GemaBottomBar
+│   │   ├── page.tsx              # Modified: FAB + sidebar state
+│   │   └── layout.tsx           # Modified: sidebar collapse logic
 │   └── api/
-│       └── gema/
+│       └── assistant/
 │           └── chat/
 │               └── route.ts       # NEW: AI chat endpoint
 ├── components/
-│   └── gema/
-│       ├── GemaSheet.tsx         # NEW: Sheet container
-│       ├── GemaChat.tsx          # NEW: Chat messages
-│       ├── GemaInput.tsx         # NEW: Input (shared)
-│       ├── GemaPreVizCard.tsx    # NEW: Confirmation card
-│       └── GemaBottomBar.tsx     # NEW: Fixed bottom bar
+│   └── assistant/
+│       ├── AssistantSheet.tsx    # NEW: Sheet container
+│       ├── AssistantChat.tsx     # NEW: Chat messages
+│       ├── AssistantFAB.tsx      # NEW: Floating Action Button
+│       ├── AssistantInput.tsx    # NEW: Input component
+│       └── AssistantPreVizCard.tsx # NEW: Confirmation card
 ├── hooks/
-│   └── useGemaChat.ts            # NEW: Chat state management
+│   └── useAssistantChat.ts     # NEW: Chat state management
 └── lib/
-    ├── gema-tools.ts             # NEW: Zod schemas + tools
-    └── gema-prompt.ts            # NEW: System prompt builder
+    ├── assistant-tools.ts        # NEW: Zod schemas + tools
+    └── assistant-prompt.ts      # NEW: System prompt builder
+```
+
+## Component Specifications
+
+### AssistantFAB
+```tsx
+// Position: fixed, bottom-right
+// Size: 48x48px
+// Margin: 24px from edges
+// States:
+//   - default: 💎 icon, bg-zinc-800
+//   - hover: scale(1.1), bg-zinc-700
+//   - active: scale(0.95)
+// Animation: transition-all duration-200
+```
+
+### AssistantSheet
+```tsx
+// Width: 400px (desktop), 100% (mobile)
+// Position: fixed right-0, top-0, bottom-0
+// Background: bg-zinc-950
+// Border-left: border-zinc-800
+// Animation: slide-in-from-right 300ms ease-out
+// Overlay: bg-black/50, click to close
+```
+
+### Sidebar Collapse Logic
+```tsx
+// Expanded: w-60 (240px)
+// Collapsed: w-16 (64px)
+// Transition: width 300ms ease-out
+// Collapsed state: { isAssistantOpen: boolean }
+// When isAssistantOpen → sidebar w-16
+```
+
+### AssistantPreVizCard
+```tsx
+// Border: border-indigo-500/50
+// Background: bg-zinc-900
+// Sections:
+//   - Header: "Verifica los datos"
+//   - Body: List of 9 fields
+//   - Footer: [Confirmar] [Corregir]
 ```
 
 ## API Contract
 
-### POST /api/gema/chat
+### POST /api/assistant/chat
 
 **Request:**
 ```typescript
@@ -126,129 +162,35 @@ src/
     role: 'user' | 'assistant'
     content: string
   }>
-  pendingTransaction?: TransaccionData  // From PreViz confirm
+  pendingTransaction?: TransaccionData
 }
 ```
 
-**Response (streaming):**
-```typescript
-// Text chunks
-data: "Excelente"
-data: " Felipe"
-data: ", registrado"
-
-// Or Tool Call
-data: { type: "tool_call", name: "registrar_transaccion", args: {...} }
-
-// Or Complete
-data: [DONE]
-```
-
-### Tool: registrar_transaccion
-
-**Definition (Zod):**
-```typescript
-const RegistrarTransaccionSchema = z.object({
-  fecha: z.string().regex(/^\d{2}\/\d{2}\/\d{4}$/),
-  descripcion: z.string().min(1),
-  categoria: z.enum([
-    'Venta Equipos Nuevos',
-    'Venta Equipos Usados',
-    'Venta Accesorios',
-    'Reparación',
-    'Publicidad',
-    'Costos Venta',
-    'Infraestructura',
-    'Nómina',
-    'Impuestos',
-    'Servicios',
-    'Retiros Felipe'
-  ]),
-  sub_categoria: z.string().optional(),
-  monto: z.number().positive(),
-  tipo: z.enum(['Ingreso', 'Egreso']),
-  medio_pago: z.enum(['Davivienda', 'Bold', 'Efectivo', 'Nequi', 'Daviplata', 'Transferencia']),
-  estado_iva: z.enum(['Exento', 'Incluido', 'Externo']),
-  comentarios: z.string().optional()
-})
-
-const BoldComisionSchema = z.object({
-  monto_original: z.number(),
-  monto_comision: z.number(),  // 5% del original
-  descripcion: z.string(),
-  categoria: z.literal('Costos Venta'),
-  tipo: z.literal('Egreso'),
-  medio_pago: z.string(),
-  comentarios: z.string()
-})
-```
-
-## Database Schema
-
-### Supabase: transacciones (modified)
-
-```sql
-ALTER TABLE transacciones ADD COLUMN parent_id UUID REFERENCES transacciones(id) ON DELETE CASCADE;
-
--- Index for faster lookups
-CREATE INDEX idx_transacciones_parent_id ON transacciones(parent_id);
-```
-
-**Rationale:** `ON DELETE CASCADE` ensures that when parent (venta) is deleted, child (comisión Bold) is also deleted automatically.
-
-## Component Specifications
-
-### GemaBottomBar
-- Fixed position: `bottom-0, left-0, right-0`
-- Height: 56px
-- Background: `bg-zinc-900/95 backdrop-blur`
-- Border-top: `border-t border-zinc-800`
-- Contains: GemaInput (flex-1)
-
-### GemaSheet
-- Width: `w-[400px]` (mobile: `w-full`)
-- Position: `fixed right-0 top-0 bottom-0`
-- Animation: slide-in from right
-- Overlay: `bg-black/50` (click to close)
-- Contains: GemaChat + GemaInput + Close button
-
-### GemaPreVizCard
-- Border: `border border-indigo-500/50`
-- Background: `bg-zinc-900`
-- Sections:
-  - Header: "Verifica los datos"
-  - Body: List of 9 fields
-  - Footer: [Confirmar] [Corregir]
-
-### GemaChat
-- ScrollArea for messages
-- Message bubbles:
-  - User: `bg-indigo-600/20 ml-auto`
-  - Assistant: `bg-zinc-800`
-- Typing indicator while streaming
+**Response:** Streaming text via `toTextStreamResponse()`
 
 ## Environment Variables
 
 ```env
-GEMINI_API_KEY=           # Gemini API key (from Google AI Studio)
+GEMINI_API_KEY=  # From ~/.env
 ```
 
 ## Migration
 
-1. Create new files (no existing data modified)
-2. Add `parent_id` column to Supabase (nullable, backwards compatible)
-3. Deploy API route
-4. Deploy components
-5. No downtime
+1. Create new components in `src/components/assistant/`
+2. Modify `dashboard/page.tsx` to add FAB and state
+3. Modify `dashboard/layout.tsx` for sidebar collapse
+4. Create API route
+5. No existing functionality modified (additive change)
 
 ## Open Questions
 
-None — all decisions finalized per user confirmation.
+1. **Name:** "Copilot" tentative - pending user confirmation
+2. **FAB Icon:** 💎 placeholder - need final icon
 
 ## Testing Strategy
 
 | Layer | What | How |
 |-------|------|-----|
-| Unit | Zod schemas | Jest/Zod validation tests |
+| Unit | Zod schemas | Validation tests |
 | Integration | API route | Test with sample conversations |
-| E2E | Full flow | User submits → confirms → verifies in table |
+| E2E | Full flow | User clicks FAB → chat → confirms → verifies in table |

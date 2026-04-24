@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^2.0.29",
     "@ai-sdk/google": "^3.0.64",
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-collapsible": "^1.1.12",

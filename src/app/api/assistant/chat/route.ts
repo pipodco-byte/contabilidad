@@ -1,13 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { streamText } from 'ai'
-import { google } from '@ai-sdk/google'
-import { buildSystemPrompt } from '@/lib/gema-prompt'
+import { deepseek } from '@ai-sdk/deepseek'
+import { buildSystemPrompt } from '@/lib/assistant-prompt'
 import {
   RegistrarTransaccionSchema,
   generarTransaccionBold,
   calcularComisionBold,
-} from '@/lib/gema-tools'
+} from '@/lib/assistant-tools'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -34,14 +34,14 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await streamText({
-      model: google('gemini-2.0-flash'),
+      model: deepseek('deepseek-chat'),
       system: buildSystemPrompt(),
       messages,
     })
 
     return result.toTextStreamResponse()
   } catch (error) {
-    console.error('[Gema API Error]:', error)
+    console.error('[Copilot API Error]:', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Internal error' },
       { status: 500 }
@@ -120,7 +120,7 @@ async function handleTransaction(
       .single()
 
     if (boldError) {
-      console.error('[Gema] Bold insert error:', boldError)
+      console.error('[Copilot] Bold insert error:', boldError)
     } else {
       boldTransaction = insertedBold
     }

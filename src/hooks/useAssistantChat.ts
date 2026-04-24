@@ -2,14 +2,28 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import { TransaccionData } from '@/lib/gema-tools'
+import { TransaccionData } from '@/lib/assistant-tools'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
 }
 
-export function useGemaChat() {
+interface UseAssistantChatReturn {
+  messages: Message[]
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>
+  input: string
+  setInput: (input: string) => void
+  isLoading: boolean
+  pendingTransaction: TransaccionData | null
+  error: string | null
+  handleSend: (text?: string) => Promise<void>
+  handleConfirm: () => Promise<void>
+  handleCorrect: () => void
+  reset: () => void
+}
+
+export function useAssistantChat(): UseAssistantChatReturn {
   const { user } = useAuth()
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -35,7 +49,7 @@ export function useGemaChat() {
       abortControllerRef.current = new AbortController()
 
       try {
-        const response = await fetch('/api/gema/chat', {
+        const response = await fetch('/api/assistant/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +112,7 @@ export function useGemaChat() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/gema/chat', {
+      const response = await fetch('/api/assistant/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,6 +169,7 @@ export function useGemaChat() {
     messages,
     input,
     setInput,
+    setMessages,
     isLoading,
     pendingTransaction,
     error,

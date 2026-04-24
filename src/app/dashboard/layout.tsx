@@ -8,6 +8,8 @@ import { Sidebar } from '@/components/layout/sidebar'
 import { Header } from '@/components/layout/header'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Toaster } from '@/components/ui/sonner'
+import { AssistantFAB } from '@/components/assistant/AssistantFAB'
+import { AssistantSheet } from '@/components/assistant/AssistantSheet'
 
 export default function DashboardLayout({
   children,
@@ -18,6 +20,7 @@ export default function DashboardLayout({
   const router = useRouter()
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -49,7 +52,7 @@ export default function DashboardLayout({
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar
-          collapsed={sidebarCollapsed}
+          collapsed={sidebarCollapsed || isAssistantOpen}
           onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
       </div>
@@ -69,6 +72,18 @@ export default function DashboardLayout({
         </main>
         <Toaster richColors />
       </div>
+
+      {/* Assistant FAB */}
+      <AssistantFAB
+        onClick={() => setIsAssistantOpen(true)}
+        isActive={isAssistantOpen}
+      />
+
+      {/* Assistant Sheet */}
+      <AssistantSheet
+        isOpen={isAssistantOpen}
+        onClose={() => setIsAssistantOpen(false)}
+      />
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Search, Plus } from 'lucide-react'
 
 export default function TransaccionesPage() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const [showForm, setShowForm] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
@@ -22,11 +22,9 @@ export default function TransaccionesPage() {
     return () => clearTimeout(timer)
   }, [searchInput])
 
-  if (!user) return null
-
   const {
     transacciones,
-    loading,
+    loading: txLoading,
     selectedYear,
     selectedMonth,
     currentPage,
@@ -39,7 +37,15 @@ export default function TransaccionesPage() {
     goToPage,
     firstPage,
     lastPage,
-  } = usePaginatedTransactions(user.id, user.rol, debouncedQuery)
+  } = usePaginatedTransactions(user?.id || '', user?.rol || 'usuario', debouncedQuery)
+
+  if (loading || !user) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-muted-foreground">Cargando...</div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -79,7 +85,7 @@ export default function TransaccionesPage() {
         userId={user.id}
         userRole={user.rol}
         transacciones={transacciones}
-        loading={loading}
+        loading={txLoading}
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
         currentPage={currentPage}

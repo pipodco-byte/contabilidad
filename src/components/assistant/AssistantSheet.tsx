@@ -2,18 +2,19 @@
 
 import { useEffect } from 'react'
 import { X, Send } from 'lucide-react'
-import { useGemaChat } from '@/hooks/useGemaChat'
-import { TransaccionData } from '@/lib/gema-tools'
+import { useAssistantChat } from '@/hooks/useAssistantChat'
+import { TransaccionData } from '@/lib/assistant-tools'
 
-interface GemaSheetProps {
+interface AssistantSheetProps {
   isOpen: boolean
   onClose: () => void
   initialMessage?: string
 }
 
-export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
+export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantSheetProps) {
   const {
     messages,
+    setMessages,
     input,
     setInput,
     isLoading,
@@ -21,13 +22,22 @@ export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
     handleSend,
     handleConfirm,
     handleCorrect,
-  } = useGemaChat()
+  } = useAssistantChat()
 
   useEffect(() => {
     if (initialMessage && initialMessage.trim()) {
       handleSend(initialMessage)
     }
   }, [initialMessage])
+
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      setMessages([{
+        role: 'assistant',
+        content: '¡Hola! Soy tu asistente contable. Puedo ayudarte a registrar transacciones con lenguaje natural.\n\nSolo describe tu transacción y yo me encargo del resto. Por ejemplo:\n"Venta de consultoría $2.000.000 Nequi Gravado"\n\n¿Listo para empezar?'
+      }])
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
@@ -41,8 +51,10 @@ export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
       <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-zinc-950 border-l border-zinc-800 z-50 flex flex-col animate-in slide-in-from-right duration-300">
         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
           <div className="flex items-center gap-2">
-            <span className="text-xl">💎</span>
-            <h2 className="text-lg font-semibold text-zinc-100">Gema</h2>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+              <span className="text-white text-sm font-bold">C</span>
+            </div>
+            <h2 className="text-lg font-semibold text-zinc-100">Copilot</h2>
           </div>
           <button
             onClick={onClose}
@@ -61,8 +73,8 @@ export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
               <div
                 className={`max-w-[85%] px-4 py-3 rounded-2xl ${
                   msg.role === 'user'
-                    ? 'bg-indigo-600/20 text-zinc-100 rounded-br-md'
-                    : 'bg-zinc-800 text-zinc-100 rounded-bl-md'
+                    ? 'bg-indigo-600/20 text-zinc-100 rounded-br-md border border-indigo-500/30'
+                    : 'bg-zinc-800/80 text-zinc-100 rounded-bl-md border border-zinc-700/50'
                 }`}
               >
                 <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
@@ -72,7 +84,7 @@ export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
 
           {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
             <div className="flex justify-start">
-              <div className="bg-zinc-800 text-zinc-100 px-4 py-3 rounded-2xl rounded-bl-md">
+              <div className="bg-zinc-800/80 text-zinc-100 px-4 py-3 rounded-2xl rounded-bl-md border border-zinc-700/50">
                 <p className="text-sm animate-pulse">Escribiendo...</p>
               </div>
             </div>
@@ -91,7 +103,7 @@ export function GemaSheet({ isOpen, onClose, initialMessage }: GemaSheetProps) {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Escribe tu respuesta..."
+              placeholder="Escribe tu transacción..."
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/50 disabled:opacity-50 transition-all"
             />
