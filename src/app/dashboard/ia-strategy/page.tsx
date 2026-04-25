@@ -31,7 +31,7 @@ export default function IAStrategyPage() {
 
   return (
     <div className="space-y-8">
-      {/* Action Buttons */}
+      {/* Action Buttons - Solo Nueva Transacción */}
       <div className="flex flex-wrap gap-3">
         <Button
           onClick={() => setShowForm(true)}
