@@ -23,6 +23,8 @@ export default function DashboardLayout({
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isAssistantOpen, setIsAssistantOpen] = useState(false)
 
+  const isIAStrategy = pathname === '/dashboard/ia-strategy'
+
   useEffect(() => {
     if (!loading && !user) {
       router.push('/')
@@ -44,6 +46,23 @@ export default function DashboardLayout({
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-muted-foreground">Cargando...</div>
+      </div>
+    )
+  }
+
+  if (isIAStrategy) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-background">
+        <Sidebar
+          collapsed={true}
+          onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        />
+
+        <main className="flex-1 relative overflow-hidden">
+          {children}
+        </main>
+
+        <Toaster richColors />
       </div>
     )
   }

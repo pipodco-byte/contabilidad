@@ -1,6 +1,6 @@
-state: apply
+state: apply-progress
 created: 2026-04-24
-last_modified: 2026-04-24
+last_modified: 2026-04-25
 
 artifacts:
   spec:
@@ -14,45 +14,38 @@ artifacts:
 
 current_phase: apply
 
+change_description: |
+  Arquitectura de 3 columnas estrictas para IA Strategy:
+  - Sidebar (64px, colapsado) - un solo sidebar desde dashboard/layout.tsx
+  - Chat Workspace (centro) - "Asesor Estratégico Gema"
+  - Data Panel (380px) - MetricsGrid, TrendChart, GoalsList
+
+  FIX APLICADO: Ghost Sidebar Bug eliminado.
+  - Eliminado ia-strategy/layout.tsx (causaba duplicación)
+  - dashboard/layout.tsx detecta /dashboard/ia-strategy y colapsa sidebar
+  - page.tsx tiene la lógica de 2 columnas (Chat + DataPanel)
+
 completed_tasks:
-  - T1: Schema y tipos TypeScript
-  - T2: Hook useStrategyData
-  - T3: Cálculos de Métricas
-  - T4: StrategySidebarButton
-  - T5: StrategyPanel Layout
-  - T6: MetricsGrid + MetricCard
-  - T7: RunwayBadge
-  - T8: TrendChart
-  - T9: GoalsList + GoalCard
-  - T10: GoalForm Modal
-  - T11: StrategySettingsModal
-  - T12: Strategy Advisor Prompt
-  - T13: API Route /api/strategy/chat
-  - T14: StrategyChat Component
-  - T16: Integration en Sidebar y Dashboard
-  - T17: API Route /api/strategy/calculate (optional)
-  - T18: Build & TypeCheck
+  - T1: Crear ChatWorkspace.tsx ✅
+  - T2: Crear DataPanel.tsx ✅
+  - T3: Reescribir ia-strategy/layout.tsx ❌ (ELIMINADO - causa duplicación)
+  - T4: Actualizar ia-strategy/page.tsx ✅ (ahora tiene layout de 2 columnas)
+  - T5: Dashboard layout inteligente (detecta ia-strategy, colapsa sidebar) ✅
+  - T6: Build & TypeCheck ✅ (PASSED)
 
 pending_tasks:
   - T15: Prompt Hardening (Security tests) - requires manual testing
 
-dependencies: []
-
-open_questions:
-  - key: business-context
-    question: Información de negocio de Felipe (costos, cash, metas)
-    status: pending
-    response_from: Felipe
-  - key: opencode-api
-    question: API key de OpenCode para minimax 2.7/2
-    status: pending
-    response_from: Felipe
-
 notes: |
-  Regla fundamental: El IA del Dashboard es SOLO para entradas de datos.
-  Copilot = transacciones. IA Strategy = análisis estratégico.
+  FIX COMPLETADO: Ghost Sidebar Bug.
 
-  Build PASSED - 16/18 tasks completed
-  T15 (security tests) requiere testing manual con DeepSeek
+  Arquitectura final:
+  - dashboard/layout.tsx (layout padre) → detecta pathname, sidebar colapsado
+  - dashboard/ia-strategy/page.tsx → ChatWorkspace + DataPanel (2 columnas)
 
-  ⏳ Pendiente información de negocio de Felipe para registrar en specs.
+  Ya NO existe duplicación de sidebar.
+
+  Build: PASSED ✅
+
+  Pendiente: Verificar que los datos (costos fijos, cash) se cargan correctamente.
+  Las métricas muestran $0 porque faltan datos de entrada (no es bug del layout).
