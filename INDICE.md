@@ -15,17 +15,30 @@ Si es tu primera vez, lee en este orden:
 
 ### 📊 Estado del Proyecto
 
-#### docs/ESTADO_PROYECTO.md ⭐ NUEVO
-**Propósito:** Tracking de completados y pendientes
+#### docs/ESTADO_PROYECTO.md ⭐
+**Propósito:** Tracking de estado del proyecto (histórico completado)
 
 **Contiene:**
 - ✅ Completados (histórico)
-- ⏳ En progreso
-- 📋 Pendientes priorizados
-- 🗑️ Archivos para eliminar
+- 🔲 En progreso
 - 📁 SDD activos
+- 🗑️ Archivos para eliminar
+- 🏗️ Arquitectura IA Strategy
 
-**Cuándo leerlo:** Para ver qué falta por hacer
+**Cuándo leerlo:** Para contexto completo del proyecto
+
+#### PENDIENTES.md ⭐ NUEVO
+**Propósito:** Lista de tareas pendientes (fuente de verdad para pendientes)
+
+**Contiene:**
+- 🎯 Funcionalidades Core (F3, F4)
+- 📊 Gráficos Fase 2 (G3-G6)
+- 🔧 Limpieza Técnica (L1, L2)
+- 🧪 Testing (T1-T3)
+- 🤖 AI Mejoras (AF1-AF3)
+- ⚠️ IA Strategy pendientes (T15-T17)
+
+**Cuándo leerlo:** Para ver qué falta por hacer (siempre leer este, NO ESTADO_PROYECTO.md para pendientes)
 
 ---
 

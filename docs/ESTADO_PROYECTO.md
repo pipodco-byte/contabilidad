@@ -1,7 +1,7 @@
 # 📋 Estado del Proyecto — Pipod Contabilidad
 
 **Última actualización:** Abril 2026
-**Versión:** 3.0
+**Versión:** 4.0
 
 ---
 
@@ -28,6 +28,7 @@
 - [x] E3: onApply redundante en filtros
 - [x] E4: Logout tooltip sidebar
 - [x] B3/B4: Radar hook bugs
+- [x] Ghost Sidebar Bug (ia-strategy duplicaba sidebar)
 
 ### Gráficos (v2.1)
 - [x] G1: Donut Chart (reemplaza Radar)
@@ -52,6 +53,15 @@
 - [x] V2-4: Auto-reset after INSERT
 - [x] react-markdown para renderizar formato
 
+### IA Strategy (v4.0) — Abril 2026
+- [x] IA-1: Módulo IA Strategy con arquitectura 3 columnas
+- [x] IA-2: Chat Workspace (Asesor Estratégico Gema)
+- [x] IA-3: Data Panel (380px con MetricsGrid, TrendChart, GoalsList)
+- [x] IA-4: useStrategyData hook (cálculos, goals, chat history)
+- [x] IA-5: API routes /api/strategy/chat y /api/strategy/calculate
+- [x] IA-6: Ghost Sidebar Bug fix (dashboard/layout.tsx inteligente)
+- [x] IA-7: Single source of truth para sidebar (64px colapsado)
+
 ---
 
 ## 🔲 En Progreso
@@ -62,39 +72,7 @@ _Nothing currently in progress_
 
 ## ⏳ Pendientes
 
-### Funcionalidades Core
-| Item | Descripción | Prioridad |
-|------|-------------|-----------|
-| F3 | Edición inline transacciones | Alta |
-| F4 | Batch actions (select + delete) | Alta |
-
-### Gráficos — Fase 2
-| Item | Descripción | Prioridad | Condición |
-|------|-------------|-----------|-----------|
-| G3 | Metas/Hitos de negocio | Media | Pendiente definir |
-| G4 | Profit Margin % | Media | Siempre |
-| G5 | Burn Rate | Media | ≥3 meses datos |
-| G6 | Runway | Media | ≥3 meses datos |
-
-### Limpieza Técnica
-| Item | Descripción | Prioridad |
-|------|-------------|-----------|
-| L1 | Eliminar `src/hooks/useRadarData.ts` | Baja |
-| L2 | Verificar botones indigo en todos los lugares | Media |
-
-### Testing
-| Item | Descripción | Prioridad |
-|------|-------------|-----------|
-| T1 | Tests unitarios hooks | Alta |
-| T2 | Tests de integración API | Media |
-| T3 | Setup Vitest | Media |
-
-### AI / Copilot — Futuras Mejoras
-| Item | Descripción | Prioridad |
-|------|-------------|-----------|
-| AF1 | Historial persistente entre dispositivos (Supabase) | Media |
-| AF2 | Photo OCR más robusto | Media |
-| AF3 | Analytics más avanzados (por categoría, tendencias) | Media |
+### Pendientes actuales → Ver `PENDIENTES.md`
 
 ---
 
@@ -117,6 +95,7 @@ src/hooks/
 ├── useEditarTransaccion.ts       ✅
 ├── useListaTransacciones.ts      ✅
 ├── useAssistantChat.ts          ✅ (Copilot V2)
+├── useStrategyData.ts           ✅ (IA Strategy)
 └── useRadarData.ts              🗑️ DEPRECADO (para eliminar L1)
 ```
 
@@ -138,6 +117,7 @@ src/hooks/
 |---------|-------|
 | `src/hooks/useRadarData.ts` | Reemplazado por Donut Chart |
 | `src/components.old/` | Carpeta deprecated |
+| `src/app/dashboard/ia-strategy/layout.tsx` | Eliminado (causaba ghost sidebar) |
 
 ---
 
@@ -158,7 +138,8 @@ openspec/changes/
 ├── transaction-search/          ✅ COMPLETO (F1)
 ├── toast-notifications/         ✅ COMPLETO (F5)
 ├── gema-ia/                     ✅ COMPLETO (V1)
-└── copilot-v2/                  ✅ COMPLETO (V2)
+├── copilot-v2/                  ✅ COMPLETO (V2)
+└── ia-strategy/                 ✅ COMPLETO (v4.0)
 ```
 
 ---
@@ -168,7 +149,7 @@ openspec/changes/
 | Branch | Status | Last Update |
 |--------|--------|-------------|
 | `main` | Producción | F1+F2+F5 merged |
-| `develop` | Desarrollo | Copilot V2 completo, pendiente push |
+| `develop` | Desarrollo | IA Strategy v4.0 completo ✅ |
 
 ---
 
@@ -192,7 +173,7 @@ Colores según design system:
 - DeepSeek API
 - react-markdown rendering
 
-### V2 ( Abril 2026)
+### V2 (Abril 2026)
 - Voice input (Web Speech API)
 - Image upload (screenshot bancarios)
 - CSV generation (compatible Gema import)
@@ -200,6 +181,28 @@ Colores según design system:
 - Delete chat con confirmación
 - Auto-reset after INSERT
 
+### IA Strategy (v4.0 - Separado del Copilot)
+- ruta: `/dashboard/ia-strategy`
+- Chat-first: Asesor Estratégico Gema
+- Data Panel: MetricsGrid + TrendChart + GoalsList
+- Sidebar: 64px, un solo sidebar (fix ghost bug)
+
 ---
 
-_Ultima actualizacion: Copilot V2 completo, listo para push_
+## 🏗️ Arquitectura IA Strategy
+
+```
+┌─────────┬────────────────────────────────┬──────────────┐
+│ Sidebar │     ChatWorkspace              │ DataPanel    │
+│  (64px) │     Asesor Estratégico Gema    │   (380px)    │
+│   UNO   │     [StrategyChat]             │ MetricsGrid │
+└─────────┴────────────────────────────────┴──────────────┘
+```
+
+Componentes nuevos:
+- `ChatWorkspace.tsx` - Wrapper del chat central
+- `DataPanel.tsx` - Panel derecho (380px)
+
+---
+
+_Ultima actualizacion: IA Strategy v4.0 completo (Ghost Sidebar Bug fix)_

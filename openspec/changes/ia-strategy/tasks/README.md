@@ -1,7 +1,10 @@
-# IA Strategy - Task Breakdown (v2)
+# IA Strategy - Task Breakdown (v3 - Final)
 
 ## Meta
-Reimplementar `/dashboard/ia-strategy` con arquitectura de 3 columnas: Sidebar(64px) + ChatWorkspace + DataPanel(380px)
+Reimplementar `/dashboard/ia-strategy` con arquitectura de 3 columnas estrictas:
+- Sidebar (64px, colapsado) - un solo sidebar desde dashboard/layout.tsx
+- Chat Workspace (centro) - "Asesor Estratégico Gema"
+- Data Panel (380px) - MetricsGrid, TrendChart, GoalsList
 
 ## Reutilizar lógica existente:
 - `StrategyChat` → `ChatWorkspace` (wrapper)
@@ -10,9 +13,9 @@ Reimplementar `/dashboard/ia-strategy` con arquitectura de 3 columnas: Sidebar(6
 
 ---
 
-## T1: Crear ChatWorkspace.tsx
+## T1: Crear ChatWorkspace.tsx ✅
 **Archivo:** `src/components/strategy/ChatWorkspace.tsx`
-**Dependencias:** Ninguna
+**Status:** COMPLETADO
 
 **Descripción:**
 Componente wrapper que contiene:
@@ -20,27 +23,17 @@ Componente wrapper que contiene:
 - Área de mensajes (usa StrategyChat internamente)
 - Input fijo al fondo
 
-**Props:**
-```typescript
-interface ChatWorkspaceProps {
-  strategyData: StrategyData;
-  chatHistory: StrategyChatMessage[];
-  onAddMessage: (msg: StrategyChatMessage) => void;
-  onClearChat: () => void;
-}
-```
-
 **Checklist:**
-- [ ] Header con título y Sparkles
-- [ ] EstrategiaChat integrado
-- [ ] Max-width 3xl centrado
-- [ ] Scroll vertical en mensajes
+- [x] Header con título y Sparkles
+- [x] EstrategiaChat integrado
+- [x] Max-width 3xl centrado
+- [x] Scroll vertical en mensajes
 
 ---
 
-## T2: Crear DataPanel.tsx
+## T2: Crear DataPanel.tsx ✅
 **Archivo:** `src/components/strategy/DataPanel.tsx`
-**Dependencias:** MetricsGrid, TrendChart, GoalsList
+**Status:** COMPLETADO
 
 **Descripción:**
 Panel derecho de 380px que contiene:
@@ -48,78 +41,75 @@ Panel derecho de 380px que contiene:
 - TrendChart (gráfico de 6 meses)
 - GoalsList (lista de metas)
 
-**Props:**
-```typescript
-interface DataPanelProps {
-  metrics: CalculatedMetrics;
-  goals: Goal[];
-  historicalMargins: Array<{month: string; margin: number}>;
-}
-```
-
 **Checklist:**
-- [ ] Width 380px fijo
-- [ ] Border-left zinc-800
-- [ ] Fondo zinc-900/10
-- [ ] Stack vertical: MetricsGrid → TrendChart → GoalsList
-- [ ] Scroll independiente
+- [x] Width 380px fijo
+- [x] Border-left zinc-800
+- [x] Fondo zinc-900/10
+- [x] Stack vertical: MetricsGrid → TrendChart → GoalsList
+- [x] Scroll independiente
 
 ---
 
-## T3: Reescribir ia-strategy/layout.tsx
+## T3: Eliminar ia-strategy/layout.tsx ✅ (ELIMINADO)
 **Archivo:** `src/app/dashboard/ia-strategy/layout.tsx`
-**Dependencias:** Sidebar, ChatWorkspace, DataPanel
+**Status:** ELIMINADO (causaba Ghost Sidebar Bug)
 
 **Descripción:**
-Layout de 3 columnas SIN sidebar duplicado.
+El layout de ia-strategy causaba duplicación del sidebar porque:
+- `dashboard/layout.tsx` renderiza un Sidebar
+- `ia-strategy/layout.tsx` renderizaba OTRO Sidebar
 
-**Estructura:**
-```
-layout.tsx
-├── Sidebar (64px, collapsed)
-├── ChatWorkspace (flex-1)
-└── DataPanel (380px)
-```
+**Solución:**
+- ELIMINADO `ia-strategy/layout.tsx`
+- La lógica de sidebar colapsado se maneja en `dashboard/layout.tsx`
 
 **Checklist:**
-- [ ] Un solo Sidebar (no duplicar)
-- [ ] 3 columnas estrictas
-- [ ] Sin StrategyPanel anidado
-- [ ] AssistantFAB oculto
+- [x] Layout eliminado
+- [x] No más duplicación de sidebar
 
 ---
 
-## T4: Actualizar ia-strategy/page.tsx
+## T4: Actualizar ia-strategy/page.tsx ✅
 **Archivo:** `src/app/dashboard/ia-strategy/page.tsx`
-**Dependencias:** useStrategyData, ChatWorkspace, DataPanel
+**Status:** COMPLETADO
 
 **Descripción:**
-Page que conecta datos con componentes.
+Page que conecta datos con componentes de 2 columnas:
+- ChatWorkspace (centro, flex-1)
+- DataPanel (derecha, 380px)
 
 **Checklist:**
-- [ ] useStrategyData hook
-- [ ] ChatWorkspace con datos
-- [ ] DataPanel con métricas
-- [ ] Chat history en localStorage
-- [ ] Botón limpiar chat
+- [x] useStrategyData hook
+- [x] ChatWorkspace con datos
+- [x] DataPanel con métricas
+- [x] Chat history en localStorage
+- [x] Botón limpiar chat
 
 ---
 
-## T5: Eliminar/Archivar StrategyPanel.tsx
-**Archivo:** `src/components/strategy/StrategyPanel.tsx`
-**Dependencias:** Ninguna
+## T5: Dashboard layout inteligente ✅
+**Archivo:** `src/app/dashboard/layout.tsx`
+**Status:** COMPLETADO
 
 **Descripción:**
-El viejo StrategyPanel se reemplaza por ChatWorkspace + DataPanel.
+Layout padre detecta `/dashboard/ia-strategy` y:
+- Colapsa sidebar a 64px
+- Oculta Header (no necesita header extra)
+- Oculta AssistantFAB
+- No renderiza más nada - solo el children
 
-**Acción:**
-- Mover a `strategy/legacy/StrategyPanel.tsx` O
-- Eliminar si no se necesita backward compatibility
+**Checklist:**
+- [x] Detecta pathname === '/dashboard/ia-strategy'
+- [x] Sidebar colapsado a 64px
+- [x] Sin Header en ia-strategy
+- [x] AssistantFAB oculto
+- [x] Un solo sidebar en todo el app
 
 ---
 
-## T6: Verificar Ghost Sidebar Bug Fix
-**Dependencias:** T3
+## T6: Verificar Ghost Sidebar Bug Fix ✅
+**Dependencias:** T5
+**Status:** VERIFICADO
 
 **Descripción:**
 Verificar que al entrar a `/dashboard/ia-strategy`:
@@ -128,34 +118,69 @@ Verificar que al entrar a `/dashboard/ia-strategy`:
 - No hay "ghost sidebar" expandido
 
 **Checklist:**
-- [ ] Inspect DOM: solo 1 Sidebar
-- [ ] Ancho correcto: 64px
-- [ ] Iconos visibles sin texto
+- [x] Inspect DOM: solo 1 Sidebar
+- [x] Ancho correcto: 64px
+- [x] Iconos visibles sin texto
+- [x] Arquitectura visual correcta:
+  ```
+  ┌─────────┬────────────────────────────────┬──────────────┐
+  │ Sidebar │     ChatWorkspace              │ DataPanel    │
+  │  (64px) │     Asesor Estratégico Gema    │   (380px)    │
+  │   UNO   │     [StrategyChat]             │ MetricsGrid │
+  └─────────┴────────────────────────────────┴──────────────┘
+  ```
 
 ---
 
-## T7: Build & TypeCheck
-**Dependencias:** T1-T6
+## T7: Build & TypeCheck ✅
+**Status:** PASSED
 
 **Descripción:**
 Verificar que todo compila.
 
 **Checklist:**
-- [ ] `npm run build` pasa
-- [ ] `npm run typecheck` pasa
-- [ ] No hay errores de TypeScript
+- [x] `npm run build` pasa
+- [x] `npm run typecheck` pasa
+- [x] No hay errores de TypeScript
 
 ---
 
-## Orden de ejecución
+## T8: Commit & Push ✅
+**Status:** COMPLETADO
 
 ```
-T1 (ChatWorkspace) → T2 (DataPanel) → T3 (layout) → T4 (page) → T5 (cleanup) → T6 (verify fix) → T7 (build)
+[develop 1a4c105] fix: resolve ghost sidebar bug in IA Strategy
+```
+
+---
+
+## Tareas Pendientes (de SDD anterior)
+
+| Task | Descripción | Status |
+|------|-------------|--------|
+| T15 | Prompt Hardening (Security tests) | PENDING - requiere manual testing con DeepSeek |
+
+---
+
+## Arquitectura Final
+
+```
+┌─────────┬────────────────────────────────┬──────────────┐
+│ Sidebar │     ChatWorkspace              │ DataPanel    │
+│  (64px) │     "Asesor Estratégico Gema"  │   (380px)    │
+│   UNO   │     [StrategyChat]             │ MetricsGrid │
+│  solo   │     [input]                    │ TrendChart   │
+│         │                                │ GoalsList    │
+└─────────┴────────────────────────────────┴──────────────┘
 ```
 
 ---
 
 ## Notas
 
-- T15 (Prompt Hardening security tests) queda pendiente de previous SDD
-- Build debe pasar antes de marcar como completo
+- Build PASSED ✅
+- Ghost Sidebar Bug ELIMINADO ✅
+- Un solo source of truth para sidebar ✅
+
+- Métricas muestran $0 porque faltan datos de entrada (costos fijos, cash) - NO es bug del layout
+- Pendiente: configurar datos de entrada para ver métricas reales
