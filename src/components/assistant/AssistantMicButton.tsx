@@ -9,14 +9,12 @@ import { cn } from '@/lib/utils'
 interface AssistantMicButtonProps {
   onTranscript: (text: string) => void
   disabled?: boolean
-  currentInput?: string
   onInterimChange?: (text: string) => void
 }
 
 export function AssistantMicButton({
   onTranscript,
   disabled = false,
-  currentInput = '',
   onInterimChange,
 }: AssistantMicButtonProps) {
   const {
@@ -31,9 +29,9 @@ export function AssistantMicButton({
 
   useEffect(() => {
     if (isListening && interimTranscript && onInterimChange) {
-      onInterimChange(currentInput + ' ' + interimTranscript)
+      onInterimChange(interimTranscript)
     }
-  }, [interimTranscript, isListening, currentInput, onInterimChange])
+  }, [interimTranscript, isListening, onInterimChange])
 
   const handleClick = () => {
     if (isListening) {

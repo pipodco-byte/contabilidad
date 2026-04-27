@@ -1,0 +1,48 @@
+state: apply
+created: 2026-04-25
+last_modified: 2026-04-25
+
+artifacts:
+  spec:
+    - spec/README.md
+  design:
+    - design/README.md
+  tasks:
+    - tasks/README.md
+
+current_phase: apply
+
+change_description: |
+  Fix para el infinite loop causado por el live transcript del micrófono.
+
+  Problema anterior:
+  - useEffect en AssistantMicButton causaba infinite loop
+  - currentInput como prop causaba re-renders
+  - onInterimChange no era estable
+
+  Solución refinada:
+  - Eliminar currentInput prop (desacoplamiento total)
+  - useCallback estable en handleInterimChange (vacío [])
+  - useEffect solo depende de interimTranscript
+  - El botón solo notifica, no sabe del estado del input
+
+completed_tasks: []
+
+pending_tasks:
+  - T1: Update AssistantSheet.tsx - useCallback estable
+  - T2: Update AssistantMicButton.tsx - remove currentInput
+  - T3: Build & TypeCheck
+  - T4: Verify no infinite loop
+  - T5: Commit (sin push)
+
+dependencies:
+  - T1 before T2
+  - T2 before T3
+  - T3 before T4
+  - T4 before T5
+
+notes: |
+  Refinamiento Boutique Engineering:
+  - Stability total (useCallback vacío)
+  - Desacoplamiento (botón no conoce estado)
+  - Performance (menos re-renders)

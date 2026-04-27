@@ -13,7 +13,7 @@ interface UseAssistantChatReturn {
   messages: Message[]
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>
   input: string
-  setInput: (input: string) => void
+  setInput: React.Dispatch<React.SetStateAction<string>>
   isLoading: boolean
   pendingTransaction: TransaccionData | null
   error: string | null

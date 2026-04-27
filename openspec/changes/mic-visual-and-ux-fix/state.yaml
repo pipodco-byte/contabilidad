@@ -1,4 +1,4 @@
-state: apply
+state: completed
 created: 2026-04-25
 last_modified: 2026-04-25
 
@@ -10,7 +10,7 @@ artifacts:
   tasks:
     - tasks/README.md
 
-current_phase: apply
+current_phase: completed
 
 change_description: |
   Fix para el micrófono del Copilot:
@@ -20,26 +20,21 @@ change_description: |
   Problema: El texto iba directo al chat sin poder editar
   Solución: Mostrar interim en input, usuario tiene control total
 
-completed_tasks: []
+completed_tasks:
+  - T1: Modificar voice-utils.ts - Agregar interimTranscript ✅
+  - T2: Modificar AssistantMicButton.tsx - Wave Animation + Props ✅
+  - T3: Modificar AssistantSheet.tsx - Integrar input state ✅
+  - T4: Build & TypeCheck ✅ (PASSED)
+  - T5: Commit (sin push) ✅ (develop 9b0ec91)
 
-pending_tasks:
-  - T1: Modificar voice-utils.ts - Agregar interimTranscript
-  - T2: Modificar AssistantMicButton.tsx - Wave Animation + Props
-  - T3: Modificar AssistantSheet.tsx - Integrar input state
-  - T4: Build & TypeCheck
-  - T5: Commit (sin push)
-
-dependencies:
-  - T1 before T2
-  - T2 before T3
-  - T3 before T4
-  - T4 before T5
+pending_tasks: []
 
 notes: |
-  User requirements:
-  - Wave animation (no pulse feo)
-  - Ver texto mientras hablo en el input
-  - Poder editar antes de enviar
-  - Control total sobre el texto
+  Wave animation: mic-wave 1.4s ease-in-out infinite
+  Live preview: interimTranscript → input en tiempo real
+  User control: puede editar antes de enviar
+  Build PASSED ✅
+  Commit sin push ✅
 
-  Commit only, no push.
+commit: 9b0ec91
+branch: develop (NOT PUSHED)

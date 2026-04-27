@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { X, Send, Trash2 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -117,6 +117,10 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
     setInput(text)
   }
 
+  const handleInterimChange = useCallback((interimText: string) => {
+    setInput((current) => `${current} ${interimText}`.trim())
+  }, [])
+
   const handleImageSelected = (base64: string) => {
     setAttachedImage(base64)
     const extracted = extractDataFromText(base64)
@@ -223,8 +227,7 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
             <AssistantMicButton
               onTranscript={handleTranscript}
               disabled={isLoading}
-              currentInput={input}
-              onInterimChange={setInput}
+              onInterimChange={handleInterimChange}
             />
             <ImageUpload
               onImageSelected={handleImageSelected}
