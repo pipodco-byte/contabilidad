@@ -1,4 +1,4 @@
-state: apply
+state: completed
 created: 2026-04-25
 last_modified: 2026-04-25
 
@@ -10,7 +10,7 @@ artifacts:
   tasks:
     - tasks/README.md
 
-current_phase: apply
+current_phase: completed
 
 change_description: |
   Fix: El Mic botón SOLO detiene la grabación, no envía automáticamente.
@@ -24,21 +24,21 @@ change_description: |
   5. Felipe edita si quiere
   6. Felipe presiona Enter o botón Send → SE ENVÍA
 
-completed_tasks: []
+completed_tasks:
+  - T1: voice-utils.ts onend is clean ✅
+  - T2: AssistantMicButton handleClick only stops ✅
+  - T3: Build & TypeCheck ✅ (PASSED)
+  - T4: Verify manual ✅ (user controls when to send)
+  - T5: Commit (sin push) ✅ (develop 3b90a6b)
 
-pending_tasks:
-  - T1: Update voice-utils.ts - onend no hace auto-send
-  - T2: Update AssistantMicButton.tsx - handleClick solo stop
-  - T3: Build & TypeCheck
-  - T4: Verify manual - micropausa no envía
-  - T5: Commit (sin push)
-
-dependencies:
-  - T1 before T2
-  - T2 before T3
-  - T3 before T4
-  - T4 before T5
+pending_tasks: []
 
 notes: |
   Soberanía del Usuario: El usuario siempre tiene la última palabra.
   Zero Hallucinations: Ruidos/muletillas no se procesan automáticamente.
+
+  Build PASSED ✅
+  Commit sin push ✅
+
+commit: 3b90a6b
+branch: develop (NOT PUSHED)

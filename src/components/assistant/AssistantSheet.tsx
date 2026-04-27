@@ -99,6 +99,8 @@ const markdownComponents: Record<string, React.ComponentType<any>> = {
 export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantSheetProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [attachedImage, setAttachedImage] = useState<string | null>(null)
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const {
     messages,
@@ -158,6 +160,15 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
       }])
     }
   }, [isOpen])
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: isFirstLoad ? 'instant' : 'smooth'
+      })
+    }
+    setIsFirstLoad(false)
+  }, [messages, isFirstLoad])
 
   if (!isOpen) return null
 
@@ -233,6 +244,8 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
               <PreVizCard transaction={pendingTransaction} onConfirm={handleConfirm} onCorrect={handleCorrect} />
             </div>
           )}
+
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="p-4 border-t border-zinc-800">

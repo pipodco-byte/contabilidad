@@ -1,0 +1,40 @@
+state: apply
+created: 2026-04-25
+last_modified: 2026-04-25
+
+artifacts:
+  spec:
+    - spec/README.md
+  design:
+    - design/README.md
+  tasks:
+    - tasks/README.md
+
+current_phase: apply
+
+change_description: |
+  Auto-scroll en el chat del Copilot para mejor UX.
+
+  Comportamiento diferenciado:
+  - Al abrir chat: scroll instantáneo al último mensaje
+  - Nuevo mensaje: scroll suave (smooth) para que el ojo siga
+
+completed_tasks: []
+
+pending_tasks:
+  - T1: Crear SDD auto-scroll
+  - T2: Implementar scroll en AssistantSheet
+  - T3: Build & TypeCheck
+  - T4: Verify
+  - T5: Commit (sin push)
+
+dependencies:
+  - T1 before T2
+  - T2 before T3
+  - T3 before T4
+  - T4 before T5
+
+notes: |
+  Issue: Chat no hace scroll automáticamente
+  Solution: useRef + useEffect + scrollIntoView con behavior diferenciado
+  Al abrir: instant | Nuevo mensaje: smooth
