@@ -8,6 +8,7 @@ import { Sidebar } from '@/components/layout/sidebar'
 import { Header } from '@/components/layout/header'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Toaster } from '@/components/ui/sonner'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { AssistantFAB } from '@/components/assistant/AssistantFAB'
 import { AssistantSheet } from '@/components/assistant/AssistantSheet'
 
@@ -50,24 +51,20 @@ export default function DashboardLayout({
     )
   }
 
-  if (isIAStrategy) {
-    return (
-      <div className="flex h-screen overflow-hidden bg-background">
-        <Sidebar
-          collapsed={true}
-          onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
-        />
+  const content = isIAStrategy ? (
+    <div className="flex h-screen overflow-hidden bg-background">
+      <Sidebar
+        collapsed={true}
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
 
-        <main className="flex-1 relative overflow-hidden">
-          {children}
-        </main>
+      <main className="flex-1 relative overflow-hidden">
+        {children}
+      </main>
 
-        <Toaster richColors />
-      </div>
-    )
-  }
-
-  return (
+      <Toaster richColors />
+    </div>
+  ) : (
     <div className="flex h-screen overflow-hidden bg-background">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
@@ -110,5 +107,11 @@ export default function DashboardLayout({
         onClose={() => setIsAssistantOpen(false)}
       />
     </div>
+  )
+
+  return (
+    <TooltipProvider delayDuration={0}>
+      {content}
+    </TooltipProvider>
   )
 }
