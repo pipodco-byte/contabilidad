@@ -113,10 +113,6 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
     clearHistory,
   } = useAssistantChat()
 
-  const handleTranscript = (text: string) => {
-    setInput(text)
-  }
-
   const handleInterimChange = useCallback((interimText: string) => {
     setInput((current) => `${current} ${interimText}`.trim())
   }, [])
@@ -242,7 +238,6 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
         <div className="p-4 border-t border-zinc-800">
           <form onSubmit={(e) => { e.preventDefault(); handleSend() }} className="flex items-center gap-2">
             <AssistantMicButton
-              onTranscript={handleTranscript}
               disabled={isLoading}
               onInterimChange={handleInterimChange}
             />

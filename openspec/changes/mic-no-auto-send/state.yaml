@@ -1,0 +1,44 @@
+state: apply
+created: 2026-04-25
+last_modified: 2026-04-25
+
+artifacts:
+  spec:
+    - spec/README.md
+  design:
+    - design/README.md
+  tasks:
+    - tasks/README.md
+
+current_phase: apply
+
+change_description: |
+  Fix: El Mic botón SOLO detiene la grabación, no envía automáticamente.
+  El usuario tiene control total: revisa/edita en textarea y presiona Enter o Send.
+
+  Flujo corregido:
+  1. Felipe presiona Mic → startListening()
+  2. Felipe habla → texto aparece en textarea (live)
+  3. Felipe deja de hablar → auto-stop (mic se apaga)
+  4. Texto queda en textarea para revisión
+  5. Felipe edita si quiere
+  6. Felipe presiona Enter o botón Send → SE ENVÍA
+
+completed_tasks: []
+
+pending_tasks:
+  - T1: Update voice-utils.ts - onend no hace auto-send
+  - T2: Update AssistantMicButton.tsx - handleClick solo stop
+  - T3: Build & TypeCheck
+  - T4: Verify manual - micropausa no envía
+  - T5: Commit (sin push)
+
+dependencies:
+  - T1 before T2
+  - T2 before T3
+  - T3 before T4
+  - T4 before T5
+
+notes: |
+  Soberanía del Usuario: El usuario siempre tiene la última palabra.
+  Zero Hallucinations: Ruidos/muletillas no se procesan automáticamente.

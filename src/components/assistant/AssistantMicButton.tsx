@@ -7,24 +7,20 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { cn } from '@/lib/utils'
 
 interface AssistantMicButtonProps {
-  onTranscript: (text: string) => void
   disabled?: boolean
   onInterimChange?: (text: string) => void
 }
 
 export function AssistantMicButton({
-  onTranscript,
   disabled = false,
   onInterimChange,
 }: AssistantMicButtonProps) {
   const {
-    transcript,
     interimTranscript,
     isListening,
     isSupported,
     startListening,
     stopListening,
-    resetTranscript,
   } = useSpeechRecognition()
 
   useEffect(() => {
@@ -36,11 +32,6 @@ export function AssistantMicButton({
   const handleClick = () => {
     if (isListening) {
       stopListening()
-      const finalText = transcript.trim() || interimTranscript.trim()
-      if (finalText) {
-        onTranscript(finalText)
-        resetTranscript()
-      }
     } else {
       startListening()
     }

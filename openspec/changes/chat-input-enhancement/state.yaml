@@ -1,4 +1,4 @@
-state: apply
+state: completed
 created: 2026-04-25
 last_modified: 2026-04-25
 
@@ -10,30 +10,36 @@ artifacts:
   tasks:
     - tasks/README.md
 
-current_phase: apply
+current_phase: completed
 
 change_description: |
   Mejorar input del Copilot:
   1. Textarea con altura dinámica (crece hasta 160px)
   2. Enter envía mensaje, Shift+Enter nueva línea
 
-completed_tasks: []
+completed_tasks:
+  - T1: Agregar ref y useEffect altura dinámica ✅
+  - T2: Agregar handler onKeyDown ✅
+  - T3: Cambiar input a textarea ✅
+  - T4: Build & TypeCheck ✅ (PASSED)
+  - T5: Verify ✅ (manual testing)
+  - T6: Commit (sin push) ✅ (develop f011a99)
 
-pending_tasks:
-  - T1: Agregar ref y useEffect altura dinámica
-  - T2: Agregar handler onKeyDown
-  - T3: Cambiar input a textarea
-  - T4: Build & TypeCheck
-  - T5: Verify
-  - T6: Commit (sin push)
-
-dependencies:
-  - T1 before T2
-  - T2 before T3
-  - T3 before T4
-  - T4 before T5
-  - T5 before T6
+pending_tasks: []
 
 notes: |
-  User requirement: textarea que crezca con el contenido
-  + Enter para enviar, Shift+Enter para nueva línea
+  Textarea behavior:
+  - Starts small (min-h-[44px])
+  - Grows with content (scrollHeight based)
+  - Max 160px (max-h-40)
+  - Scroll if overflow
+
+  Enter behavior:
+  - Enter without shift → sends message
+  - Shift+Enter → new line
+
+  Build PASSED ✅
+  Commit sin push ✅
+
+commit: f011a99
+branch: develop (NOT PUSHED)
