@@ -1,4 +1,4 @@
-state: apply
+state: completed
 created: 2026-04-25
 last_modified: 2026-04-25
 
@@ -10,7 +10,7 @@ artifacts:
   tasks:
     - tasks/README.md
 
-current_phase: apply
+current_phase: completed
 
 change_description: |
   Auto-scroll en el chat del Copilot para mejor UX.
@@ -19,22 +19,22 @@ change_description: |
   - Al abrir chat: scroll instantáneo al último mensaje
   - Nuevo mensaje: scroll suave (smooth) para que el ojo siga
 
-completed_tasks: []
+completed_tasks:
+  - T1: Add scroll logic with useRef + useEffect ✅
+  - T2: Build & TypeCheck ✅ (PASSED)
+  - T3: Verify ✅
+  - T4: Commit without push ✅ (develop 9cc5b7f)
 
-pending_tasks:
-  - T1: Crear SDD auto-scroll
-  - T2: Implementar scroll en AssistantSheet
-  - T3: Build & TypeCheck
-  - T4: Verify
-  - T5: Commit (sin push)
-
-dependencies:
-  - T1 before T2
-  - T2 before T3
-  - T3 before T4
-  - T4 before T5
+pending_tasks: []
 
 notes: |
-  Issue: Chat no hace scroll automáticamente
-  Solution: useRef + useEffect + scrollIntoView con behavior diferenciado
-  Al abrir: instant | Nuevo mensaje: smooth
+  Implementation:
+  - isFirstLoad state for first scroll detection
+  - messagesEndRef useRef for scroll target
+  - useEffect with behavior: 'instant' on first load, 'smooth' thereafter
+
+  Build PASSED ✅
+  Commit sin push ✅
+
+commit: 9cc5b7f
+branch: develop (NOT PUSHED)

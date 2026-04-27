@@ -7,6 +7,7 @@ import {
   RegistrarTransaccionSchema,
   generarTransaccionBold,
   calcularComisionBold,
+  tools,
 } from '@/lib/assistant-tools'
 
 const supabase = createClient(
@@ -37,6 +38,8 @@ export async function POST(request: NextRequest) {
       model: deepseek('deepseek-chat'),
       system: buildSystemPrompt(),
       messages,
+      tools: tools as any,
+      toolChoice: 'auto',
     })
 
     return result.toTextStreamResponse()

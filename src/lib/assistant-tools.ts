@@ -82,9 +82,32 @@ export function generarTransaccionBold(
   }
 }
 
+export const TransaccionItemSchema = z.object({
+  monto: z.number().positive('Monto debe ser mayor a 0'),
+  descripcion: z.string().min(1, 'Descripción requerida'),
+  tipo: z.enum(['Ingreso', 'Egreso']),
+  fecha: z.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).optional(),
+  medio_pago: z.enum(MEDIOS_PAGO).optional().default('Efectivo'),
+  categoria: z.enum(CATEGORIAS).optional(),
+  sub_categoria: z.string().optional(),
+  estado_iva: z.enum(ESTADOS_IVA).optional().default('Exento'),
+  comentarios: z.string().optional(),
+})
+
+export const LoteTransaccionesSchema = z.object({
+  transacciones: z.array(TransaccionItemSchema).min(1, 'Al menos una transacción requerida'),
+})
+
+export type TransaccionItem = z.infer<typeof TransaccionItemSchema>
+export type LoteTransaccionesData = z.infer<typeof LoteTransaccionesSchema>
+
 export const tools = {
   registrar_transaccion: {
     description: 'Registra una transacción contable con los 9 datos obligatorios',
     parameters: RegistrarTransaccionSchema,
+  },
+  registrar_lote_transacciones: {
+    description: 'Registra múltiples transacciones a partir de un dictamen de Gema',
+    parameters: LoteTransaccionesSchema,
   },
 } as const

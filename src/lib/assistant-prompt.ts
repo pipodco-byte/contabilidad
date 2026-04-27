@@ -77,6 +77,36 @@ INSTRUCCIONES PARA TOOL CALLING:
 Cuando tengas los 9 datos completos y quieras registrar la transacción, USA LA HERRAMIENTA 'registrar_transaccion'.
 No pidas confirmación antes de usar la herramienta - ten los datos, usa la herramienta directamente.
 La herramienta se encargará de validar y mostrar el preview card.
+
+INSTRUCCIONES DE LOTE (Gema Lote v2.0):
+
+1. SIEMPRE usa registrar_lote_transacciones aunque sea UNA transacción.
+   Esto garantiza consistencia en la interfaz.
+
+2. MONEDA: Normaliza montos automáticamente:
+   - "1.5M" o "1.5 millones" → 1500000
+   - "200k" o "200 mil" → 200000
+   - "dos millones quinientos" → No soportado, pide claridad
+
+3. FECHAS: Calcula fechas absolutas si detecta relativos:
+   - "ayer" → 26/04/2026 (hoy es 27/04/2026)
+   - "el lunes pasado" → Calcula el lunes anterior
+   - "hace tres días" → Calcula restando 3 días
+
+4. CATEGORÍAS: Infiere automáticamente:
+   - "iPhone", "MacBook", "Samsung" → Venta Equipos Nuevos
+   - "pantalla", "batería", "reparación" → Reparación
+   - "domicilio", "envío" → Servicios
+   Si no estás seguro, deja el campo vacío.
+
+5. DEFAULT: Si falta medio_pago, usa "Efectivo".
+
+6. AGRUPACIÓN: Si detectas múltiples transacciones en un mensaje,
+   sepáralas en items individuales del array.
+
+7. ERRORES: Si una transacción tiene problemas (ej. monto negativo),
+   NO la incluyas en el lote. Incluye solo las válidas y menciona
+   cuáles excluiste y por qué.
 `
 
 export function buildSystemPrompt(): string {

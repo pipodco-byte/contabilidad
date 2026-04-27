@@ -5,7 +5,8 @@ import { X, Send, Trash2 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useAssistantChat } from '@/hooks/useAssistantChat'
-import { TransaccionData } from '@/lib/assistant-tools'
+import { TransaccionData, TransaccionItem } from '@/lib/assistant-tools'
+import { BatchCard } from './BatchCard'
 import { AssistantMicButton } from './AssistantMicButton'
 import { ImageUpload } from './ImageUpload'
 import { extractDataFromText } from '@/lib/image-extract'
@@ -100,6 +101,7 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [attachedImage, setAttachedImage] = useState<string | null>(null)
   const [isFirstLoad, setIsFirstLoad] = useState(true)
+  const [pendingLote, setPendingLote] = useState<TransaccionItem[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const {
@@ -127,6 +129,48 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
 
     const userMessage = `Screenshot: ${fechaStr}, ${montoStr}, ${extracted.medio_pago || '[medio_pago]'}, Ref: ${extracted.referencia || 'N/A'}`
     setInput(userMessage)
+  }
+
+  const handleConfirmLote = async () => {
+    try {
+      for (const transaccion of pendingLote) {
+        const response = await fetch('/api/assistant/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-user-id': 'anonymous',
+          },
+          body: JSON.stringify({ pendingTransaction: transaccion }),
+        })
+        const result = await response.json()
+        if (result.type === 'error') {
+          toast.error(result.message)
+        }
+      }
+      setPendingLote([])
+      toast.success('Lote confirmado')
+    } catch {
+      toast.error('Error al confirmar lote')
+    }
+  }
+
+  const handleEditItem = (index: number, item: TransaccionItem) => {
+    console.log('Edit item:', index, item)
+  }
+
+  const handleDeleteItem = (index: number) => {
+    setPendingLote((prev) => prev.filter((_, i) => i !== index))
+  }
+
+  const handleCancelLote = () => {
+    setPendingLote([])
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: 'assistant' as const,
+        content: 'Entendido, Felipe. El lote ha sido limpiado para mantener tu contabilidad impecable. ¿Quieres intentar un nuevo dictamen o registrar manualmente?',
+      },
+    ])
   }
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -242,6 +286,19 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
           {pendingTransaction && (
             <div className="mt-4">
               <PreVizCard transaction={pendingTransaction} onConfirm={handleConfirm} onCorrect={handleCorrect} />
+            </div>
+          )}
+
+          {pendingLote.length > 0 && (
+            <div className="mt-4">
+              <BatchCard
+                transacciones={pendingLote}
+                onConfirm={handleConfirmLote}
+                onEdit={handleEditItem}
+                onDelete={handleDeleteItem}
+                onCancel={handleCancelLote}
+                isLoading={isLoading}
+              />
             </div>
           )}
 

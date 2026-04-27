@@ -1,0 +1,20 @@
+status: completed
+phase: apply
+created: 2026-04-27
+updated: 2026-04-27
+
+artifacts:
+  spec: spec/README.md
+  design: design/README.md
+  tasks: tasks/README.md
+
+progress:
+  task_1_schema: completed
+  task_2_api: completed
+  task_3_prompt: completed
+  task_4_batchcard: completed
+  task_5_integration: completed
+  task_6_css: completed
+  task_7_verification: completed
+
+next_task: null
