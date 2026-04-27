@@ -1,0 +1,45 @@
+state: apply
+created: 2026-04-25
+last_modified: 2026-04-25
+
+artifacts:
+  spec:
+    - spec/README.md
+  design:
+    - design/README.md
+  tasks:
+    - tasks/README.md
+
+current_phase: apply
+
+change_description: |
+  Fix para el micrófono del Copilot:
+  1. Wave animation custom (reemplazar animate-pulse feo)
+  2. Live transcript en input para edición antes de enviar
+
+  Problema: El texto iba directo al chat sin poder editar
+  Solución: Mostrar interim en input, usuario tiene control total
+
+completed_tasks: []
+
+pending_tasks:
+  - T1: Modificar voice-utils.ts - Agregar interimTranscript
+  - T2: Modificar AssistantMicButton.tsx - Wave Animation + Props
+  - T3: Modificar AssistantSheet.tsx - Integrar input state
+  - T4: Build & TypeCheck
+  - T5: Commit (sin push)
+
+dependencies:
+  - T1 before T2
+  - T2 before T3
+  - T3 before T4
+  - T4 before T5
+
+notes: |
+  User requirements:
+  - Wave animation (no pulse feo)
+  - Ver texto mientras hablo en el input
+  - Poder editar antes de enviar
+  - Control total sobre el texto
+
+  Commit only, no push.

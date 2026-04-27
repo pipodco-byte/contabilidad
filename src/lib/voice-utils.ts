@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 
 interface UseSpeechRecognitionReturn {
   transcript: string
+  interimTranscript: string
   isListening: boolean
   isSupported: boolean
   startListening: () => void
@@ -13,6 +14,7 @@ interface UseSpeechRecognitionReturn {
 
 export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   const [transcript, setTranscript] = useState('')
+  const [interimTranscript, setInterimTranscript] = useState('')
   const [isListening, setIsListening] = useState(false)
   const [isSupported, setIsSupported] = useState(false)
   const recognitionRef = useRef<any>(null)
@@ -28,27 +30,30 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
 
       recognitionRef.current.onresult = (event: any) => {
         let finalTranscript = ''
-        let interimTranscript = ''
+        let interim = ''
 
         for (let i = 0; i < event.results.length; i++) {
           const result = event.results[i]
           if (result.isFinal) {
             finalTranscript += result[0].transcript
           } else {
-            interimTranscript += result[0].transcript
+            interim += result[0].transcript
           }
         }
 
-        setTranscript(finalTranscript || interimTranscript)
+        setTranscript(finalTranscript || interim)
+        setInterimTranscript(interim)
       }
 
       recognitionRef.current.onerror = (event: any) => {
         console.error('[Voice] Recognition error:', event.error)
         setIsListening(false)
+        setInterimTranscript('')
       }
 
       recognitionRef.current.onend = () => {
         setIsListening(false)
+        setInterimTranscript('')
       }
     }
   }, [])
@@ -56,6 +61,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   const startListening = useCallback(() => {
     if (recognitionRef.current && isSupported) {
       setTranscript('')
+      setInterimTranscript('')
       setIsListening(true)
       try {
         recognitionRef.current.start()
@@ -70,15 +76,18 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     if (recognitionRef.current && isListening) {
       recognitionRef.current.stop()
       setIsListening(false)
+      setInterimTranscript('')
     }
   }, [isListening])
 
   const resetTranscript = useCallback(() => {
     setTranscript('')
+    setInterimTranscript('')
   }, [])
 
   return {
     transcript,
+    interimTranscript,
     isListening,
     isSupported,
     startListening,

@@ -223,6 +223,8 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
             <AssistantMicButton
               onTranscript={handleTranscript}
               disabled={isLoading}
+              currentInput={input}
+              onInterimChange={setInput}
             />
             <ImageUpload
               onImageSelected={handleImageSelected}
