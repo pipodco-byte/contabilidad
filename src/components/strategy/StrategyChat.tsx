@@ -6,6 +6,7 @@ import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
 import { Button } from '@/components/ui/button';
 import { StrategyMessage } from './StrategyMessage';
 import { StrategyVoiceButton } from './StrategyVoiceButton';
+import { StrategyMiniChart } from './StrategyMiniChart';
 import { toast } from 'sonner';
 
 interface StrategyChatProps {
@@ -140,6 +141,10 @@ export function StrategyChat({
             <Trash2 className="h-4 w-4" />
           </Button>
         )}
+      </div>
+
+      <div className="px-4 py-3 border-b border-zinc-800">
+        <StrategyMiniChart data={[]} />
       </div>
 
       <div className="bg-card border rounded-lg p-3 space-y-3 max-h-64 overflow-y-auto">

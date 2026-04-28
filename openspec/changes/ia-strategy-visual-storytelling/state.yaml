@@ -1,5 +1,5 @@
-status: artifacts_complete
-phase: spec
+status: apply_complete
+phase: apply
 created: 2026-04-28
 updated: 2026-04-28
 
@@ -17,22 +17,17 @@ summary:
   phases: "Fase 4 (Data Viz) + Fase 5 (Narrative)"
   fast_track: Narrative first (uses existing infrastructure)
 
-phases:
+completed:
   fase_5_narrative:
-    name: The Captain's Log (Fast Track)
-    tasks:
-      - T5.1: Update strategy-prompt.ts with Captain's voice
-    effort: low
-    note: Uses existing SQL View + context from Fase 2
+    - T5.1: Updated strategy-prompt.ts with Captain's voice
   fase_4_viz:
-    name: Visual Insights
-    tasks:
-      - T5.2: Create StrategyMiniChart.tsx
-      - T5.3: Integrate chart in StrategyChat
-    effort: medium
+    - T5.2: Created StrategyMiniChart.tsx
+    - T5.3: Integrated chart in StrategyChat
+  verification:
+    - T5.4: Build passes
 
-next_recommended: apply
+next_recommended: verify
 notes:
-  - Fast Track: Narrative can be done immediately (no new components needed)
-  - Data Viz requires MiniComboChart + styling
-  - Both phases use existing infrastructure from Fase 1-3
+  - Build passes without errors
+  - Chart shows empty data (needs real data flow integration)
+  - Narrative tone updated in strategy-prompt.ts

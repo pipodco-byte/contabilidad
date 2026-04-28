@@ -13,12 +13,12 @@
 **Priority:** High (Fast Track - immediate value)
 
 #### Tasks:
-- [ ] T5.1.1: Read current `STRATEGY_ADVISOR_SYSTEM_PROMPT`
-- [ ] T5.1.2: Add "Capitán del navío" role definition
-- [ ] T5.1.3: Add narrative rules (Apertura → Desarrollo → Cierre)
-- [ ] T5.1.4: Add tone guidelines (profesional, cálido, action-oriented)
-- [ ] T5.1.5: Add example response with Capitán voice
-- [ ] T5.1.6: Verify build passes
+- [x] T5.1.1: Read current `STRATEGY_ADVISOR_SYSTEM_PROMPT`
+- [x] T5.1.2: Add "Capitán del navío" role definition
+- [x] T5.1.3: Add narrative rules (Apertura → Desarrollo → Cierre)
+- [x] T5.1.4: Add tone guidelines (profesional, cálido, action-oriented)
+- [x] T5.1.5: Add example response with Capitán voice
+- [x] T5.1.6: Verify build passes
 
 **Verification:** Send test message to IA Strategy → response should have Captain's tone
 
@@ -33,16 +33,16 @@
 **Priority:** High
 
 #### Tasks:
-- [ ] T5.2.1: Create component with recharts AreaChart
-- [ ] T5.2.2: Add 4 data series:
-  - [ ] Area: Ingresos (emerald-500 stroke, emerald-900 fill)
-  - [ ] Area: Egresos (rose-400 stroke, rose-900 fill)
-  - [ ] Line: Gastos Fijos (zinc-400, dashed 4 4)
-  - [ ] Line: Break-even (indigo-500, solid)
-- [ ] T5.2.3: Add XAxis and YAxis hidden
-- [ ] T5.2.4: Add minimal Tooltip (zinc-900 bg, 12px font)
-- [ ] T5.2.5: Set height to 120px, overflow hidden
-- [ ] T5.2.6: Add proper TypeScript types
+- [x] T5.2.1: Create component with recharts AreaChart
+- [x] T5.2.2: Add 4 data series:
+  - [x] Area: Ingresos (emerald-500 stroke, emerald-900 fill)
+  - [x] Area: Egresos (rose-400 stroke, rose-900 fill)
+  - [x] Line: Gastos Fijos (zinc-400, dashed 4 4)
+  - [x] Line: Break-even (indigo-500, solid)
+- [x] T5.2.3: Add XAxis and YAxis hidden
+- [x] T5.2.4: Add minimal Tooltip (zinc-900 bg, 12px font)
+- [x] T5.2.5: Set height to 120px, overflow hidden
+- [x] T5.2.6: Add proper TypeScript types
 
 **Verification:** Component renders without errors in isolation
 
@@ -55,10 +55,10 @@
 **Priority:** High
 
 #### Tasks:
-- [ ] T5.3.1: Import StrategyMiniChart
-- [ ] T5.3.2: Get monthly data from getFinancialContext()
-- [ ] T5.3.3: Add chart above input area (border-b, py-3)
-- [ ] T5.3.4: Style container: px-4, border-zinc-800
+- [x] T5.3.1: Import StrategyMiniChart
+- [x] T5.3.2: Get monthly data from getFinancialContext()
+- [x] T5.3.3: Add chart above input area (border-b, py-3)
+- [x] T5.3.4: Style container: px-4, border-zinc-800
 
 **Verification:** Chart visible in StrategyChat above input
 
@@ -69,9 +69,9 @@
 **Priority:** Critical
 
 #### Tasks:
-- [ ] T5.4.1: Run `npm run build`
-- [ ] T5.4.2: Fix any TypeScript errors
-- [ ] T5.4.3: Verify no console errors
+- [x] T5.4.1: Run `npm run build`
+- [x] T5.4.2: Fix any TypeScript errors (removed unused showLegend param)
+- [x] T5.4.3: Verify no console errors
 
 ---
 
