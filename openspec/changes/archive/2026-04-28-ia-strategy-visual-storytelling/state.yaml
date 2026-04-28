@@ -1,7 +1,8 @@
-status: verify_complete
-phase: verify
+status: archived
+phase: archive
 created: 2026-04-28
-updated: 2026-04-28
+archived: 2026-04-28
+location: openspec/changes/archive/2026-04-28-ia-strategy-visual-storytelling
 
 change_name: ia-strategy-visual-storytelling
 type: enhancement
@@ -28,8 +29,9 @@ completed:
     - T5.4: Build passes
     - verify: All 7 requirements compliant
 
-next_recommended: archive
+next_recommended: none
 notes:
+  - SDD cycle complete
   - Build passes without errors
   - Chart shows empty data (needs real data flow integration)
   - Narrative tone updated in strategy-prompt.ts
