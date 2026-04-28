@@ -1,5 +1,5 @@
-status: proposed
-phase: proposal
+status: apply_in_progress
+phase: apply
 created: 2026-04-28
 updated: 2026-04-28
 
@@ -8,46 +8,56 @@ type: enhancement
 
 artifacts:
   proposal: proposal/PROPOSAL.md
+  spec: spec/SPEC.md
+  design: design/DESIGN.md
+  tasks: tasks/TASKS.md
 
 summary:
   intent: Transform IA Strategy with Gema UX patterns + real financial data
-  phases: 3 (UX Quick Wins → Real Data T16 → Voice)
-  scope: "6 components modified, 1 new file, 1 new View"
+  current_phase: fase_1_ux
+  sdd_complete: true
 
 phases:
   fase_1_ux:
     name: Quick Wins UX
+    status: in_progress
     items:
-      - Markdown rendering with remarkGfm
-      - Textarea auto-grow
-      - Delete confirm modal with blur
-      - Hybrid scrolling
+      - markdown_rendering: pending
+      - textarea_auto_grow: pending
+      - delete_confirm_modal: pending
+      - hybrid_scrolling: pending
     effort: low
+    files:
+      - src/components/strategy/StrategyMessage.tsx
+      - src/components/strategy/StrategyChat.tsx
   fase_2_data:
     name: Real Data (T16)
-    items:
-      - strategy-constants.ts
-      - View SQL vw_monthly_financial_summary
-      - API integration
-    effort: medium
+    status: pending
     depends_on: fase_1_ux
+    files:
+      - src/lib/strategy-constants.ts
+      - src/app/api/strategy/chat/route.ts
+      - supabase/migrations/
   fase_3_voice:
     name: Voice Input
-    items:
-      - AssistantMicButton integration
-    effort: medium
+    status: pending
     depends_on: fase_2_data
+    files:
+      - src/components/strategy/StrategyChat.tsx
 
-financial_constants:
-  fixed_costs: 12149400
-  break_even: 40498000
-  business_goal: 50000000
-  target_margin: 0.30
+progress:
+  fase_1_ux:
+    markdown_rendering: pending
+    textarea_auto_grow: pending
+    delete_confirm_modal: pending
+    hybrid_scrolling: pending
+    dependencies_installed: pending
+  fase_2_data: pending
+  fase_3_voice: pending
 
-next_recommended: spec
+next_task: fase_1_ux.markdown_rendering
 
 notes:
-  - Based on discussion with user about Gema → Strategy integration
-  - Formula: Utilidad Neta = Ventas - Egresos - Gastos Fijos
-  - Constants in .env, not DB (simpler for MVP)
-  - View SQL for data aggregation
+  - SDD complete: proposal, spec, design, tasks all created
+  - Starting apply with Fase 1: UI Quick Wins
+  - Dependencies needed: react-markdown, remark-gfm

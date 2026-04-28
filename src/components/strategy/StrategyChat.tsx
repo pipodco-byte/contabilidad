@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Send, Loader2, Trash2 } from 'lucide-react';
 import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { StrategyMessage } from './StrategyMessage';
 import { toast } from 'sonner';
 
@@ -24,11 +23,26 @@ export function StrategyChat({
   const [input, setInput] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = React.useState(false);
+  const [isFirstLoad, setIsFirstLoad] = React.useState(true);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatHistory]);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: isFirstLoad ? 'instant' : 'smooth'
+      });
+    }
+    setIsFirstLoad(false);
+  }, [chatHistory, isFirstLoad]);
+
+  React.useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'inherit';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = `${Math.min(scrollHeight, 160)}px`;
+    }
+  }, [input]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
