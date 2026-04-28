@@ -1,7 +1,8 @@
-status: apply_complete
-phase: apply
+status: archived
+phase: archive
 created: 2026-04-28
-updated: 2026-04-28
+archived: 2026-04-28
+location: openspec/changes/archive/2026-04-28-visual-milestones-g3
 
 change_name: visual-milestones-g3
 type: enhancement
@@ -11,6 +12,7 @@ artifacts:
   spec: spec/SPEC.md
   design: design/DESIGN.md
   tasks: tasks/TASKS.md
+  verify_report: verify-report.md
 
 summary:
   intent: Integrate "Radar de Navegación" milestone lines in charts
@@ -26,18 +28,18 @@ completed:
     - T6.1: MilestoneLine component created
     - T6.2: AreaChart with 3 ReferenceLines
     - T6.3: BalanceLine with 3 ReferenceLines
+  enhancement:
+    - T6.5: Tooltip Micro-Insights
   verification:
     - T6.7: Build passes
 
 pending:
-  enhancement:
-    - T6.4: Mobile Guardrails
-    - T6.5: Tooltip Micro-Insights
-  integration:
-    - T6.6: TrendChart (DataPanel)
+  - T6.4: Mobile Guardrails (future enhancement)
+  - T6.6: TrendChart (DataPanel) integration (future enhancement)
 
-next_recommended: verify
+next_recommended: none
 notes:
-  - Build passes with MilestoneLine component
-  - Core tasks T6.1-T6.3 complete
-  - Pending: T6.4-T6.6 for full implementation
+  - SDD cycle complete
+  - MilestoneLine component reusable
+  - Build passes
+  - Pending tasks can be implemented in future SDD

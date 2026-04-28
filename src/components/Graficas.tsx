@@ -84,6 +84,46 @@ export function Graficas({ userId, userRole }: GraficasProps) {
     }).format(value);
   };
 
+  const formatTooltipInsight = (value: number) => {
+    const breakEven = FINANCIAL_PLAN.breakEven;
+    const metaSana = FINANCIAL_PLAN.businessGoal;
+
+    if (value < breakEven) {
+      const falta = breakEven - value;
+      return `Faltan ${formatCurrencyCompact(falta)} para el Break-even`;
+    }
+    if (value < metaSana) {
+      const pct = ((value - breakEven) / (metaSana - breakEven) * 100).toFixed(0);
+      return `Superaste el Break-even. Vas ${pct}% camino a la Meta Sana`;
+    }
+    const exceso = value - metaSana;
+    return `¡Meta alcanzada! Excediste por ${formatCurrencyCompact(exceso)}`;
+  };
+
+  interface CustomTooltipProps {
+    active?: boolean;
+    payload?: Array<{ value?: number; name?: string }>;
+    label?: string;
+  }
+
+  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+    if (!active || !payload?.length) return null;
+    const value = payload[0].value;
+    if (value === undefined) return null;
+    const insight = formatTooltipInsight(value);
+    const isExceded = value >= FINANCIAL_PLAN.businessGoal;
+
+    return (
+      <div className="bg-zinc-900/95 border border-zinc-700 rounded-lg p-3 shadow-xl">
+        <p className="text-zinc-100 font-medium text-sm">{label}</p>
+        <p className="text-zinc-300 text-sm">{formatCurrency(value)}</p>
+        <p className={`text-sm mt-1 ${isExceded ? 'text-emerald-400' : 'text-indigo-400'}`}>
+          {insight}
+        </p>
+      </div>
+    );
+  };
+
   const mesesOrdenados = [...datosAnuales].sort((a, b) => new Date(a.mes).getTime() - new Date(b.mes).getTime());
   const mesActual = mesesOrdenados[mesesOrdenados.length - 1];
   const mesAnterior = mesesOrdenados[mesesOrdenados.length - 2];
@@ -99,7 +139,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="categoria" angle={-45} textAnchor="end" height={80} stroke={axisStroke} />
             <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Tooltip contentStyle={tooltipStyle} content={<CustomTooltip />} />
             <Legend />
             <Bar dataKey="ingresos" fill="#10b981" name="Ingresos" />
             <Bar dataKey="egresos" fill="#fb7185" name="Egresos" />
@@ -130,7 +170,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
               tickFormatter={(value) => formatCurrencyCompact(value)}
               domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
             />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Tooltip contentStyle={tooltipStyle} content={<CustomTooltip />} />
             <Legend />
             <Area type="monotone" dataKey="ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresos)" name="Ingresos" />
             <Area type="monotone" dataKey="egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresos)" name="Egresos" />
@@ -166,7 +206,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
               <Cell fill="#fbbf24" />
               <Cell fill="#f59e0b" />
             </Pie>
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Tooltip contentStyle={tooltipStyle} content={<CustomTooltip />} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
@@ -191,7 +231,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="mes" stroke={axisStroke} />
             <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Tooltip contentStyle={tooltipStyle} content={<CustomTooltip />} />
             <Legend />
             <Area type="monotone" dataKey="Ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresos)" name="Ingresos" />
             <Area type="monotone" dataKey="Egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresos)" name="Egresos" />
@@ -212,7 +252,7 @@ export function Graficas({ userId, userRole }: GraficasProps) {
               tickFormatter={(value) => formatCurrencyCompact(value)}
               domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
             />
-            <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
+            <Tooltip contentStyle={tooltipStyle} content={<CustomTooltip />} />
             <Legend />
             <ReferenceLine
               y={0}

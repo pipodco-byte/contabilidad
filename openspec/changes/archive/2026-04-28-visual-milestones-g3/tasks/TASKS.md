@@ -78,12 +78,12 @@
 **Priority:** Medium
 
 #### Tasks:
-- [ ] T6.5.1: Create custom tooltip or enhance existing
-- [ ] T6.5.2: Implement `formatTooltipInsight(value)` logic:
-  - [ ] If value < $40.5M → "Faltan $X para el Break-even"
-  - [ ] If value >= $40.5M AND < $50M → "Vas Y% camino a la Meta Sana"
-  - [ ] If value >= $50M → "¡Meta alcanzada! Excediste por $X"
-- [ ] T6.5.3: Apply emerald success color for exceeded insights
+- [x] T6.5.1: Create custom tooltip or enhance existing
+- [x] T6.5.2: Implement `formatTooltipInsight(value)` logic:
+  - [x] If value < $40.5M → "Faltan $X para el Break-even"
+  - [x] If value >= $40.5M AND < $50M → "Vas Y% camino a la Meta Sana"
+  - [x] If value >= $50M → "¡Meta alcanzada! Excediste por $X"
+- [x] T6.5.3: Apply emerald success color for exceeded insights
 
 **Verification:** Hover tooltip shows distance to goal
 
@@ -123,7 +123,7 @@
 | T6.2 | AreaChart with 3 ReferenceLines | ✅ |
 | T6.3 | BalanceLine with 3 ReferenceLines | ✅ |
 | T6.4 | Mobile Guardrails | ⬜ |
-| T6.5 | Tooltip Micro-Insights | ⬜ |
+| T6.5 | Tooltip Micro-Insights | ✅ |
 | T6.6 | TrendChart integration | ⬜ |
 | T6.7 | Verify build | ✅ |
 
