@@ -11,14 +11,14 @@
 **Priority:** High
 
 #### Tasks:
-- [ ] T6.1.1: Create `MilestoneLine` component with recharts `ReferenceLine`
-- [ ] T6.1.2: Support 3 types: `fixed`, `breakEven`, `meta`
-- [ ] T6.1.3: Apply correct colors:
-  - [ ] `fixed`: rose-400, strokeDasharray="3 3"
-  - [ ] `breakEven`: indigo-500, solid
-  - [ ] `meta`: emerald-500, strokeDasharray="5 5", strokeWidth={2}
-- [ ] T6.1.4: Smart Label: `position="insideTopRight"`, `fillOpacity={0.6}`, `fontSize={10}`, monospace
-- [ ] T6.1.5: Set `isFront={false}` (datos reales siempre protagonistas)
+- [x] T6.1.1: Create `MilestoneLine` component with recharts `ReferenceLine`
+- [x] T6.1.2: Support 3 types: `fixed`, `breakEven`, `meta`
+- [x] T6.1.3: Apply correct colors:
+  - [x] `fixed`: rose-400, strokeDasharray="3 3"
+  - [x] `breakEven`: indigo-500, solid
+  - [x] `meta`: emerald-500, strokeDasharray="5 5", strokeWidth={2}
+- [x] T6.1.4: Smart Label: `position="insideTopRight"`, `fillOpacity={0.6}`, `fontSize={10}`, monospace
+- [x] T6.1.5: Set `isFront={false}` (datos reales siempre protagonistas)
 
 **Verification:** Component renders without errors
 
@@ -31,10 +31,10 @@
 **Priority:** High
 
 #### Tasks:
-- [ ] T6.2.1: Import `MilestoneLine` component
-- [ ] T6.2.2: Calculate Y-axis domain: `[0, Math.max(dataMax, businessGoal * 1.2)]`
-- [ ] T6.2.3: Add 3 `MilestoneLine` components after Areas
-- [ ] T6.2.4: Apply same domain logic to Balance Line Chart
+- [x] T6.2.1: Import `MilestoneLine` component
+- [x] T6.2.2: Calculate Y-axis domain: `[0, Math.max(dataMax, businessGoal * 1.2)]`
+- [x] T6.2.3: Add 3 `MilestoneLine` components after Areas
+- [x] T6.2.4: Apply same domain logic to Balance Line Chart
 
 **Verification:** AreaChart shows 3 ReferenceLines, Y-axis has 20% buffer
 
@@ -47,9 +47,9 @@
 **Priority:** High
 
 #### Tasks:
-- [ ] T6.3.1: Add same Y-axis domain formula
-- [ ] T6.3.2: Add 3 `MilestoneLine` components
-- [ ] T6.3.3: Keep existing ReferenceLine for y=0 (break-even base)
+- [x] T6.3.1: Add same Y-axis domain formula
+- [x] T6.3.2: Add 3 `MilestoneLine` components
+- [x] T6.3.3: Keep existing ReferenceLine for y=0 (break-even base)
 
 **Verification:** BalanceLine shows "línea de flotación" clearly
 
@@ -109,9 +109,9 @@
 **Priority:** Critical
 
 #### Tasks:
-- [ ] T6.7.1: Run `npm run build`
-- [ ] T6.7.2: Fix any TypeScript errors
-- [ ] T6.7.3: Verify no console errors
+- [x] T6.7.1: Run `npm run build`
+- [x] T6.7.2: Fix any TypeScript errors
+- [x] T6.7.3: Verify no console errors
 
 ---
 
@@ -119,13 +119,13 @@
 
 | Task | Description | Status |
 |------|-------------|--------|
-| T6.1 | Create MilestoneLine component | ⬜ |
-| T6.2 | AreaChart with 3 ReferenceLines | ⬜ |
-| T6.3 | BalanceLine with 3 ReferenceLines | ⬜ |
+| T6.1 | Create MilestoneLine component | ✅ |
+| T6.2 | AreaChart with 3 ReferenceLines | ✅ |
+| T6.3 | BalanceLine with 3 ReferenceLines | ✅ |
 | T6.4 | Mobile Guardrails | ⬜ |
 | T6.5 | Tooltip Micro-Insights | ⬜ |
 | T6.6 | TrendChart integration | ⬜ |
-| T6.7 | Verify build | ⬜ |
+| T6.7 | Verify build | ✅ |
 
 ---
 

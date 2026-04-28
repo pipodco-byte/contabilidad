@@ -1,5 +1,5 @@
-status: artifacts_complete
-phase: proposal
+status: apply_complete
+phase: apply
 created: 2026-04-28
 updated: 2026-04-28
 
@@ -21,21 +21,23 @@ summary:
     meta_sana: $50,000,000 (norte emerald)
   buffer: 20% (1.2) overhead for Y-axis domain
 
-phases:
+completed:
   core:
-    - T6.1: MilestoneLine component
-    - T6.2: AreaChart ReferenceLines
-    - T6.3: BalanceLine ReferenceLines
+    - T6.1: MilestoneLine component created
+    - T6.2: AreaChart with 3 ReferenceLines
+    - T6.3: BalanceLine with 3 ReferenceLines
+  verification:
+    - T6.7: Build passes
+
+pending:
   enhancement:
     - T6.4: Mobile Guardrails
     - T6.5: Tooltip Micro-Insights
   integration:
     - T6.6: TrendChart (DataPanel)
-  verification:
-    - T6.7: Build pass
 
-next_recommended: apply
+next_recommended: verify
 notes:
-  - SDD ready for apply phase
-  - Single Source of Truth: strategy-constants.ts
-  - "Siguiente Boya" logic for mobile
+  - Build passes with MilestoneLine component
+  - Core tasks T6.1-T6.3 complete
+  - Pending: T6.4-T6.6 for full implementation

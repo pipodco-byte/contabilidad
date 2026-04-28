@@ -5,6 +5,8 @@ import { useInformeAnual } from '@/hooks/useInformeAnual';
 import { useEvolucionMensual } from '@/hooks/useEvolucionMensual';
 import { useTema } from '@/hooks/useTema';
 import { ChartSkeleton } from '@/components/ui/skeleton';
+import { MilestoneLine } from '@/components/MilestoneLine';
+import { FINANCIAL_PLAN } from '@/lib/strategy-constants';
 import {
   BarChart,
   Bar,
@@ -111,13 +113,30 @@ export function Graficas({ userId, userRole }: GraficasProps) {
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={datosAnuales} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            <defs>
+              <linearGradient id="colorIngresos" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorEgresos" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#fb7185" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="mes" stroke={axisStroke} angle={-45} textAnchor="end" height={60} />
-            <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
+            <YAxis
+              stroke={axisStroke}
+              tickFormatter={(value) => formatCurrencyCompact(value)}
+              domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
+            />
             <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
             <Legend />
-            <Area type="monotone" dataKey="ingresos" stroke="#10b981" fill="#10b981" fillOpacity={0.2} />
-            <Area type="monotone" dataKey="egresos" stroke="#fb7185" fill="#fb7185" fillOpacity={0.2} />
+            <Area type="monotone" dataKey="ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresos)" name="Ingresos" />
+            <Area type="monotone" dataKey="egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresos)" name="Egresos" />
+            <MilestoneLine type="fixed" />
+            <MilestoneLine type="breakEven" />
+            <MilestoneLine type="meta" />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -188,7 +207,11 @@ export function Graficas({ userId, userRole }: GraficasProps) {
           <LineChart data={mesesOrdenados} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="mes" stroke={axisStroke} angle={-45} textAnchor="end" height={60} />
-            <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
+            <YAxis
+              stroke={axisStroke}
+              tickFormatter={(value) => formatCurrencyCompact(value)}
+              domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
+            />
             <Tooltip contentStyle={tooltipStyle} formatter={(value) => formatCurrency(value as number)} />
             <Legend />
             <ReferenceLine
@@ -211,6 +234,9 @@ export function Graficas({ userId, userRole }: GraficasProps) {
               activeDot={{ r: 6 }}
               name="Balance"
             />
+            <MilestoneLine type="fixed" />
+            <MilestoneLine type="breakEven" />
+            <MilestoneLine type="meta" />
           </LineChart>
         </ResponsiveContainer>
       </div>
