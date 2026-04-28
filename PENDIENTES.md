@@ -77,13 +77,26 @@
 
 | SDD | Descripción | Path |
 |-----|-------------|------|
-| `ia-strategy-financial-data` | Integrar PLAN_FINANCIERO + calcular Utilidad Real | `openspec/changes/ia-strategy-financial-data/` |
+| `ia-strategy-ux-enhancement` | UX (Markdown, Textarea) + T16 (Real Data) + Voice | `openspec/changes/ia-strategy-ux-enhancement/` |
 
-### T16 - Detalles
-- **Problema:** IA Strategy no tiene "Utilidad Actual" de transacciones
-- **Solución:** Fetch `cont_transacciones` + calcular vs plan financiero
-- **Archivos a crear:** `strategy-constants.ts`
-- **Archivos a modificar:** `useStrategyData.ts`, `MetricsGrid.tsx`, `TrendChart.tsx`
+### SDD: ia-strategy-ux-enhancement
+
+**Visión:** Transformar IA Strategy de simulador manual a Asesor de Negocios de Alta Precisión.
+
+#### Fase 1: Quick Wins UX (Bajo Esfuerzo)
+- Markdown rendering con `remarkGfm`
+- Textarea auto-grow (Enter=enviar, Shift+Enter=nueva línea)
+- Delete confirm modal con backdrop blur
+- Hybrid scrolling (instant first load, smooth después)
+
+#### Fase 2: T16 - Real Data
+- `strategy-constants.ts` con gastos fijos desde `.env`
+- View SQL `vw_monthly_financial_summary`
+- Integrar datos reales en prompt de Strategy
+- **Fórmula:** `Utilidad Neta = Ventas - Egresos - $12.1M`
+
+#### Fase 3: Voice
+- Integrar `AssistantMicButton` en StrategyChat
 
 ### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
 - Gastos Fijos: $12,149,400/mes
