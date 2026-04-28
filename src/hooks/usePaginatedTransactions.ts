@@ -26,6 +26,13 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    if (!userId || userId.length < 5) {
+      setTransacciones([]);
+      setTotalCount(0);
+      setLoading(false);
+      return;
+    }
+
     const fetchTransactions = async () => {
       setLoading(true);
       try {

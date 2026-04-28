@@ -57,6 +57,11 @@ export function useListaTransacciones(userId: string, userRole: string = 'usuari
   };
 
   useEffect(() => {
+    if (!userId || userId.length < 5) {
+      setTransacciones([]);
+      setLoading(false);
+      return;
+    }
     cargarTransacciones();
   }, [userId, userRole]);
 
