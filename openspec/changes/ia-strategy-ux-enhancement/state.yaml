@@ -1,4 +1,4 @@
-status: apply_in_progress
+status: completed
 phase: apply
 created: 2026-04-28
 updated: 2026-04-28
@@ -16,9 +16,8 @@ artifacts:
   fase3_tasks: fase3-voice/TASKS.md
 
 summary:
-  intent: Transform IA Strategy with Gema UX patterns + real financial data
-  current_phase: fase_3_voice
-  sdd_complete: true
+  intent: Transform IA Strategy with Gema UX patterns + real financial data + voice
+  current_phase: all_completed
 
 phases:
   fase_1_ux:
@@ -29,20 +28,27 @@ phases:
     status: completed
   fase_3_voice:
     name: Voice Input
-    status: sdd_ready
-    files:
-      - src/components/strategy/StrategyChat.tsx
+    status: completed
 
-progress:
-  fase_1_ux: completed
-  fase_2_data: completed
+completed_features:
+  fase_1_ux:
+    - Markdown with remarkGfm + zinc styles
+    - Textarea auto-grow
+    - Delete confirm modal with backdrop blur
+    - Hybrid scroll (instant + smooth)
+  fase_2_data:
+    - strategy-constants.ts (FINANCIAL_PLAN)
+    - SQL View migration doc
+    - API getFinancialContext() injection
   fase_3_voice:
-    sdd: completed
-    implementation: pending
+    - StrategyVoiceButton component
+    - Zinc minimalist design
+    - Indigo/emerald micro-feedback
+    - Web Speech API integration
 
-next_task: fase_3_voice.implementation
+verification:
+  build: passed
 
 notes:
-  - Fase 1 (UI Quick Wins) completed
-  - Fase 2 (Real Data / T16) completed
-  - Fase 3 SDD ready - awaiting implementation
+  - All 3 phases completed
+  - Ready for testing

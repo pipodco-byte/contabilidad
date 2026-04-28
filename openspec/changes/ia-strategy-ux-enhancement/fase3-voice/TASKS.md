@@ -4,39 +4,52 @@
 
 ---
 
-## Task 1: Update StrategyChat.tsx
+## Task 1: Create StrategyVoiceButton.tsx
+
+**File:** `src/components/strategy/StrategyVoiceButton.tsx`
+
+**Design:** Zinc minimalist with micro-feedback
+- Idle: zinc-400
+- Recording: zinc-50 + pulse/scale breathing
+- Transcribing: indigo-500 Loader2
+- Success: emerald-500 flash
+- Error: rose-400 + toast
+
+**Features:**
+- Web Speech API integration
+- SpeechRecognition with continuous mode
+- Auto-stop after final transcript
+
+---
+
+## Task 2: Update StrategyChat.tsx
 
 **File:** `src/components/strategy/StrategyChat.tsx`
 
 **Changes:**
-- [ ] Import `AssistantMicButton`
-- [ ] Add voice state: `isRecording`, `isTranscribing`
-- [ ] Add handlers: `handleInterimChange`, `handleFinalChange`, `handleMicError`
-- [ ] Add `AssistantMicButton` component in input area
-- [ ] Add visual indicators (recording, transcribing)
-- [ ] Handle microphone errors gracefully
+- [ ] Import `StrategyVoiceButton`
+- [ ] Add handlers: `handleVoiceTranscript`, `handleVoiceError`
+- [ ] Replace mic with `StrategyVoiceButton` component
+- [ ] Position next to textarea
 
 ---
 
-## Task 2: Check AssistantMicButton Props
+## Task 3: Update Tailwind Config (Optional)
 
-**File:** `src/components/assistant/AssistantMicButton.tsx`
+**File:** `tailwind.config.ts`
 
-**Verify props:**
+Add custom animations if pulse/scale breathing not smooth enough:
 ```typescript
-interface AssistantMicButtonProps {
-  disabled?: boolean;
-  onInterimChange?: (text: string) => void;
-  onFinalChange?: (text: string) => void;
-  onError?: (error: string) => void;
+extend: {
+  animation: {
+    'scale-breathe': 'scale-breathe 2s ease-in-out infinite',
+  },
 }
 ```
 
-**If props differ, adjust StrategyChat handlers accordingly.**
-
 ---
 
-## Task 3: Build Verification
+## Task 4: Build Verification
 
 ```bash
 npm run build
@@ -44,16 +57,17 @@ npm run build
 
 ---
 
-## Task 4: Manual Testing
+## Task 5: Manual Testing
 
 **Checklist:**
 - [ ] Open IA Strategy page
-- [ ] Click mic button
+- [ ] Click mic → zinc-50 + breathing animation
 - [ ] Speak: "Cómo voy este mes?"
-- [ ] Verify transcript appears
-- [ ] Verify "Escuchando..." indicator shows while recording
-- [ ] Tap send → AI responds
-- [ ] Test error cases (mic blocked, no speech)
+- [ ] Verify transcript appears in input
+- [ ] Indigo spinner during transcribing
+- [ ] Emerald flash on success
+- [ ] Tap send → AI responds with real data
+- [ ] Test error cases
 
 ---
 
@@ -61,6 +75,7 @@ npm run build
 
 | File | Action |
 |------|--------|
+| `src/components/strategy/StrategyVoiceButton.tsx` | Create |
 | `src/components/strategy/StrategyChat.tsx` | Modify |
 
 ---
@@ -68,8 +83,9 @@ npm run build
 ## Effort Estimate
 
 - Task 1: 45 min
-- Task 2: 10 min
-- Task 3: 5 min
-- Task 4: 15 min
+- Task 2: 20 min
+- Task 3: 5 min (optional)
+- Task 4: 5 min
+- Task 5: 15 min
 
-**Total: ~1.25 hours**
+**Total: ~1.5 hours**

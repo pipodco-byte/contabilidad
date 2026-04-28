@@ -11,19 +11,19 @@
 
 ## 2. Problem Statement
 
-IA Strategy needs hands-free voice input for strategic queries. While Gema's `AssistantMicButton` exists, voice interaction in a strategic context requires defined states and elegant error handling.
+IA Strategy needs hands-free voice input for strategic queries. Design must be **Zinc minimalist** - no competing colors, just functional micro-feedback.
 
 ---
 
-## 3. Voice States
+## 3. Voice States (Zinc Minimalist Design)
 
-| State | Description | UI |
-|-------|-------------|-----|
-| **Idle** | Mic button ready | Default mic icon |
-| **Recording** | User is speaking | Pulsing red dot + waveform |
-| **Transcribing** | Converting speech to text | "Escuchando..." text |
-| **Generating** | AI processing | "Pensando..." with pulse |
-| **Error** | Something failed | Toast error + back to Idle |
+| State | Icon | Color | Effect |
+|-------|------|-------|--------|
+| **Idle** | `Mic` | zinc-400 | None |
+| **Recording** | `Mic` | zinc-50 + bg-zinc-800/50 | Pulse + scale "breathing" |
+| **Transcribing** | `Loader2` | indigo-500 | Spin |
+| **Success** | `Check` | emerald-500 | Flash quick |
+| **Error** | `X` | rose-400 | Toast error |
 
 ---
 
@@ -34,23 +34,23 @@ Felipe taps mic
         ↓
 State: Idle → Recording
         ↓
-Visual: Mic turns red + waveform animation
+Visual: Zinc-50 + pulse scale "breathing"
         ↓
 Felipe speaks (Web Speech API captures audio)
         ↓
 State: Recording → Transcribing
         ↓
-Visual: "Escuchando..." with pulse
+Visual: Indigo-500 Loader2 spinning
         ↓
 Transcript ready → auto-fill input
         ↓
+Flash emerald-500 Check briefly
+        ↓
 User reviews/corrects if needed
         ↓
-User taps Send (or auto-send option)
+User taps Send
         ↓
-State: Generating
-        ↓
-AI responds with strategic advice
+AI responds with strategic advice (context from Fase 2)
         ↓
 State: Idle
 ```
@@ -61,18 +61,24 @@ State: Idle
 
 ### 5.1 Component Integration
 
-- Import `AssistantMicButton` from Gema
+- Custom voice button (not Gema's AssistantMicButton - different design)
 - Integrate into `StrategyChat.tsx`
 - Handle voice → text → submit flow
 
-### 5.2 Visual Feedback
+### 5.2 Visual Feedback (Zinc Minimalist)
 
-- Mic icon with red recording state
-- Waveform animation during recording
-- "Escuchando..." text with pulse
-- Consistent with zinc theme
+- **Idle:** zinc-400 outline only, no background
+- **Recording:** zinc-50 text + bg-zinc-800/50 + scale pulse
+- **Transcribing:** indigo-500 Loader2 spinner
+- **Success:** emerald-500 Check flash (200ms)
 
-### 5.3 Error Handling
+### 5.3 Micro-Feedback (Indigo/Emerald)
+
+- Indigo-500 for "thinking/processing" states
+- Emerald-500 for successful actions
+- No red - zinc theme is sober, not alarming
+
+### 5.4 Error Handling
 
 | Scenario | Handling |
 |----------|----------|
@@ -81,7 +87,7 @@ State: Idle
 | Network error | Show toast: "Error de conexión" |
 | Browser doesn't support Web Speech | Hide mic button |
 
-### 5.4 Context Integration
+### 5.5 Context Integration
 
 - Voice message should trigger same `getFinancialContext()` flow
 - Ensure real data is included in strategic queries
@@ -90,16 +96,18 @@ State: Idle
 
 ## 6. Dependencies
 
-- `AssistantMicButton` component (exists in Gema)
-- `useAssistantChat` hook (for reference)
 - Web Speech API (browser built-in)
+- Lucide icons (already in use)
+- Sonner toast (already in use)
 
 ---
 
 ## 7. Success Criteria
 
-- [ ] Mic button visible in StrategyChat
-- [ ] Recording shows visual feedback
+- [ ] Mic button visible in StrategyChat (zinc-400 idle)
+- [ ] Recording shows zinc-50 + pulse/scale "breathing"
+- [ ] Transcribing shows indigo-500 spinner
+- [ ] Success flash emerald-500
 - [ ] Transcript auto-fills input
 - [ ] Errors handled gracefully
 - [ ] Strategic context included in voice queries

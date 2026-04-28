@@ -5,6 +5,7 @@ import { Send, Loader2, Trash2 } from 'lucide-react';
 import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
 import { Button } from '@/components/ui/button';
 import { StrategyMessage } from './StrategyMessage';
+import { StrategyVoiceButton } from './StrategyVoiceButton';
 import { toast } from 'sonner';
 
 interface StrategyChatProps {
@@ -105,6 +106,26 @@ export function StrategyChat({
     toast.success('Chat eliminado');
   };
 
+  const handleVoiceTranscript = (text: string) => {
+    setInput(text);
+  };
+
+  const handleVoiceError = (error: string) => {
+    switch (error) {
+      case 'not-allowed':
+        toast.error('Micrófono no disponible');
+        break;
+      case 'no-speech':
+        toast.error('No detecté voz');
+        break;
+      case 'network':
+        toast.error('Error de conexión');
+        break;
+      default:
+        toast.error('Error con el micrófono');
+    }
+  };
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
@@ -143,6 +164,11 @@ export function StrategyChat({
       </div>
 
       <div className="flex gap-2">
+        <StrategyVoiceButton
+          disabled={isLoading}
+          onTranscript={handleVoiceTranscript}
+          onError={handleVoiceError}
+        />
         <textarea
           ref={textareaRef}
           value={input}
