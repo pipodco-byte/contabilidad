@@ -1,0 +1,41 @@
+status: artifacts_complete
+phase: proposal
+created: 2026-04-28
+updated: 2026-04-28
+
+change_name: visual-milestones-g3
+type: enhancement
+
+artifacts:
+  proposal: proposal/PROPOSAL.md
+  spec: spec/SPEC.md
+  design: design/DESIGN.md
+  tasks: tasks/TASKS.md
+
+summary:
+  intent: Integrate "Radar de Navegación" milestone lines in charts
+  vision: "Sin las líneas de meta, los datos son puntos en el espacio; con ellas, ruta de navegación"
+  metrics:
+    gastos_fijos: $12,149,400 (suelo rose)
+    break_even: $40,498,000 (flotación indigo)
+    meta_sana: $50,000,000 (norte emerald)
+  buffer: 20% (1.2) overhead for Y-axis domain
+
+phases:
+  core:
+    - T6.1: MilestoneLine component
+    - T6.2: AreaChart ReferenceLines
+    - T6.3: BalanceLine ReferenceLines
+  enhancement:
+    - T6.4: Mobile Guardrails
+    - T6.5: Tooltip Micro-Insights
+  integration:
+    - T6.6: TrendChart (DataPanel)
+  verification:
+    - T6.7: Build pass
+
+next_recommended: apply
+notes:
+  - SDD ready for apply phase
+  - Single Source of Truth: strategy-constants.ts
+  - "Siguiente Boya" logic for mobile
