@@ -27,7 +27,7 @@
 
 | Item | Descripción | Prioridad | Condición |
 |------|-------------|-----------|-----------|
-| G3 | Metas/Hitos de negocio | Media | Pendiente definir con Felipe |
+| G3 | Metas/Hitos de negocio | Media | ✅ SDD creado (`visual-milestones-g3`) |
 | G4 | Profit Margin % | Media | Siempre disponible |
 | G5 | Burn Rate | Media | ≥3 meses de datos |
 | G6 | Runway | Media | ≥3 meses de datos |
@@ -82,6 +82,23 @@
 | `empty-userid-query-fix` | Query con userId vacío | ✅ 2026-04 |
 | `ia-strategy-ux-enhancement` | UX + T16 (Real Data) + Voice | ✅ 2026-04 |
 | `ia-strategy-visual-storytelling` | Visual Insights + Captain's Log Narrative | ✅ 2026-04-28 |
+
+## 📁 SDDs En Progreso
+
+| SDD | Descripción | Fase |
+|-----|-------------|------|
+| `visual-milestones-g3` | Líneas de meta en gráficos (Radar de Navegación) | Propuesta |
+
+### SDD: visual-milestones-g3
+
+**Visión:** "Sin las líneas de meta, los datos son puntos en el espacio; con ellas, ruta de navegación."
+
+**3 Metas:**
+- Gastos Fijos: $12,149,400 (suelo rose - strokeDasharray="3 3")
+- Break-even: $40,498,000 (flotación indigo - sólida)
+- Meta Sana: $50,000,000 (norte emerald - strokeWidth={2})
+
+**Buffer Y-axis:** 20% (1.2) overhead
 
 ### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
 - Gastos Fijos: $12,149,400/mes
