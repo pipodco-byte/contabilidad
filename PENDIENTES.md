@@ -5,6 +5,15 @@
 
 ---
 
+## 🔧 Bugs Críticos Corregidos (Abril 2026)
+
+| Item | Descripción | Status |
+|------|-------------|--------|
+| B5 | Tabla incorrecta `transacciones` → `cont_transacciones` (18 archivos) | ✅ Corregido |
+| B6 | Query con userId vacío causa error UUID (datos desaparecen) | ✅ Corregido |
+
+---
+
 ## 🎯 Funcionalidades Core
 
 | Item | Descripción | Prioridad |

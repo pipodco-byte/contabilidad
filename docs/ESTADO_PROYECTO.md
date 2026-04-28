@@ -1,7 +1,7 @@
 # 📋 Estado del Proyecto — Pipod Contabilidad
 
 **Última actualización:** Abril 2026
-**Versión:** 4.0
+**Versión:** 4.1
 
 ---
 
@@ -29,6 +29,8 @@
 - [x] E4: Logout tooltip sidebar
 - [x] B3/B4: Radar hook bugs
 - [x] Ghost Sidebar Bug (ia-strategy duplicaba sidebar)
+- [x] B5: Tabla `transacciones` → `cont_transacciones` (18 archivos)
+- [x] B6: userId vacío causa error UUID en queries
 
 ### Gráficos (v2.1)
 - [x] G1: Donut Chart (reemplaza Radar)
@@ -40,7 +42,7 @@
 - [x] F2: Validación de imports (Zod schema en API Gema)
 - [x] F5: Toast notifications (Sonner reemplazó state messages)
 
-### Copilot V2 (v3.0) — Abril 2026
+### Copilot V2 / Gema Lote (v3.0) — Abril 2026
 - [x] G-IA1: FAB bottom-right (no Command Bar - cambió el diseño)
 - [x] G-IA2: Integración DeepSeek (cambió de Gemini)
 - [x] G-IA3: Parser texto → 9 datos
@@ -52,6 +54,8 @@
 - [x] V2-3: Delete chat con confirmación
 - [x] V2-4: Auto-reset after INSERT
 - [x] react-markdown para renderizar formato
+- [x] Gema Lote v2: Tool calling con execute handler
+- [x] Gema confirmation UI: Muestra BatchCard cuando toolResults existe
 
 ### IA Strategy (v4.0) — Abril 2026
 - [x] IA-1: Módulo IA Strategy con arquitectura 3 columnas
@@ -83,7 +87,7 @@ src/hooks/
 ├── useAuth.ts                    ✅
 ├── useTema.ts                    ✅
 ├── useTransacciones.ts           ✅
-├── usePaginatedTransactions.ts   ✅
+├── usePaginatedTransactions.ts   ✅ (con guard clause userId)
 ├── useResumen.ts                 ✅
 ├── useGraficas.ts                ✅ (Bar + Donut)
 ├── useInformeAnual.ts           ✅ (Area + Balance Line)
@@ -93,7 +97,7 @@ src/hooks/
 ├── useExportarPDF.ts             ✅
 ├── useEnviarReporteMensual.ts    ✅
 ├── useEditarTransaccion.ts       ✅
-├── useListaTransacciones.ts      ✅
+├── useListaTransacciones.ts      ✅ (con guard clause userId)
 ├── useAssistantChat.ts          ✅ (Copilot V2)
 ├── useStrategyData.ts           ✅ (IA Strategy)
 └── useRadarData.ts              🗑️ DEPRECADO (para eliminar L1)
@@ -139,7 +143,9 @@ openspec/changes/
 ├── toast-notifications/         ✅ COMPLETO (F5)
 ├── gema-ia/                     ✅ COMPLETO (V1)
 ├── copilot-v2/                  ✅ COMPLETO (V2)
-└── ia-strategy/                 ✅ COMPLETO (v4.0)
+├── ia-strategy/                 ✅ COMPLETO (v4.0)
+├── table-name-consistency-fix/   ✅ COMPLETO (B5)
+└── empty-userid-query-fix/      ✅ COMPLETO (B6)
 ```
 
 ---
@@ -149,7 +155,7 @@ openspec/changes/
 | Branch | Status | Last Update |
 |--------|--------|-------------|
 | `main` | Producción | F1+F2+F5 merged |
-| `develop` | Desarrollo | IA Strategy v4.0 completo ✅ |
+| `develop` | Desarrollo | Bugs B5+B6 corregidos ✅ |
 
 ---
 
@@ -181,6 +187,13 @@ Colores según design system:
 - Delete chat con confirmación
 - Auto-reset after INSERT
 
+### Gema Lote v2.0 (Tool Calling)
+- AI SDK 6+ con `generateText` + `execute` handler
+- Tool calling: `handleLoteTransaction` inserta directamente
+- Confirmation UI: BatchCard muestra cuando toolResults existe
+- Dynamic date en prompts
+- Silencio clause para respuestas cortas
+
 ### IA Strategy (v4.0 - Separado del Copilot)
 - ruta: `/dashboard/ia-strategy`
 - Chat-first: Asesor Estratégico Gema
@@ -205,4 +218,26 @@ Componentes nuevos:
 
 ---
 
-_Ultima actualizacion: IA Strategy v4.0 completo (Ghost Sidebar Bug fix)_
+## 🔍 Discoveries Importantes
+
+### Tablas de Supabase
+| Tabla | Uso |
+|-------|-----|
+| `cont_transacciones` | Transacciones financieras (principal) |
+| `cont_usuarios` | Usuarios relacionados con transacciones |
+| `usuarios` | Tabla de autenticación (auth) |
+
+### UUIDs Importantes
+| UUID | Descripción |
+|------|-------------|
+| `ca85a0bc-2e6e-4887-bf75-930f4dd34880` | Felipe (cont_usuarios) |
+
+### Errores Comunes y Soluciones
+| Error | Causa | Solución |
+|-------|-------|----------|
+| `invalid input syntax for type uuid: ""` | Query con userId vacío | Guard clause `if (!userId \|\| userId.length < 5)` |
+| Tabla no existe / datos vacíos | Nombre incorrecto de tabla | Usar `cont_transacciones` |
+
+---
+
+_Ultima actualizacion: Bugs críticos B5 y B6 corregidos (Abril 2026)_
