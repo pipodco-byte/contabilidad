@@ -65,11 +65,30 @@
 
 ## ⚠️ IA Strategy — Pendientes
 
-| Item | Descripción | Prioridad |
-|------|-------------|-----------|
-| T15 | Prompt Hardening (Security tests) | Media |
-| T16 | Configurar datos de entrada (costos fijos, cash) | Alta |
-| T17 | Settings modal para StrategyData | Media |
+| Item | Descripción | Prioridad | Status SDD |
+|------|-------------|-----------|------------|
+| T15 | Prompt Hardening (Security tests) | Media | - |
+| T16 | Configurar datos de entrada (costos fijos, cash) | Alta | ✅ SDD Listo |
+| T17 | Settings modal para StrategyData | Media | - |
+
+---
+
+## 📁 SDDs Creados (Sin Aplicar)
+
+| SDD | Descripción | Path |
+|-----|-------------|------|
+| `ia-strategy-financial-data` | Integrar PLAN_FINANCIERO + calcular Utilidad Real | `openspec/changes/ia-strategy-financial-data/` |
+
+### T16 - Detalles
+- **Problema:** IA Strategy no tiene "Utilidad Actual" de transacciones
+- **Solución:** Fetch `cont_transacciones` + calcular vs plan financiero
+- **Archivos a crear:** `strategy-constants.ts`
+- **Archivos a modificar:** `useStrategyData.ts`, `MetricsGrid.tsx`, `TrendChart.tsx`
+
+### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
+- Gastos Fijos: $12,149,400/mes
+- Break-even: $40,498,000
+- Meta Negocio Sano: $50,000,000 (15% utilidad neta)
 
 ---
 
