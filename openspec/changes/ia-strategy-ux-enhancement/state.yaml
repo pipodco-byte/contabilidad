@@ -1,4 +1,4 @@
-status: completed
+status: apply_in_progress
 phase: apply
 created: 2026-04-28
 updated: 2026-04-28
@@ -11,10 +11,13 @@ artifacts:
   spec: spec/SPEC.md
   design: design/DESIGN.md
   tasks: tasks/TASKS.md
+  fase3_spec: fase3-voice/SPEC.md
+  fase3_design: fase3-voice/DESIGN.md
+  fase3_tasks: fase3-voice/TASKS.md
 
 summary:
   intent: Transform IA Strategy with Gema UX patterns + real financial data
-  current_phase: fase_2_data_completed
+  current_phase: fase_3_voice
   sdd_complete: true
 
 phases:
@@ -24,27 +27,22 @@ phases:
   fase_2_data:
     name: Real Data (T16)
     status: completed
-    items:
-      - strategy_constants: completed
-      - sql_view: completed (doc created)
-      - api_integration: completed
   fase_3_voice:
     name: Voice Input
-    status: pending
-    depends_on: fase_2_data
+    status: sdd_ready
+    files:
+      - src/components/strategy/StrategyChat.tsx
 
-completed_fixes:
-  - strategy-constants.ts: FINANCIAL_PLAN + FIXED_COSTS_BREAKDOWN
-  - SQL View migration: docs/SQL_VIEW_MONTHLY_FINANCIAL_SUMMARY.sql
-  - API /api/strategy/chat: getFinancialContext() + injection
+progress:
+  fase_1_ux: completed
+  fase_2_data: completed
+  fase_3_voice:
+    sdd: completed
+    implementation: pending
 
-verification:
-  build: passed
-
-manual_step_required:
-  - Run SQL from docs/SQL_VIEW_MONTHLY_FINANCIAL_SUMMARY.sql in Supabase Dashboard
+next_task: fase_3_voice.implementation
 
 notes:
   - Fase 1 (UI Quick Wins) completed
   - Fase 2 (Real Data / T16) completed
-  - Ready for Fase 3: Voice Input
+  - Fase 3 SDD ready - awaiting implementation
