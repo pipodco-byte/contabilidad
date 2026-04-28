@@ -1,0 +1,39 @@
+status: planned
+phase: proposal
+created: 2026-04-28
+updated: 2026-04-28
+
+change_name: ia-strategy-visual-storytelling
+type: enhancement
+
+artifacts:
+  proposal: proposal/PROPOSAL.md
+
+summary:
+  intent: Transform IA Strategy into "instrumento de navegación" - Visual + Narrative
+  phases: "Fase 4 (Data Viz) + Fase 5 (Narrative)"
+  fast_track: Narrative first (uses existing infrastructure)
+
+phases:
+  fase_4_viz:
+    name: Visual Insights
+    items:
+      - MiniComboChart component
+      - Estrategia Zinc aesthetic
+      - Integration in StrategyChat
+    effort: medium
+  fase_5_narrative:
+    name: The Captain's Log (Fast Track)
+    items:
+      - Update strategy-prompt.ts with Capitán voice
+      - Narrative tone + examples
+      - Data interpretation in prose
+    effort: low
+    note: Uses existing SQL View + context from Fase 2
+
+next_recommended: spec
+
+notes:
+  - Fast Track: Narrative can be done immediately (no new components needed)
+  - Data Viz requires MiniComboChart + styling
+  - Both phases use existing infrastructure from Fase 1-3
