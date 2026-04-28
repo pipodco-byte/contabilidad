@@ -78,6 +78,21 @@
 | SDD | Descripción | Path |
 |-----|-------------|------|
 | `ia-strategy-ux-enhancement` | UX (Markdown, Textarea) + T16 (Real Data) + Voice | `openspec/changes/ia-strategy-ux-enhancement/` |
+| `ia-strategy-visual-storytelling` | Visual Insights + Captain's Log Narrative | `openspec/changes/ia-strategy-visual-storytelling/` |
+
+### SDD: ia-strategy-visual-storytelling
+
+**Visión:** "Los números son el mapa, pero la narrativa es la brújula."
+
+#### Fast Track: The Captain's Log (Fase 5)
+- Actualizar `strategy-prompt.ts` con tono de Capitán
+- Narrativa estratégica basada en datos reales
+- No requiere componentes nuevos (usa infraestructura de Fase 2)
+
+#### Fase 4: Visual Insights
+- `MiniComboChart`: Ingresos vs Egresos + Gastos Fijos + Break-even
+- Estética Zinc minimalista
+- Integración en StrategyChat
 
 ### SDD: ia-strategy-ux-enhancement
 

@@ -1,5 +1,5 @@
-status: planned
-phase: proposal
+status: artifacts_complete
+phase: spec
 created: 2026-04-28
 updated: 2026-04-28
 
@@ -8,6 +8,9 @@ type: enhancement
 
 artifacts:
   proposal: proposal/PROPOSAL.md
+  spec: spec/SPEC.md
+  design: design/DESIGN.md
+  tasks: tasks/TASKS.md
 
 summary:
   intent: Transform IA Strategy into "instrumento de navegación" - Visual + Narrative
@@ -15,24 +18,20 @@ summary:
   fast_track: Narrative first (uses existing infrastructure)
 
 phases:
-  fase_4_viz:
-    name: Visual Insights
-    items:
-      - MiniComboChart component
-      - Estrategia Zinc aesthetic
-      - Integration in StrategyChat
-    effort: medium
   fase_5_narrative:
     name: The Captain's Log (Fast Track)
-    items:
-      - Update strategy-prompt.ts with Capitán voice
-      - Narrative tone + examples
-      - Data interpretation in prose
+    tasks:
+      - T5.1: Update strategy-prompt.ts with Captain's voice
     effort: low
     note: Uses existing SQL View + context from Fase 2
+  fase_4_viz:
+    name: Visual Insights
+    tasks:
+      - T5.2: Create StrategyMiniChart.tsx
+      - T5.3: Integrate chart in StrategyChat
+    effort: medium
 
-next_recommended: spec
-
+next_recommended: apply
 notes:
   - Fast Track: Narrative can be done immediately (no new components needed)
   - Data Viz requires MiniComboChart + styling
