@@ -1,0 +1,23 @@
+status: proposed
+phase: proposal
+created: 2026-04-28
+updated: 2026-04-28
+
+change_name: ia-strategy-financial-data
+parent_sdd: T16
+
+artifacts:
+  proposal: proposal/PROPOSAL.md
+
+summary:
+  intent: Integrate PLAN_FINANCIERO data and calculate real utility from transactions
+  scope: "3 deliverables: constants, hook extension, UI updates"
+  risk: Medium
+
+next_recommended: sdd-spec
+
+notes:
+  - Financial plan exists at PLAN_FINANCIERO_PIPOD_2026.md
+  - Fixed costs: $12,149,400/month
+  - Break-even: $40,498,000
+  - Meta: $50,000,000 (15% utility)
