@@ -1,4 +1,4 @@
-status: apply_in_progress
+status: completed
 phase: apply
 created: 2026-04-28
 updated: 2026-04-28
@@ -14,18 +14,18 @@ artifacts:
 
 summary:
   intent: Transform IA Strategy with Gema UX patterns + real financial data
-  current_phase: fase_1_ux
+  current_phase: fase_1_ux_completed
   sdd_complete: true
 
 phases:
   fase_1_ux:
     name: Quick Wins UX
-    status: in_progress
+    status: completed
     items:
-      - markdown_rendering: pending
-      - textarea_auto_grow: pending
-      - delete_confirm_modal: pending
-      - hybrid_scrolling: pending
+      - markdown_rendering: completed
+      - textarea_auto_grow: completed
+      - delete_confirm_modal: completed
+      - hybrid_scrolling: completed
     effort: low
     files:
       - src/components/strategy/StrategyMessage.tsx
@@ -45,19 +45,13 @@ phases:
     files:
       - src/components/strategy/StrategyChat.tsx
 
-progress:
-  fase_1_ux:
-    markdown_rendering: pending
-    textarea_auto_grow: pending
-    delete_confirm_modal: pending
-    hybrid_scrolling: pending
-    dependencies_installed: pending
-  fase_2_data: pending
-  fase_3_voice: pending
+completed_fixes:
+  - StrategyMessage.tsx: Markdown with remarkGfm + zinc styles
+  - StrategyChat.tsx: Textarea auto-grow + backdrop blur modal + hybrid scroll
 
-next_task: fase_1_ux.markdown_rendering
+verification:
+  build: passed
 
 notes:
-  - SDD complete: proposal, spec, design, tasks all created
-  - Starting apply with Fase 1: UI Quick Wins
-  - Dependencies needed: react-markdown, remark-gfm
+  - Fase 1 (UI Quick Wins) completed
+  - Ready for Fase 2: Real Data (T16)

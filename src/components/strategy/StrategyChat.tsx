@@ -143,13 +143,15 @@ export function StrategyChat({
       </div>
 
       <div className="flex gap-2">
-        <Input
+        <textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="¿Cuánto puedo gastar?"
           disabled={isLoading}
-          className="flex-1"
+          rows={1}
+          className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
         />
         <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
           <Send className="h-4 w-4" />
@@ -157,23 +159,36 @@ export function StrategyChat({
       </div>
 
       {showDeleteConfirm && (
-        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 flex items-center justify-between">
-          <span className="text-sm">¿Eliminar conversación?</span>
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowDeleteConfirm(false)}
-            >
-              Cancelar
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={handleDeleteChat}
-            >
-              Eliminar
-            </Button>
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50"
+          onClick={() => setShowDeleteConfirm(false)}
+        >
+          <div
+            className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-semibold text-zinc-100 mb-2">
+              ¿Eliminar conversación?
+            </h3>
+            <p className="text-sm text-zinc-400 mb-4">
+              Se eliminará toda la conversación.
+            </p>
+            <div className="flex gap-3">
+              <Button
+                variant="ghost"
+                className="flex-1"
+                onClick={() => setShowDeleteConfirm(false)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="destructive"
+                className="flex-1"
+                onClick={handleDeleteChat}
+              >
+                Eliminar
+              </Button>
+            </div>
           </div>
         </div>
       )}
