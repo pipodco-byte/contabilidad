@@ -75,6 +75,38 @@ Donde:
 - Gastos Fijos = $12,149,400 (de constants)
 ```
 
+## SQL View Design
+
+```sql
+CREATE VIEW vw_monthly_financial_summary AS
+SELECT
+  user_id,
+  date_trunc('month', created_at) as mes,
+  SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) as ventas_totales,
+  SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) as egresos_totales,
+  COUNT(*) as num_transacciones
+FROM cont_transacciones
+GROUP BY user_id, date_trunc('month', created_at);
+```
+
+**Beneficio:** Permite comparativas históricas ("Felipe, este mes gastaste 15% más que el anterior").
+
+## JSON Context Injection
+
+Para que DeepSeek razone sin alucinar, pasar datos como JSON estructurado:
+
+```json
+{
+  "contexto_financiero_real": {
+    "ventas": 15000000,
+    "egresos_variables": 2000000,
+    "gastos_fijos_configurados": 12149400,
+    "utilidad_neta_calculada": 850600,
+    "mes": "2026-04"
+  }
+}
+```
+
 ## Risks
 
 | Risk | Likelihood | Mitigation |
@@ -106,3 +138,30 @@ Donde:
 - [ ] API injecta financial snapshot en prompt
 - [ ] IA responde con datos reales: "Tu utilidad neta es $X"
 - [ ] Build pasa sin errores
+
+## Próximos Pasos
+
+### Opción A: System Prompt de IA Strategy
+Redactar el System Prompt base que IA Strategy usará para interpretar los datos de la Fase 2.
+
+**Contenido:**
+- Rol: "Asesor Estratégico de Pipod"
+- Tono: Profesional pero cálido
+- Reglas: No dar advice financiero, solo analizar datos
+- Formato: Cómo presentar números y comparativas
+
+### Opción B: Fase 1 - UI Fixes
+Implementar los Quick Wins de UX directamente:
+
+1. Copiar `markdownComponents` de AssistantSheet a StrategyMessage
+2. Agregar `remarkGfm` para tablas/código
+3. Textarea con auto-grow + Enter=enviar
+4. Delete confirm modal con backdrop blur
+5. Hybrid scrolling (instant + smooth)
+
+**Esfuerzo estimado:** 2-4 horas
+**Impacto:** UI consistente con Gema
+
+---
+
+*Documento creado en colaboración (Usuario + Claude) - Abril 2026*
