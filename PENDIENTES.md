@@ -63,13 +63,13 @@
 
 ---
 
-## ⚠️ IA Strategy — Pendientes
+## ⚠️ IA Strategy — Completado
 
-| Item | Descripción | Prioridad | Status SDD |
-|------|-------------|-----------|------------|
-| T15 | Prompt Hardening (Security tests) | Media | - |
-| T16 | Configurar datos de entrada (costos fijos, cash) | Alta | ✅ SDD Listo |
-| T17 | Settings modal para StrategyData | Media | - |
+| Item | Descripción | Status |
+|------|-------------|--------|
+| T16 | Configurar datos de entrada (costos fijos, cash) | ✅ Implementado |
+| UX | Markdown, Textarea, Delete Modal, Hybrid Scroll | ✅ Implementado |
+| Voice | Zinc minimalist mic button | ✅ Implementado |
 
 ---
 
