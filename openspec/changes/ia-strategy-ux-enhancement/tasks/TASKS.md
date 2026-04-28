@@ -1,71 +1,74 @@
-# Tasks: IA Strategy - UX Enhancement (Fase 1)
+# Tasks: IA Strategy - Real Data Integration (Fase 2 / T16)
 
-## Phase: Apply - Fase 1 Quick Wins UX
-
----
-
-## Task 1: Install Dependencies
-
-**Command:**
-```bash
-npm install react-markdown remark-gfm
-```
-
-**Verify:** Check package.json for new dependencies.
+## Phase: Apply - Fase 2 Real Data (T16)
 
 ---
 
-## Task 2: Update StrategyMessage.tsx
+## Task 1: Create strategy-constants.ts
 
-**File:** `src/components/strategy/StrategyMessage.tsx`
+**File:** `src/lib/strategy-constants.ts`
 
-**Changes:**
-- [ ] Add imports: `ReactMarkdown`, `remarkGfm`
-- [ ] Add `markdownComponents` object with zinc-compatible styles
-- [ ] Update message rendering: user = plain text, assistant = markdown
-
-**Styling Reference:**
+**Content:**
 ```typescript
-const markdownComponents = {
-  p: ({ children }) => <p className="text-sm text-zinc-100 mb-2">{children}</p>,
-  strong: ({ children }) => <strong className="text-indigo-400">{children}</strong>,
-  // ... full implementation in DESIGN.md
-};
+export const FINANCIAL_PLAN = {
+  fixedCosts: 12149400,
+  breakEven: 40498000,
+  businessGoal: 50000000,
+  targetMargin: 0.30,
+  currency: 'COP',
+} as const;
+
+export const FIXED_COSTS_BREAKDOWN = [
+  { label: 'Nóminas', amount: 8000000 },
+  { label: 'Mensajero', amount: 1500000 },
+  { label: 'Arriendo', amount: 1200000 },
+  { label: 'Servicios', amount: 500000 },
+  { label: 'Marketing', amount: 500000 },
+  { label: 'Otros', amount: 394400 },
+] as const;
 ```
 
 ---
 
-## Task 3: Update StrategyChat.tsx
+## Task 2: Create SQL Migration
 
-**File:** `src/components/strategy/StrategyChat.tsx`
+**File:** `supabase/migrations/xxx_create_vw_monthly_financial_summary.sql`
+
+**Content:**
+```sql
+CREATE OR REPLACE VIEW vw_monthly_financial_summary AS
+SELECT
+  user_id,
+  date_trunc('month', created_at)::date as mes,
+  SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) as ventas_totales,
+  SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) as egresos_totales,
+  COUNT(*) as num_transacciones
+FROM cont_transacciones
+GROUP BY user_id, date_trunc('month', created_at);
+```
+
+**Note:** Run this SQL in Supabase Dashboard → SQL Editor
+
+---
+
+## Task 3: Modify API /api/strategy/chat
+
+**File:** `src/app/api/strategy/chat/route.ts`
 
 **Changes:**
-
-### 3.1 Textarea Auto-grow
-- [ ] Replace `Input` with `textarea`
-- [ ] Add `textareaRef`
-- [ ] Add auto-grow `useEffect`
-- [ ] Add `handleKeyDown` for Enter/Shift+Enter
-
-### 3.2 Hybrid Scrolling
-- [ ] Add `isFirstLoad` state
-- [ ] Update scroll `useEffect` with instant/smooth logic
-
-### 3.3 Delete Modal Enhancement
-- [ ] Wrap modal in backdrop overlay
-- [ ] Add scale animation
-- [ ] Style consistently with Gema
+- [ ] Import FINANCIAL_PLAN from strategy-constants
+- [ ] Query vw_monthly_financial_summary for current month
+- [ ] Calculate utility: ventas - egresos - fixedCosts
+- [ ] Build financialContext JSON object
+- [ ] Inject in system prompt
 
 ---
 
 ## Task 4: Build Verification
 
-**Command:**
 ```bash
 npm run build
 ```
-
-**Expected:** Build passes without errors.
 
 ---
 
@@ -73,12 +76,9 @@ npm run build
 
 **Checklist:**
 - [ ] Open IA Strategy page
-- [ ] Type multi-line message - textarea grows
-- [ ] Press Enter - message sends
-- [ ] Press Shift+Enter - new line in textarea
-- [ ] Delete chat - modal has blur backdrop
-- [ ] First load scroll is instant
-- [ ] New messages scroll smoothly
+- [ ] Ask: "¿Cómo voy este mes?"
+- [ ] Verify IA responds with real numbers from transactions
+- [ ] Check console for errors
 
 ---
 
@@ -86,16 +86,16 @@ npm run build
 
 | File | Action |
 |------|--------|
-| `src/components/strategy/StrategyMessage.tsx` | Modify |
-| `src/components/strategy/StrategyChat.tsx` | Modify |
-| `package.json` | Modify (add deps) |
+| `src/lib/strategy-constants.ts` | Create |
+| `supabase/migrations/xxx_create_vw_monthly_financial_summary.sql` | Create |
+| `src/app/api/strategy/chat/route.ts` | Modify |
 
 ---
 
 ## Effort Estimate
 
-- Task 1: 5 min
-- Task 2: 30 min
+- Task 1: 10 min
+- Task 2: 5 min (SQL in Supabase)
 - Task 3: 45 min
 - Task 4: 5 min
 - Task 5: 10 min

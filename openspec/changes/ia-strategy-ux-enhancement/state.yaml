@@ -1,4 +1,4 @@
-status: completed
+status: apply_in_progress
 phase: apply
 created: 2026-04-28
 updated: 2026-04-28
@@ -14,44 +14,39 @@ artifacts:
 
 summary:
   intent: Transform IA Strategy with Gema UX patterns + real financial data
-  current_phase: fase_1_ux_completed
+  current_phase: fase_2_data
   sdd_complete: true
 
 phases:
   fase_1_ux:
     name: Quick Wins UX
     status: completed
-    items:
-      - markdown_rendering: completed
-      - textarea_auto_grow: completed
-      - delete_confirm_modal: completed
-      - hybrid_scrolling: completed
-    effort: low
-    files:
-      - src/components/strategy/StrategyMessage.tsx
-      - src/components/strategy/StrategyChat.tsx
   fase_2_data:
     name: Real Data (T16)
-    status: pending
-    depends_on: fase_1_ux
+    status: in_progress
+    items:
+      - strategy_constants: pending
+      - sql_view: pending
+      - api_integration: pending
     files:
-      - src/lib/strategy-constants.ts
-      - src/app/api/strategy/chat/route.ts
-      - supabase/migrations/
+      - src/lib/strategy-constants.ts (new)
+      - supabase/migrations/xxx_create_vw_monthly_financial_summary.sql (new)
+      - src/app/api/strategy/chat/route.ts (modify)
   fase_3_voice:
     name: Voice Input
     status: pending
     depends_on: fase_2_data
-    files:
-      - src/components/strategy/StrategyChat.tsx
 
-completed_fixes:
-  - StrategyMessage.tsx: Markdown with remarkGfm + zinc styles
-  - StrategyChat.tsx: Textarea auto-grow + backdrop blur modal + hybrid scroll
+progress:
+  fase_1_ux: completed
+  fase_2_data:
+    strategy_constants: pending
+    sql_view: pending
+    api_integration: pending
+  fase_3_voice: pending
 
-verification:
-  build: passed
+next_task: fase_2_data.strategy_constants
 
 notes:
-  - Fase 1 (UI Quick Wins) completed
-  - Ready for Fase 2: Real Data (T16)
+  - Fase 1 completed: Markdown, Textarea, Delete Modal, Hybrid Scroll
+  - Starting Fase 2: Real Data Integration

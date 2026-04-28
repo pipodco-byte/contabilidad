@@ -1,124 +1,146 @@
-# Specification: IA Strategy - UX Enhancement (Fase 1)
+# Specification: IA Strategy - Real Data Integration (Fase 2 / T16)
 
 ## 1. Overview
 
-**Change:** Fase 1 - Quick Wins UX
-**Type:** UI Enhancement
+**Change:** Fase 2 - Real Data Integration (T16)
+**Type:** Feature Enhancement
 **Status:** Spec Draft
 **Created:** 2026-04-28
 
 ---
 
-## 2. Requirements
+## 2. Problem Statement
 
-### 2.1 Markdown Rendering
+IA Strategy currently uses manual inputs for financial calculations. It lacks access to real transaction data from `cont_transacciones` to calculate actual utility.
 
-**Objective:** Render Markdown en mensajes del asistente con soporte para tablas y code blocks.
+---
 
-**Implementation:**
-- Importar `react-markdown` y `remark-gfm`
-- Crear `markdownComponents` object con estilos personalizados
-- Aplicar estilos zinc-compatible para consistency
+## 3. Requirements
 
-**Components:**
+### 3.1 Financial Constants
+
+Create `strategy-constants.ts` with financial plan data:
+
 ```typescript
-// Elements a soportar
-- p, strong, em, ul, ol, li
-- h1, h2, h3
-- blockquote
-- code, pre
-- table, thead, tbody, tr, th, td
-- hr
+export const FINANCIAL_PLAN = {
+  fixedCosts: 12149400,
+  breakEven: 40498000,
+  businessGoal: 50000000,
+  targetMargin: 0.30,
+  currency: 'COP',
+} as const;
+
+export const FIXED_COSTS_BREAKDOWN = [
+  { label: 'Nóminas', amount: 8000000 },
+  { label: 'Mensajero', amount: 1500000 },
+  { label: 'Arriendo', amount: 1200000 },
+  { label: 'Servicios', amount: 500000 },
+  { label: 'Marketing', amount: 500000 },
+  { label: 'Otros', amount: 394400 },
+] as const;
 ```
 
-**Styling:**
-- User messages: Plain text (no markdown)
-- Assistant messages: Full markdown rendering
+### 3.2 SQL View
 
-### 2.2 Textarea Auto-grow
+Create View for monthly financial summary:
 
-**Objective:** Input que crece automáticamente con el contenido.
-
-**Implementation:**
-- Textarea en vez de Input
-- Auto-height basada en scrollHeight
-- Max-height: 160px
-- Overflow-y: auto cuando excede max
-
-**Behavior:**
-- Enter: Enviar mensaje
-- Shift+Enter: Nueva línea
-- Mantener placeholder visible
-
-### 2.3 Delete Confirm Modal
-
-**Objective:** Confirmación elegante para eliminar chat.
-
-**Implementation:**
-- Overlay con backdrop blur
-- Escala animation (0.95 → 1)
-- Botones Cancelar/Eliminar
-- Cierre con X o click fuera
-
-### 2.4 Hybrid Scrolling
-
-**Objective:** Scroll instantáneo en primer load, suave en nuevos mensajes.
-
-**Implementation:**
-- State `isFirstLoad` boolean
-- Primer mensaje: `behavior: 'instant'`
-- Mensajes siguientes: `behavior: 'smooth'`
-
-### 2.5 Loading State
-
-**Objective:** Feedback visual mientras IA responde.
-
-**Current:**
-```tsx
-<div className="flex items-center gap-2 text-muted-foreground">
-  <Loader2 className="h-4 w-4 animate-spin" />
-  <span className="text-sm">Pensando...</span>
-</div>
+```sql
+CREATE VIEW vw_monthly_financial_summary AS
+SELECT
+  user_id,
+  date_trunc('month', created_at) as mes,
+  SUM(CASE WHEN tipo = 'Ingreso' THEN monto ELSE 0 END) as ventas_totales,
+  SUM(CASE WHEN tipo = 'Egreso' THEN monto ELSE 0 END) as egresos_totales,
+  COUNT(*) as num_transacciones
+FROM cont_transacciones
+GROUP BY user_id, date_trunc('month', created_at);
 ```
 
-**Keep as-is:** Ya tiene pulse animation correcto.
+### 3.3 Utility Calculation
+
+```
+Utilidad Neta = Ventas - Egresos - Gastos Fijos
+
+Donde:
+- Ventas = SUM(monto) WHERE tipo = 'Ingreso' (mes actual)
+- Egresos = SUM(monto) WHERE tipo = 'Egreso' (mes actual)
+- Gastos Fijos = $12,149,400 (de constants)
+```
+
+### 3.4 API Integration
+
+Modify `/api/strategy/chat` to:
+1. Query View for current month data
+2. Calculate utility
+3. Inject as JSON context in prompt
 
 ---
 
-## 3. Component Changes
+## 4. Data Flow
 
-### 3.1 StrategyMessage.tsx
+```
+User asks: "¿Cómo voy este mes?"
+        ↓
+API /api/strategy/chat receives request
+        ↓
+Query vw_monthly_financial_summary for current month
+        ↓
+Calculate: Utilidad = Ventas - Egresos - $12.1M
+        ↓
+Build JSON context:
+{
+  "contexto_financiero_real": {
+    "ventas": 15000000,
+    "egresos": 2000000,
+    "gastos_fijos": 12149400,
+    "utilidad_neta": 850600,
+    "mes": "2026-04"
+  }
+}
+        ↓
+Send to DeepSeek with context
+        ↓
+IA responds with real data analysis
+```
+
+---
+
+## 5. Component Changes
+
+### 5.1 New File: `src/lib/strategy-constants.ts`
+
+```typescript
+export const FINANCIAL_PLAN = { ... } as const;
+export const FIXED_COSTS_BREAKDOWN = [...] as const;
+```
+
+### 5.2 Modified: `src/app/api/strategy/chat/route.ts`
 
 **Changes:**
-- Add `react-markdown` and `remark-gfm` imports
-- Add `markdownComponents` object
-- Add conditional rendering (user = plain, assistant = markdown)
+- Import FINANCIAL_PLAN
+- Query `vw_monthly_financial_summary` for user_id + current month
+- Calculate utility
+- Inject context in prompt
 
-### 3.2 StrategyChat.tsx
+### 5.3 New Migration: `supabase/migrations/xxx_create_vw_monthly_financial_summary.sql`
 
-**Changes:**
-- Replace `Input` with `textarea`
-- Add `isFirstLoad` state
-- Add `textareaRef` for auto-grow
-- Update scroll logic with hybrid behavior
-- Enhance delete modal with backdrop blur
+```sql
+CREATE VIEW vw_monthly_financial_summary AS ...
+```
 
 ---
 
-## 4. Dependencies
+## 6. Dependencies
 
-| Package | Purpose |
-|---------|---------|
-| `react-markdown` | Markdown rendering |
-| `remark-gfm` | GitHub Flavored Markdown (tables, etc.) |
+- `cont_transacciones` table with data
+- Supabase access for View creation
 
 ---
 
-## 5. Success Criteria
+## 7. Success Criteria
 
-- [ ] Mensajes de asistente renderizan Markdown (tablas, code, etc.)
-- [ ] Textarea crece automáticamente hasta 160px
-- [ ] Enter envia, Shift+Enter hace nueva línea
-- [ ] Delete modal tiene backdrop blur
-- [ ] Primer scroll es instant, siguientes son suaves
-- [ ] Build pasa sin errores
+- [ ] View SQL created and accessible
+- [ ] strategy-constants.ts exports correct values
+- [ ] API injects real financial data in prompt
+- [ ] IA responds with: "Tu utilidad neta es $X"
+- [ ] Build passes
