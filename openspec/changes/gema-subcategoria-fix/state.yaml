@@ -1,0 +1,22 @@
+status: completed
+phase: apply
+created: 2026-04-27
+updated: 2026-04-28
+
+artifacts:
+  spec: spec/README.md
+  design: design/README.md
+  tasks: tasks/README.md
+
+progress:
+  task_1_fix: completed
+
+next_task: null
+
+notes:
+  - Added sub_categoria to handleLoteTransaction type definition
+  - Added defensivo handling: (transaccion.sub_categoria && transaccion.sub_categoria.trim()) ? transaccion.sub_categoria : 'N/A'
+  - Added sub_categoria fallback 'N/A' in handleTransaction
+  - Added sub_categoria fallback 'N/A' in Bold insert
+  - Build passes successfully
+  - VERIFIED: Inserts work without NULL constraint violations

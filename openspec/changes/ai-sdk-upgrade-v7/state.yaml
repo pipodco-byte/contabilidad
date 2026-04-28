@@ -1,0 +1,17 @@
+status: in_progress
+phase: apply
+created: 2026-04-27
+updated: 2026-04-27
+
+artifacts:
+  spec: spec/README.md
+  design: design/README.md
+  tasks: tasks/README.md
+
+progress:
+  task_1_upgrade: in_progress
+  task_2_route: pending
+  task_3_build: pending
+  task_4_test: pending
+
+next_task: task_1_upgrade

@@ -17,6 +17,12 @@ export function useRadarData(userId: string, userRole: string = 'usuario') {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userId || userId.length < 5) {
+      setLoading(false)
+      setData([])
+      return
+    }
+
     const cargarDatos = async () => {
       try {
         let query = supabase.from('transacciones').select('monto, categoria, tipo');

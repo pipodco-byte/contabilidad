@@ -1,0 +1,20 @@
+status: completed
+phase: apply
+created: 2026-04-27
+updated: 2026-04-28
+
+artifacts:
+  spec: spec/README.md
+  design: design/README.md
+  tasks: tasks/README.md
+
+progress:
+  task_1_fix: completed
+
+next_task: null
+
+notes:
+  - Changed user_id from 'be0fa692-a3b1-41b6-9b9c-2e29f20f77ea' (usuarios table) to 'ca85a0bc-2e6e-4887-bf75-930f4dd34880' (cont_usuarios table)
+  - Used correct UUID from cont_usuarios table (Felipe)
+  - Build passes successfully
+  - VERIFIED: Transaction successfully inserted with correct FK (ID: 0546ab67-03c0-4521-b48b-1f0ba0d04184)

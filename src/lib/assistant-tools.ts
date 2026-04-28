@@ -102,12 +102,8 @@ export type TransaccionItem = z.infer<typeof TransaccionItemSchema>
 export type LoteTransaccionesData = z.infer<typeof LoteTransaccionesSchema>
 
 export const tools = {
-  registrar_transaccion: {
-    description: 'Registra una transacción contable con los 9 datos obligatorios',
-    parameters: RegistrarTransaccionSchema,
-  },
   registrar_lote_transacciones: {
     description: 'Registra múltiples transacciones a partir de un dictamen de Gema',
-    parameters: LoteTransaccionesSchema,
+    inputSchema: LoteTransaccionesSchema,
   },
 } as const

@@ -137,34 +137,31 @@ export function useAssistantChat(): UseAssistantChatReturn {
           body: JSON.stringify({
             messages: [...messages, userMessage],
           }),
-          signal: abortControllerRef.current.signal,
         })
 
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor')
         }
 
-        const reader = response.body?.getReader()
-        const decoder = new TextDecoder()
-        let fullResponse = ''
+        const result = await response.json()
 
-        if (reader) {
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) break
+        if (result.error) {
+          throw new Error(result.error)
+        }
 
-            const chunk = decoder.decode(value, { stream: true })
-            fullResponse += chunk
+        let assistantContent = result.content || ''
 
-            setMessages((prev) => {
-              const lastMsg = prev[prev.length - 1]
-              if (lastMsg?.role === 'assistant') {
-                return [...prev.slice(0, -1), { ...lastMsg, content: fullResponse }]
-              }
-              return [...prev, { role: 'assistant', content: fullResponse }]
-            })
+        if (result.toolResults && result.toolResults.length > 0) {
+          const successCount = result.toolResults.filter((r: any) => !r.error).length
+          if (successCount > 0) {
+            assistantContent += `\n\n✅ ${successCount} transacción${successCount > 1 ? 'es' : ''} registrada${successCount > 1 ? 's' : ''} exitosamente en Supabase.`
           }
         }
+
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: assistantContent }
+        ])
       } catch (err) {
         if (err instanceof Error && err.name === 'AbortError') {
           setMessages((prev) => [
