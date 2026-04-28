@@ -74,30 +74,14 @@
 
 ---
 
-## 📁 SDDs Creados (Sin Aplicar)
+## 📁 SDDs Archivados
 
-| SDD | Descripción | Path |
-|-----|-------------|------|
-| `ia-strategy-ux-enhancement` | UX (Markdown, Textarea) + T16 (Real Data) + Voice | `openspec/changes/ia-strategy-ux-enhancement/` |
-
-### SDD: ia-strategy-ux-enhancement
-
-**Visión:** Transformar IA Strategy de simulador manual a Asesor de Negocios de Alta Precisión.
-
-#### Fase 1: Quick Wins UX (Bajo Esfuerzo)
-- Markdown rendering con `remarkGfm`
-- Textarea auto-grow (Enter=enviar, Shift+Enter=nueva línea)
-- Delete confirm modal con backdrop blur
-- Hybrid scrolling (instant first load, smooth después)
-
-#### Fase 2: T16 - Real Data
-- `strategy-constants.ts` con gastos fijos desde `.env`
-- View SQL `vw_monthly_financial_summary`
-- Integrar datos reales en prompt de Strategy
-- **Fórmula:** `Utilidad Neta = Ventas - Egresos - $12.1M`
-
-#### Fase 3: Voice
-- Integrar `AssistantMicButton` en StrategyChat
+| SDD | Descripción | Archivado |
+|-----|-------------|------------|
+| `table-name-consistency-fix` | Tabla incorrecta transacciones → cont_transacciones | ✅ 2026-04 |
+| `empty-userid-query-fix` | Query con userId vacío | ✅ 2026-04 |
+| `ia-strategy-ux-enhancement` | UX + T16 (Real Data) + Voice | ✅ 2026-04 |
+| `ia-strategy-visual-storytelling` | Visual Insights + Captain's Log Narrative | ✅ 2026-04-28 |
 
 ### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
 - Gastos Fijos: $12,149,400/mes

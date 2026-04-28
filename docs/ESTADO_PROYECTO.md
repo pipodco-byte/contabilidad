@@ -66,6 +66,13 @@
 - [x] IA-6: Ghost Sidebar Bug fix (dashboard/layout.tsx inteligente)
 - [x] IA-7: Single source of truth para sidebar (64px colapsado)
 
+### IA Strategy Enhancements (v4.1) — Abril 2026
+- [x] IA-UX: Markdown con remarkGfm, Textarea auto-grow, Delete modal, Hybrid scroll
+- [x] IA-T16: Datos reales vía SQL View `vw_monthly_financial_summary`
+- [x] IA-Voice: Botón de voz con diseño Zinc minimalista
+- [x] IA-Captain: Tono de "Capitán del navío" en system prompt
+- [x] IA-Viz: StrategyMiniChart con 4 series (recharts)
+
 ---
 
 ## 🔲 En Progreso

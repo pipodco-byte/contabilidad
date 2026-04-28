@@ -105,6 +105,10 @@ Constraints de Supabase:
 
 | SDD | Fecha | Descripción |
 |-----|-------|-------------|
+| `ia-strategy-visual-storytelling` | 2026-04-28 | MiniComboChart + Captain's Log Narrative |
+| `ia-strategy-ux-enhancement` | 2026-04-28 | UX + T16 (Real Data) + Voice |
+| `table-name-consistency-fix` | 2026-04-28 | 18 archivos: transacciones → cont_transacciones |
+| `empty-userid-query-fix` | 2026-04-28 | Guard clause contra userId vacío |
 | `gema-lote-v2` | 2026-04-28 | Schema + API + BatchCard + confirmation UI |
 | `gema-atomic-response` | 2026-04-28 | streamText → generateText |
 | `gema-stream-stability` | 2026-04-28 | Fix indentación, disable tools temp |
@@ -114,8 +118,6 @@ Constraints de Supabase:
 | `gema-subcategoria-fix` | 2026-04-28 | NULL handling para sub_categoria |
 | `gema-cont-usuarios-fix` | 2026-04-28 | UUID correcto de cont_usuarios |
 | `gema-confirmation-ui` | 2026-04-28 | Confirmation en chat cuando toolResults existe |
-| `table-name-consistency-fix` | 2026-04-28 | 18 archivos: transacciones → cont_transacciones |
-| `empty-userid-query-fix` | 2026-04-28 | Guard clause contra userId vacío |
 
 ## 🔄 Workflow de Desarrollo
 
