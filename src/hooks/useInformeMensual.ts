@@ -16,7 +16,7 @@ export function useInformeMensual(userId: string, userRole: string = 'usuario') 
     const cargarDatosMensuales = async () => {
       try {
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('categoria, tipo, monto, fecha');
 
         if (userRole !== 'admin') {

@@ -24,7 +24,7 @@ export function useEditarTransaccion(userId: string) {
 
     try {
       const { error: err } = await supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .update({
           ...data,
           updated_at: new Date(),

@@ -15,7 +15,7 @@ export function useGraficas(userId: string, userRole: string = 'usuario') {
     const cargarDatos = async () => {
       try {
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('categoria, tipo, monto');
 
         if (userRole !== 'admin') {

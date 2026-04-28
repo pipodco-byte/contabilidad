@@ -16,7 +16,7 @@ export async function GET(request: Request) {
     const fechaFin = searchParams.get('fechaFin');
 
     let query = supabase
-      .from('transacciones')
+      .from('cont_transacciones')
       .select('*')
       .eq('user_id', user.id);
 

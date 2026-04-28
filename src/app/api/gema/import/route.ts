@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     });
 
     console.log('[API] Insertando', dataToInsert.length, 'registros en Supabase...');
-    const { error } = await supabase.from('transacciones').insert(dataToInsert);
+    const { error } = await supabase.from('cont_transacciones').insert(dataToInsert);
 
     if (error) {
       console.error('[API] Error de Supabase:', error);

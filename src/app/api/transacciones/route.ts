@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const offset = searchParams.get('offset') || '0';
 
     const { data, error } = await supabase
-      .from('transacciones')
+      .from('cont_transacciones')
       .select('*')
       .eq('user_id', user.id)
       .order('fecha', { ascending: false })
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
     // Guardar transacción principal
     const { data: transaccion, error } = await supabase
-      .from('transacciones')
+      .from('cont_transacciones')
       .insert({
         ...validatedData,
         user_id: user.id,
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       const montoComision = Math.round(validatedData.monto * (BOLD_COMMISSION / 100));
 
       await supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .insert({
           user_id: user.id,
           fecha: validatedData.fecha.toISOString().split('T')[0],

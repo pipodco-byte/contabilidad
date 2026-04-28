@@ -25,7 +25,7 @@ export function useRadarData(userId: string, userRole: string = 'usuario') {
 
     const cargarDatos = async () => {
       try {
-        let query = supabase.from('transacciones').select('monto, categoria, tipo');
+        let query = supabase.from('cont_transacciones').select('monto, categoria, tipo');
 
         if (userRole !== 'admin') {
           query = query.eq('user_id', userId);

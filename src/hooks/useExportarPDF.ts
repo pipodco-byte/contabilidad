@@ -5,7 +5,7 @@ export function useExportarPDF() {
   const exportarTransaccionesPDF = useCallback(async (userId: string, userRole: string) => {
     try {
       let query = supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .select('*');
 
       if (userRole !== 'admin') {

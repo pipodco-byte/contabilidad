@@ -91,7 +91,7 @@ export function useStrategyData(): UseStrategyDataReturn {
         if (!user) return;
 
         const { data, error } = await supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('*')
           .eq('user_id', user.id)
           .order('fecha', { ascending: false })

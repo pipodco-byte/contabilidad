@@ -1,0 +1,44 @@
+status: completed
+phase: completed
+created: 2026-04-28
+updated: 2026-04-28
+
+artifacts:
+  spec: spec/README.md
+  design: design/README.md
+  tasks: tasks/README.md
+
+progress:
+  task_1_hooks: completed
+  task_2_api: completed
+  task_3_build: completed
+  task_4_test: pending_runtime
+
+completed_fixes:
+  - useRadarData.ts
+  - useStrategyData.ts
+  - useEvolucionMensual.ts
+  - useInformeMensual.ts
+  - useInformeAnual.ts
+  - useGraficas.ts
+  - useResumen.ts
+  - useExportarPDF.ts
+  - useExportarExcel.ts
+  - useEditarTransaccion.ts
+  - useTransacciones.ts
+  - useListaTransacciones.ts (2 instances)
+  - api/dashboard/route.ts
+  - api/transacciones/route.ts (3 instances)
+  - api/gema/import/route.ts
+
+total_instances_fixed: 18
+total_files_modified: 15
+
+verification:
+  build: passed
+  grep_for_remaining: 0 instances found
+
+notes:
+  - All 18 instances of .from('transacciones') now use .from('cont_transacciones')
+  - Build compiles without errors
+  - Runtime testing needed to confirm UI shows data

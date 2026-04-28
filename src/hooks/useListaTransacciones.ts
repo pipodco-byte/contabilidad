@@ -24,7 +24,7 @@ export function useListaTransacciones(userId: string, userRole: string = 'usuari
     setLoading(true);
     try {
       let query = supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .select('*');
 
       if (userRole !== 'admin') {
@@ -45,7 +45,7 @@ export function useListaTransacciones(userId: string, userRole: string = 'usuari
   const eliminarTransaccion = async (id: string) => {
     try {
       const { error: err } = await supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .delete()
         .eq('id', id);
 

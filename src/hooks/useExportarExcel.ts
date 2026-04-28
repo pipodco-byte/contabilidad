@@ -5,7 +5,7 @@ export function useExportarExcel() {
   const exportarTransacciones = useCallback(async (userId: string) => {
     try {
       const { data } = await supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .select('*')
         .eq('user_id', userId)
         .order('fecha', { ascending: false });

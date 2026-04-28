@@ -19,7 +19,7 @@ export function useResumen(userId: string, userRole: string = 'usuario') {
     const cargarResumen = async () => {
       try {
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('tipo, monto');
 
         if (userRole !== 'admin') {

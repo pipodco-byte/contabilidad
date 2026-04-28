@@ -18,7 +18,7 @@ export function useEvolucionMensual(userId: string, userRole: string = 'usuario'
       try {
         const year = new Date().getFullYear();
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('monto, tipo, fecha');
 
         if (userRole !== 'admin') {

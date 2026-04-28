@@ -16,7 +16,7 @@ export function useInformeAnual(userId: string, userRole: string = 'usuario') {
     const cargarDatosAnuales = async () => {
       try {
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('fecha, tipo, monto');
 
         if (userRole !== 'admin') {

@@ -24,7 +24,7 @@ export function useTransacciones(userId: string) {
 
     try {
       const { error: err } = await supabase
-        .from('transacciones')
+        .from('cont_transacciones')
         .insert({
           ...data,
           user_id: userId,

@@ -33,7 +33,7 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
         const endDate = new Date(selectedYear, selectedMonth, 0).toISOString().split('T')[0];
 
         let query = supabase
-          .from('transacciones')
+          .from('cont_transacciones')
           .select('*', { count: 'exact' })
           .gte('fecha', startDate)
           .lte('fecha', endDate)
