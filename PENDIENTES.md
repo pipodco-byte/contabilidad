@@ -1,6 +1,7 @@
 # ⏳ Pendientes — Pipod Contabilidad
 
 **Última actualización:** Abril 2026
+**Versión:** 4.2
 **Fuente de verdad:** Este archivo + `ESTADO_PROYECTO.md`
 
 ---
@@ -27,7 +28,7 @@
 
 | Item | Descripción | Prioridad | Condición |
 |------|-------------|-----------|-----------|
-| G3 | Metas/Hitos de negocio | Media | ✅ SDD creado (`visual-milestones-g3`) |
+| G3 | Metas/Hitos de negocio | ✅ | ✅ Completado (`visual-milestones-g3`) |
 | G4 | Profit Margin % | Media | Siempre disponible |
 | G5 | Burn Rate | Media | ≥3 meses de datos |
 | G6 | Runway | Media | ≥3 meses de datos |
@@ -82,7 +83,9 @@
 | `empty-userid-query-fix` | Query con userId vacío | ✅ 2026-04 |
 | `ia-strategy-ux-enhancement` | UX + T16 (Real Data) + Voice | ✅ 2026-04 |
 | `ia-strategy-visual-storytelling` | Visual Insights + Captain's Log Narrative | ✅ 2026-04-28 |
-| `visual-milestones-g3` | Líneas de meta en gráficos (Radar de Navegación) | ✅ 2026-04-28 |
+| `visual-milestones-g3` | Líneas de meta en gráficos (MilestoneLine component) | ✅ 2026-04-28 |
+| `chart-polish-hybrid` | Framer Motion fade-in + shadcn Charts + palette rose | ✅ 2026-04-28 |
+| `fix-legend-usechart-error` | SimpleLegendContent standalone (sin ChartContainer dependency) | ✅ 2026-04-28 |
 
 ## 📁 SDDs En Progreso
 
@@ -122,4 +125,4 @@ Para ver el contexto completo (histórico, arquitectura, SDD), consulta `ESTADO_
 
 ---
 
-_Ultima actualizacion: Abril 2026_
+_Ultima actualizacion: Abril 2026 (v4.2 - Chart Polish + Milestones G3)_

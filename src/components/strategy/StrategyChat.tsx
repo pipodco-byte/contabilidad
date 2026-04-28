@@ -143,7 +143,7 @@ export function StrategyChat({
         )}
       </div>
 
-      <div className="px-4 py-3 border-b border-zinc-800">
+      <div className="px-4 py-3 border-b border-border">
         <StrategyMiniChart data={[]} />
       </div>
 
@@ -182,7 +182,7 @@ export function StrategyChat({
           placeholder="¿Cuánto puedo gastar?"
           disabled={isLoading}
           rows={1}
-          className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
+          className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-input border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
         />
         <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
           <Send className="h-4 w-4" />
@@ -195,13 +195,13 @@ export function StrategyChat({
           onClick={() => setShowDeleteConfirm(false)}
         >
           <div
-            className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4 animate-in zoom-in-95 duration-200"
+            className="bg-popover border border-border rounded-xl p-6 max-w-sm mx-4 animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-zinc-100 mb-2">
+            <h3 className="text-lg font-semibold text-popover-foreground mb-2">
               ¿Eliminar conversación?
             </h3>
-            <p className="text-sm text-zinc-400 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               Se eliminará toda la conversación.
             </p>
             <div className="flex gap-3">

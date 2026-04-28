@@ -70,13 +70,13 @@ export default function TransaccionesPage() {
 
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           type="text"
           placeholder="Buscar por descripción..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="pl-10 bg-zinc-900/50 border-zinc-800/50 text-zinc-100 placeholder:text-zinc-500 focus:border-indigo-500/50 focus:ring-indigo-500/20"
+          className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:ring-primary/20"
         />
       </div>
 

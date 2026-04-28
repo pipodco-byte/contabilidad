@@ -13,8 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
-        <div className="fixed inset-0 bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 -z-10" />
+      <body className="bg-background text-foreground transition-colors">
+        <div className="fixed inset-0 bg-gradient-to-br from-background via-background to-muted -z-10" />
         {children}
       </body>
     </html>

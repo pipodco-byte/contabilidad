@@ -20,13 +20,13 @@ interface AssistantSheetProps {
 
 const markdownComponents: Record<string, React.ComponentType<any>> = {
   p: ({ children }: { children: React.ReactNode }) => (
-    <p className="text-sm text-zinc-100 mb-2 last:mb-0">{children}</p>
+    <p className="text-sm text-foreground mb-2 last:mb-0">{children}</p>
   ),
   strong: ({ children }: { children: React.ReactNode }) => (
     <strong className="text-indigo-400 font-semibold">{children}</strong>
   ),
   em: ({ children }: { children: React.ReactNode }) => (
-    <em className="text-zinc-400 italic">{children}</em>
+    <em className="text-muted-foreground italic">{children}</em>
   ),
   ul: ({ children }: { children: React.ReactNode }) => (
     <ul className="list-disc pl-4 space-y-1 my-2">{children}</ul>
@@ -35,33 +35,33 @@ const markdownComponents: Record<string, React.ComponentType<any>> = {
     <ol className="list-decimal pl-4 space-y-1 my-2">{children}</ol>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
-    <li className="text-sm text-zinc-300">{children}</li>
+    <li className="text-sm text-foreground">{children}</li>
   ),
   h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="text-lg font-bold text-zinc-100 mb-2">{children}</h1>
+    <h1 className="text-lg font-bold text-foreground mb-2">{children}</h1>
   ),
   h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-base font-semibold text-zinc-100 mb-2">{children}</h2>
+    <h2 className="text-base font-semibold text-foreground mb-2">{children}</h2>
   ),
   h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-sm font-semibold text-zinc-200 mb-1">{children}</h3>
+    <h3 className="text-sm font-semibold text-foreground mb-1">{children}</h3>
   ),
   blockquote: ({ children }: { children: React.ReactNode }) => (
-    <blockquote className="border-l-4 border-indigo-500 bg-zinc-900/50 pl-4 py-1 my-2 italic text-zinc-300">
+    <blockquote className="border-l-4 border-indigo-500 bg-muted pl-4 py-1 my-2 italic text-foreground">
       {children}
     </blockquote>
   ),
   code: ({ children }: { children: React.ReactNode }) => (
-    <code className="bg-zinc-800 px-1.5 py-0.5 rounded text-emerald-400 text-xs font-mono">
+    <code className="bg-muted px-1.5 py-0.5 rounded text-emerald-400 text-xs font-mono">
       {children}
     </code>
   ),
   pre: ({ children }: { children: React.ReactNode }) => (
-    <pre className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 my-2 overflow-x-auto">
+    <pre className="bg-muted border border-border rounded-lg p-3 my-2 overflow-x-auto">
       {children}
     </pre>
   ),
-  hr: () => <hr className="border-zinc-800 my-4" />,
+  hr: () => <hr className="border-border my-4" />,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
     <a
@@ -74,26 +74,26 @@ const markdownComponents: Record<string, React.ComponentType<any>> = {
     </a>
   ),
   table: ({ children }: { children: React.ReactNode }) => (
-    <div className="overflow-x-auto my-4 rounded-lg border border-zinc-800">
-      <table className="min-w-full divide-y divide-zinc-800 text-sm">
+    <div className="overflow-x-auto my-4 rounded-lg border border-border">
+      <table className="min-w-full divide-y divide-border text-sm">
         {children}
       </table>
     </div>
   ),
   thead: ({ children }: { children: React.ReactNode }) => (
-    <thead className="bg-zinc-800/50">{children}</thead>
+    <thead className="bg-muted">{children}</thead>
   ),
   tbody: ({ children }: { children: React.ReactNode }) => (
-    <tbody className="divide-y divide-zinc-800">{children}</tbody>
+    <tbody className="divide-y divide-border">{children}</tbody>
   ),
   tr: ({ children }: { children: React.ReactNode }) => (
-    <tr className="hover:bg-zinc-800/30 transition-colors">{children}</tr>
+    <tr className="hover:bg-muted/30 transition-colors">{children}</tr>
   ),
   th: ({ children }: { children: React.ReactNode }) => (
-    <th className="px-3 py-2 text-left font-semibold text-zinc-200">{children}</th>
+    <th className="px-3 py-2 text-left font-semibold text-foreground">{children}</th>
   ),
   td: ({ children }: { children: React.ReactNode }) => (
-    <td className="px-3 py-2 text-zinc-400">{children}</td>
+    <td className="px-3 py-2 text-muted-foreground">{children}</td>
   ),
 }
 
@@ -223,25 +223,25 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
         onClick={onClose}
       />
 
-      <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-zinc-950 border-l border-zinc-800 z-50 flex flex-col animate-in slide-in-from-right duration-300">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
+      <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-background border-l border-border z-50 flex flex-col animate-in slide-in-from-right duration-300">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">C</span>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+              <span className="text-primary-foreground text-sm font-bold">C</span>
             </div>
-            <h2 className="text-lg font-semibold text-zinc-100">Copilot</h2>
+            <h2 className="text-lg font-semibold text-foreground">Copilot</h2>
           </div>
           <div className="flex items-center gap-1">
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="p-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-lg transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
               aria-label="Borrar historial"
             >
               <Trash2 className="w-5 h-5" />
             </button>
             <button
               onClick={onClose}
-              className="p-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 rounded-lg transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -257,8 +257,8 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
               <div
                 className={`max-w-[85%] px-4 py-3 rounded-2xl ${
                   msg.role === 'user'
-                    ? 'bg-indigo-600/20 text-zinc-100 rounded-br-md border border-indigo-500/30'
-                    : 'bg-zinc-800/80 text-zinc-100 rounded-bl-md border border-zinc-700/50'
+                    ? 'bg-primary/20 text-foreground rounded-br-md border border-primary/30'
+                    : 'bg-secondary text-foreground rounded-bl-md border border-border/50'
                 }`}
               >
                 {msg.role === 'assistant' ? (
@@ -277,7 +277,7 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
 
           {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
             <div className="flex justify-start">
-              <div className="bg-zinc-800/80 text-zinc-100 px-4 py-3 rounded-2xl rounded-bl-md border border-zinc-700/50">
+              <div className="bg-secondary text-foreground px-4 py-3 rounded-2xl rounded-bl-md border border-border/50">
                 <p className="text-sm animate-pulse">Escribiendo...</p>
               </div>
             </div>
@@ -305,7 +305,7 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="p-4 border-t border-zinc-800">
+        <div className="p-4 border-t border-border">
           <form onSubmit={(e) => { e.preventDefault(); handleSend() }} className="flex items-center gap-2">
             <AssistantMicButton
               disabled={isLoading}
@@ -320,12 +320,12 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
                 <img
                   src={attachedImage}
                   alt="Attached"
-                  className="w-10 h-10 object-cover rounded border border-zinc-700"
+                  className="w-10 h-10 object-cover rounded border border-border"
                 />
                 <button
                   type="button"
                   onClick={() => setAttachedImage(null)}
-                  className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white rounded-full text-xs flex items-center justify-center"
+                  className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-destructive-foreground rounded-full text-xs flex items-center justify-center"
                 >
                   ×
                 </button>
@@ -339,12 +339,12 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
               placeholder="Dicta o escribe tu transacción..."
               disabled={isLoading}
               rows={1}
-              className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-indigo-500/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
+              className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-input border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="p-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-700 disabled:cursor-not-allowed text-white rounded-lg transition-all active:scale-95"
+              className="p-2.5 bg-primary hover:bg-primary/80 disabled:bg-muted disabled:cursor-not-allowed text-primary-foreground rounded-lg transition-all active:scale-95"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -353,13 +353,13 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
 
         {showDeleteConfirm && (
           <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-50">
-            <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4">
-              <h3 className="text-lg font-semibold text-zinc-100 mb-2">¿Borrar historial?</h3>
-              <p className="text-sm text-zinc-400 mb-4">Se eliminará toda la conversación.</p>
+            <div className="bg-popover border border-border rounded-xl p-6 max-w-sm mx-4">
+              <h3 className="text-lg font-semibold text-popover-foreground mb-2">¿Borrar historial?</h3>
+              <p className="text-sm text-muted-foreground mb-4">Se eliminará toda la conversación.</p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-100 rounded-lg text-sm font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-secondary hover:bg-muted text-foreground rounded-lg text-sm font-medium transition-colors"
                 >
                   Cancelar
                 </button>
@@ -369,7 +369,7 @@ export function AssistantSheet({ isOpen, onClose, initialMessage }: AssistantShe
                     setShowDeleteConfirm(false)
                     toast('Historial eliminado')
                   }}
-                  className="flex-1 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition-colors"
+                  className="flex-1 px-4 py-2 bg-destructive hover:bg-destructive/80 text-destructive-foreground rounded-lg text-sm font-medium transition-colors"
                 >
                   Borrar
                 </button>
@@ -402,58 +402,58 @@ function PreVizCard({
   const comision = isBold ? Math.round(transaction.monto * 0.05) : 0
 
   return (
-    <div className="bg-zinc-900 border border-indigo-500/50 rounded-xl p-4 space-y-3">
-      <h3 className="text-sm font-semibold text-indigo-400 uppercase tracking-wide">
+    <div className="bg-card border border-primary/50 rounded-xl p-4 space-y-3">
+      <h3 className="text-sm font-semibold text-primary uppercase tracking-wide">
         Verifica los datos
       </h3>
 
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-zinc-400">Fecha:</span>
-          <span className="text-zinc-100">{transaction.fecha}</span>
+          <span className="text-muted-foreground">Fecha:</span>
+          <span className="text-foreground">{transaction.fecha}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">Descripción:</span>
-          <span className="text-zinc-100">{transaction.descripcion}</span>
+          <span className="text-muted-foreground">Descripción:</span>
+          <span className="text-foreground">{transaction.descripcion}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">Categoría:</span>
-          <span className="text-zinc-100">{transaction.categoria}</span>
+          <span className="text-muted-foreground">Categoría:</span>
+          <span className="text-foreground">{transaction.categoria}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">Tipo:</span>
-          <span className={`font-medium ${transaction.tipo === 'Ingreso' ? 'text-emerald-400' : 'text-rose-400'}`}>
+          <span className="text-muted-foreground">Tipo:</span>
+          <span className={`font-medium ${transaction.tipo === 'Ingreso' ? 'text-emerald-500' : 'text-rose-500'}`}>
             {transaction.tipo}
           </span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">Monto:</span>
-          <span className={`font-mono font-semibold ${transaction.tipo === 'Ingreso' ? 'text-emerald-400' : 'text-rose-400'}`}>
+          <span className="text-muted-foreground">Monto:</span>
+          <span className={`font-mono font-semibold ${transaction.tipo === 'Ingreso' ? 'text-emerald-500' : 'text-rose-500'}`}>
             {transaction.tipo === 'Ingreso' ? '+' : '-'}
             {formatCurrency(transaction.monto)}
           </span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">Medio de Pago:</span>
-          <span className="text-zinc-100">{transaction.medio_pago}</span>
+          <span className="text-muted-foreground">Medio de Pago:</span>
+          <span className="text-foreground">{transaction.medio_pago}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-zinc-400">IVA:</span>
-          <span className="text-zinc-100">{transaction.estado_iva}</span>
+          <span className="text-muted-foreground">IVA:</span>
+          <span className="text-foreground">{transaction.estado_iva}</span>
         </div>
         {transaction.comentarios && (
           <div className="flex justify-between">
-            <span className="text-zinc-400">Comentarios:</span>
-            <span className="text-zinc-100 text-right">{transaction.comentarios}</span>
+            <span className="text-muted-foreground">Comentarios:</span>
+            <span className="text-foreground text-right">{transaction.comentarios}</span>
           </div>
         )}
 
         {isBold && (
-          <div className="mt-3 pt-3 border-t border-zinc-700 space-y-2">
-            <p className="text-xs text-indigo-400 font-medium">Comisión Bold (5%):</p>
+          <div className="mt-3 pt-3 border-t border-border space-y-2">
+            <p className="text-xs text-primary font-medium">Comisión Bold (5%):</p>
             <div className="flex justify-between">
-              <span className="text-zinc-400">Egreso automático:</span>
-              <span className="text-rose-400 font-mono">-{formatCurrency(comision)}</span>
+              <span className="text-muted-foreground">Egreso automático:</span>
+              <span className="text-rose-500 font-mono">-{formatCurrency(comision)}</span>
             </div>
           </div>
         )}
@@ -468,7 +468,7 @@ function PreVizCard({
         </button>
         <button
           onClick={onCorrect}
-          className="flex-1 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-100 rounded-lg text-sm font-medium transition-colors"
+          className="flex-1 px-4 py-2 bg-secondary hover:bg-muted text-foreground rounded-lg text-sm font-medium transition-colors"
         >
           Corregir
         </button>

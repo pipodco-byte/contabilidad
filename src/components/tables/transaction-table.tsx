@@ -108,10 +108,10 @@ export function TransactionTable({
     const isSearching = searchQuery && searchQuery.length > 0;
     return (
       <div className="space-y-6">
-        <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
-          <div className="p-6 border-b border-zinc-800/50">
+        <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm">
+          <div className="p-6 border-b border-border">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-zinc-50 tracking-tight">Transacciones</h2>
+              <h2 className="text-xl font-semibold text-card-foreground tracking-tight">Transacciones</h2>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
@@ -128,7 +128,7 @@ export function TransactionTable({
                   onClick={() => exportarTransaccionesPDF(userId, userRole)}
                   className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
                 >
-                  <FileText className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                <FileText className="w-4 h-4 mr-2" />
                   PDF
                 </Button>
               </div>
@@ -153,8 +153,8 @@ export function TransactionTable({
                     onClick={() => setFiltroTipo(tipo)}
                     className={
                       filtroTipo === tipo
-                        ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
-                        : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
+                        ? 'bg-primary text-primary-foreground active:scale-95 transition-all duration-200'
+                        : 'text-muted-foreground bg-transparent border border-transparent hover:text-foreground hover:bg-accent'
                     }
                   >
                     {tipo}
@@ -174,25 +174,25 @@ export function TransactionTable({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
-        <div className="p-6 border-b border-zinc-800/50">
+      <div className="rounded-xl border border-border bg-card backdrop-blur-sm">
+        <div className="p-6 border-b border-border">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-zinc-50 tracking-tight">Transacciones</h2>
+            <h2 className="text-xl font-semibold text-foreground tracking-tight">Transacciones</h2>
             <div className="flex gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => exportarTransacciones(userId)}
-                className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200"
               >
-                <Download className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+                <Download className="w-4 h-4 mr-2" />
                 CSV
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => exportarTransaccionesPDF(userId, userRole)}
-                className="text-zinc-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200"
               >
                 <FileText className="w-4 h-4 mr-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
                 PDF
@@ -218,10 +218,10 @@ export function TransactionTable({
                   size="sm"
                   onClick={() => setFiltroTipo(tipo)}
                   className={
-                    filtroTipo === tipo
-                      ? 'bg-emerald-500 text-white active:scale-95 transition-all duration-200'
-                      : 'text-zinc-500 bg-transparent border border-transparent hover:text-zinc-200 hover:bg-white/5'
-                  }
+                      filtroTipo === tipo
+                        ? 'bg-primary text-primary-foreground active:scale-95 transition-all duration-200'
+                        : 'text-muted-foreground bg-transparent border border-transparent hover:text-foreground hover:bg-accent'
+                    }
                 >
                   {tipo}
                 </Button>
@@ -234,23 +234,23 @@ export function TransactionTable({
           <ScrollArea className="w-full">
             <Table>
               <TableHeader>
-                <TableRow className="border-zinc-800/50 bg-zinc-900/50 hover:bg-zinc-900/50">
-                  <TableHead className="uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                <TableRow className="border-border bg-muted/50 hover:bg-muted/50">
+                  <TableHead className="uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Fecha
                   </TableHead>
-                  <TableHead className="uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                  <TableHead className="uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Descripción
                   </TableHead>
-                  <TableHead className="uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                  <TableHead className="uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Categoría
                   </TableHead>
-                  <TableHead className="uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                  <TableHead className="uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Tipo
                   </TableHead>
-                  <TableHead className="text-right uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                  <TableHead className="text-right uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Monto
                   </TableHead>
-                  <TableHead className="text-center uppercase text-xs tracking-wider text-zinc-400 font-medium">
+                  <TableHead className="text-center uppercase text-xs tracking-wider text-muted-foreground font-medium">
                     Acciones
                   </TableHead>
                 </TableRow>
@@ -259,15 +259,15 @@ export function TransactionTable({
                 {transaccionesFiltradas.map((t) => (
                   <TableRow
                     key={t.id}
-                    className="border-zinc-800/30 hover:bg-zinc-900/30 transition-colors"
+                    className="border-border hover:bg-muted/30 transition-colors"
                   >
-                    <TableCell className="text-zinc-300 font-medium">
+                    <TableCell className="text-foreground font-medium">
                       {formatDate(t.fecha)}
                     </TableCell>
-                    <TableCell className="text-zinc-400">{t.descripcion}</TableCell>
+                    <TableCell className="text-muted-foreground">{t.descripcion}</TableCell>
                     <TableCell>
-                      <div className="text-zinc-300">{t.categoria}</div>
-                      <div className="text-xs text-zinc-500">{t.sub_categoria}</div>
+                      <div className="text-foreground">{t.categoria}</div>
+                      <div className="text-xs text-muted-foreground">{t.sub_categoria}</div>
                     </TableCell>
                     <TableCell>
                       <Badge
@@ -316,12 +316,12 @@ export function TransactionTable({
           {transaccionesFiltradas.map((t) => (
             <div
               key={t.id}
-              className="p-4 rounded-lg border border-zinc-800/50 bg-zinc-900/30 hover:bg-zinc-900/50 transition-colors space-y-3"
+              className="p-4 rounded-lg border border-border bg-muted/30 hover:bg-muted/50 transition-colors space-y-3"
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="text-zinc-100 font-medium">{t.descripcion}</div>
-                  <div className="text-sm text-zinc-500">{formatDate(t.fecha)}</div>
+                  <div className="text-foreground font-medium">{t.descripcion}</div>
+                  <div className="text-sm text-muted-foreground">{formatDate(t.fecha)}</div>
                 </div>
                 <Badge
                   variant="outline"
@@ -336,8 +336,8 @@ export function TransactionTable({
               </div>
               <div className="flex justify-between items-center">
                 <div>
-                  <div className="text-sm text-zinc-400">{t.categoria}</div>
-                  <div className="text-xs text-zinc-500">{t.sub_categoria}</div>
+                  <div className="text-sm text-muted-foreground">{t.categoria}</div>
+                  <div className="text-xs text-muted-foreground">{t.sub_categoria}</div>
                 </div>
                 <span
                   className={`font-mono tabular-nums font-semibold ${
@@ -348,7 +348,7 @@ export function TransactionTable({
                   {formatCurrency(t.monto)}
                 </span>
               </div>
-              <div className="flex gap-2 justify-end pt-2 border-t border-zinc-800/50">
+              <div className="flex gap-2 justify-end pt-2 border-t border-border">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -368,8 +368,8 @@ export function TransactionTable({
           ))}
         </div>
 
-        <div className="px-6 py-4 border-t border-zinc-800/50 bg-zinc-900/20">
-          <div className="text-sm text-zinc-500 text-center">
+        <div className="px-6 py-4 border-t border-border bg-muted/20">
+          <div className="text-sm text-muted-foreground text-center">
             Total: {transaccionesFiltradas.length} transacciones
           </div>
         </div>
@@ -384,7 +384,7 @@ export function TransactionTable({
                 className={
                   currentPage === 1
                     ? 'pointer-events-none opacity-50'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }
               />
             </PaginationItem>
@@ -394,7 +394,7 @@ export function TransactionTable({
                 className={
                   currentPage === 1
                     ? 'pointer-events-none opacity-50'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }
               />
             </PaginationItem>
@@ -405,8 +405,8 @@ export function TransactionTable({
                   isActive={currentPage === page}
                   className={
                     currentPage === page
-                      ? 'bg-zinc-800 text-zinc-100 hover:bg-zinc-700'
-                      : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/80'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                   }
                 >
                   {page}
@@ -419,7 +419,7 @@ export function TransactionTable({
                 className={
                   currentPage === totalPages
                     ? 'pointer-events-none opacity-50'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }
               />
             </PaginationItem>
@@ -429,7 +429,7 @@ export function TransactionTable({
                 className={
                   currentPage === totalPages
                     ? 'pointer-events-none opacity-50'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                 }
               />
             </PaginationItem>

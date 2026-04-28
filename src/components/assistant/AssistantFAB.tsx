@@ -23,7 +23,7 @@ export function AssistantFAB({ onClick, isActive = false }: AssistantFABProps) {
             transition={{ duration: 0.2 }}
             className="absolute right-full top-1/2 -translate-y-1/2 mr-3"
           >
-            <div className="bg-zinc-800 text-zinc-100 px-3 py-1.5 rounded-lg text-sm whitespace-nowrap shadow-lg">
+            <div className="bg-popover text-popover-foreground px-3 py-1.5 rounded-lg text-sm whitespace-nowrap shadow-lg border border-border">
               Asistente
             </div>
           </motion.div>

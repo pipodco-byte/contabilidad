@@ -66,7 +66,7 @@ export function AssistantMicButton({
             'p-2 rounded-lg transition-all duration-200',
             isListening
               ? 'mic-recording'
-              : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800',
+              : 'text-muted-foreground hover:text-foreground hover:bg-accent',
             disabled && 'opacity-50 cursor-not-allowed'
           )}
           aria-label={isListening ? 'Detener grabación' : 'Iniciar grabación'}

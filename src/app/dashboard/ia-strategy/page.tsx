@@ -51,7 +51,7 @@ export default function IAStrategyPage() {
 
   return (
     <div className="flex h-full w-full">
-      <div className="flex-1 border-r border-zinc-800/50 flex flex-col">
+      <div className="flex-1 border-r border-border flex flex-col">
         <ChatWorkspace
           strategyData={strategyData}
           chatHistory={chatHistory}

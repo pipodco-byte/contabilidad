@@ -7,14 +7,14 @@ interface SkeletonProps {
 export function Skeleton({ className = '' }: SkeletonProps) {
   return (
     <div
-      className={`bg-zinc-900/50 rounded-lg animate-pulse ${className}`}
+      className={`bg-muted rounded-lg animate-pulse ${className}`}
     />
   );
 }
 
 export function KPICardSkeleton() {
   return (
-    <div className="border-l-4 bg-zinc-950/80 border border-zinc-800/50 p-6">
+    <div className="border-l-4 bg-card border border-border p-6">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <Skeleton className="h-4 w-24 mb-2" />
@@ -29,7 +29,7 @@ export function KPICardSkeleton() {
 
 export function TableRowSkeleton() {
   return (
-    <div className="flex items-center gap-4 p-4 border-b border-zinc-800/30">
+    <div className="flex items-center gap-4 p-4 border-b border-border">
       <Skeleton className="h-4 w-20" />
       <Skeleton className="h-4 flex-1" />
       <Skeleton className="h-4 w-24" />
@@ -45,7 +45,7 @@ export function TableRowSkeleton() {
 
 export function ChartSkeleton() {
   return (
-    <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-6">
+    <div className="bg-card border border-border rounded-xl p-6">
       <Skeleton className="h-6 w-48 mb-4" />
       <Skeleton className="h-80 w-full" />
     </div>
@@ -54,8 +54,8 @@ export function ChartSkeleton() {
 
 export function TransactionTableSkeleton() {
   return (
-    <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm">
-      <div className="p-6 border-b border-zinc-800/50">
+    <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm">
+      <div className="p-6 border-b border-border">
         <div className="flex justify-between items-center mb-4">
           <Skeleton className="h-6 w-32" />
           <div className="flex gap-2">
@@ -80,7 +80,7 @@ export function TransactionTableSkeleton() {
       </div>
       <div className="md:hidden p-4 space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="p-4 rounded-lg border border-zinc-800/50">
+          <div key={i} className="p-4 rounded-lg border border-border">
             <div className="flex justify-between mb-3">
               <Skeleton className="h-5 w-32" />
               <Skeleton className="h-5 w-16" />
@@ -92,7 +92,7 @@ export function TransactionTableSkeleton() {
           </div>
         ))}
       </div>
-      <div className="px-6 py-4 border-t border-zinc-800/50">
+      <div className="px-6 py-4 border-t border-border">
         <Skeleton className="h-4 w-32 mx-auto" />
       </div>
     </div>

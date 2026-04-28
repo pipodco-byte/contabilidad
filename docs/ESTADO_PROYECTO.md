@@ -1,7 +1,7 @@
 # 📋 Estado del Proyecto — Pipod Contabilidad
 
 **Última actualización:** Abril 2026
-**Versión:** 4.1
+**Versión:** 4.2
 
 ---
 
@@ -72,6 +72,25 @@
 - [x] IA-Voice: Botón de voz con diseño Zinc minimalista
 - [x] IA-Captain: Tono de "Capitán del navío" en system prompt
 - [x] IA-Viz: StrategyMiniChart con 4 series (recharts)
+
+### Chart Polish Híbrido (v4.2) — Abril 2026
+- [x] Framer Motion fade-in + scale en cada card de gráfico (stagger 0.1s)
+- [x] shadcn ChartLegendContent integrado para leyendas estilizadas
+- [x] Palette rose para PieChart: `['#fb7185', '#f43f5e', ...]`
+- [x] Tooltips mejorados con CSS variables del tema
+- [x] Accesibilidad preservada (role="img", aria-labelledby)
+- [x] shadcn chart.tsx wrapper integrado
+
+### Visual Milestones G3 — Abril 2026
+- [x] MilestoneLine component para líneas de meta en gráficos
+- [x] Tipos: fixed, breakEven, meta
+- [x] Integración con AreaChart y LineChart de evolución temporal
+
+### Fix Legend useChart Error — Abril 2026
+- [x] SimpleLegendContent component (standalone sin ChartContext dependency)
+- [x] Iconos SVG inline (trending up/down) para look boutique
+- [x] Actualizado Graficas.tsx: 5 legend usages reemplazadas
+- [x] Build pasa sin errores de useChart
 
 ---
 
@@ -152,7 +171,12 @@ openspec/changes/
 ├── copilot-v2/                  ✅ COMPLETO (V2)
 ├── ia-strategy/                 ✅ COMPLETO (v4.0)
 ├── table-name-consistency-fix/   ✅ COMPLETO (B5)
-└── empty-userid-query-fix/      ✅ COMPLETO (B6)
+├── empty-userid-query-fix/      ✅ COMPLETO (B6)
+├── ia-strategy-ux-enhancement/  ✅ COMPLETO (v4.1)
+├── ia-strategy-visual-storytelling/ ✅ COMPLETO (v4.1)
+├── visual-milestones-g3/         ✅ COMPLETO (v4.2)
+├── chart-polish-hybrid/         ✅ COMPLETO (v4.2)
+└── fix-legend-usechart-error/   ✅ COMPLETO (bug fix)
 ```
 
 ---
@@ -247,4 +271,4 @@ Componentes nuevos:
 
 ---
 
-_Ultima actualizacion: Bugs críticos B5 y B6 corregidos (Abril 2026)_
+_Ultima actualizacion: Chart Polish Híbrido (v4.2) + Visual Milestones G3 (Abril 2026)_

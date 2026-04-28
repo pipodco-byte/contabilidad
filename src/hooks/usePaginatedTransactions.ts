@@ -17,13 +17,26 @@ export interface Transaccion {
 
 const ITEMS_PER_PAGE = 20;
 
+function getDefaultDateRange() {
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - 30);
+  return {
+    startDate: startDate.toISOString().split('T')[0],
+    endDate: endDate.toISOString().split('T')[0],
+  };
+}
+
 export function usePaginatedTransactions(userId: string, userRole: string, searchQuery?: string) {
   const [transacciones, setTransacciones] = useState<Transaccion[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [startDate, setStartDate] = useState(getDefaultDateRange().startDate);
+  const [endDate, setEndDate] = useState(getDefaultDateRange().endDate);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const selectedYear = new Date(startDate).getFullYear();
+  const selectedMonth = new Date(startDate).getMonth() + 1;
 
   useEffect(() => {
     if (!userId || userId.length < 5) {
@@ -36,9 +49,6 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
     const fetchTransactions = async () => {
       setLoading(true);
       try {
-        const startDate = new Date(selectedYear, selectedMonth - 1, 1).toISOString().split('T')[0];
-        const endDate = new Date(selectedYear, selectedMonth, 0).toISOString().split('T')[0];
-
         let query = supabase
           .from('cont_transacciones')
           .select('*', { count: 'exact' })
@@ -70,7 +80,7 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
     };
 
     fetchTransactions();
-  }, [userId, userRole, selectedYear, selectedMonth, currentPage, searchQuery]);
+  }, [userId, userRole, startDate, endDate, currentPage, searchQuery]);
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
@@ -82,12 +92,22 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
     currentPage,
     totalPages,
     totalCount,
+    startDate,
+    endDate,
+    showingLast30Days: true,
     setSelectedYear: (year: number) => {
-      setSelectedYear(year);
+      const newDate = new Date(startDate);
+      newDate.setFullYear(year);
+      setStartDate(newDate.toISOString().split('T')[0]);
       setCurrentPage(1);
     },
     setSelectedMonth: (month: number) => {
-      setSelectedMonth(month);
+      const newDate = new Date(startDate);
+      newDate.setMonth(month - 1);
+      const firstDay = new Date(newDate.getFullYear(), newDate.getMonth(), 1);
+      const lastDay = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0);
+      setStartDate(firstDay.toISOString().split('T')[0]);
+      setEndDate(lastDay.toISOString().split('T')[0]);
       setCurrentPage(1);
     },
     nextPage: () => currentPage < totalPages && setCurrentPage(currentPage + 1),

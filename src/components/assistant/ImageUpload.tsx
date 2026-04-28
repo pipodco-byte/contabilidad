@@ -51,7 +51,7 @@ export function ImageUpload({ onImageSelected, disabled = false }: ImageUploadPr
             htmlFor="image-upload"
             className={cn(
               "p-2 rounded-lg transition-all cursor-pointer",
-              "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800",
+              "text-muted-foreground hover:text-foreground hover:bg-accent",
               disabled && "opacity-50 cursor-not-allowed"
             )}
           >

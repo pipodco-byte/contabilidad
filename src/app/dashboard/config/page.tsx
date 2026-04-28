@@ -57,8 +57,8 @@ export default function ConfigPage() {
   return (
     <div className="space-y-6">
       {/* Gema Import */}
-      <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm p-6">
-        <h2 className="text-xl font-semibold text-zinc-50 tracking-tight mb-4 flex items-center gap-2">
+      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6">
+        <h2 className="text-xl font-semibold text-foreground tracking-tight mb-4 flex items-center gap-2">
           <Gem className="h-5 w-5" />
           Importar desde Gema
         </h2>
@@ -72,12 +72,12 @@ export default function ConfigPage() {
         </Button>
 
         {showGema && (
-          <div className="flex gap-3 p-4 border rounded-xl bg-zinc-900/50">
+          <div className="flex gap-3 p-4 border rounded-xl bg-muted/50">
             <textarea
               value={gemaInput}
               onChange={(e) => setGemaInput(e.target.value)}
               placeholder="Pega aquí el output de Gema de Contabilidad..."
-              className="flex-1 px-4 py-3 border border-zinc-700 bg-zinc-900 text-zinc-100 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
+              className="flex-1 px-4 py-3 border border-input bg-muted text-foreground rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-violet-500"
               rows={4}
             />
             <div className="flex flex-col gap-2">
@@ -94,11 +94,11 @@ export default function ConfigPage() {
       </div>
 
       {/* Settings placeholder */}
-      <div className="rounded-xl border border-zinc-800/50 bg-zinc-950/80 backdrop-blur-sm p-6">
-        <h2 className="text-xl font-semibold text-zinc-50 tracking-tight mb-4">
+      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6">
+        <h2 className="text-xl font-semibold text-foreground tracking-tight mb-4">
           Configuración
         </h2>
-        <p className="text-zinc-400">Más opciones de configuración coming soon...</p>
+        <p className="text-muted-foreground">Más opciones de configuración coming soon...</p>
       </div>
     </div>
   )

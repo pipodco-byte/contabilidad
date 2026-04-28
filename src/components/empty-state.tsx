@@ -25,7 +25,7 @@ export function EmptyState({ title, description, action, icon = 'table' }: Empty
         strokeWidth="1"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-zinc-600 mb-6"
+        className="text-muted-foreground mb-6"
       >
         {icon === 'table' && (
           <>
@@ -56,8 +56,8 @@ export function EmptyState({ title, description, action, icon = 'table' }: Empty
         )}
       </svg>
 
-      <h3 className="text-xl font-semibold text-zinc-200 mb-2">{title}</h3>
-      <p className="text-zinc-500 text-center max-w-md mb-6">{description}</p>
+      <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
+      <p className="text-muted-foreground text-center max-w-md mb-6">{description}</p>
 
       {action && (
         <Button

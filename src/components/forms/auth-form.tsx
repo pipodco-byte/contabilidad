@@ -40,20 +40,20 @@ export function AuthForm() {
       <div className="text-center mb-8">
         <div className="flex justify-center mb-4">
           <div className="relative">
-            <Gem size={40} className="text-violet-500 dark:text-violet-400 drop-shadow-sm" />
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-400 to-violet-600 rounded-full blur-lg opacity-30 -z-10" />
+            <Gem size={40} className="text-primary drop-shadow-sm" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-primary/60 rounded-full blur-lg opacity-30 -z-10" />
           </div>
         </div>
-        <h1 className="text-3xl font-semibold tracking-tight bg-gradient-to-r from-violet-600 dark:from-violet-400 to-violet-600 dark:to-violet-400 bg-clip-text text-transparent mb-2">
+        <h1 className="text-3xl font-semibold tracking-tight bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-2">
           Pipod Contabilidad
         </h1>
-        <p className="text-zinc-500 dark:text-zinc-400">Inicia sesión para continuar</p>
+        <p className="text-muted-foreground">Inicia sesión para continuar</p>
       </div>
 
-      <div className="bg-zinc-950/80 backdrop-blur-md border border-zinc-800/50 rounded-xl p-6 shadow-lg">
+      <div className="bg-card border border-border rounded-xl p-6 shadow-lg">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-zinc-400 uppercase text-xs tracking-wider block">
+            <label className="text-muted-foreground uppercase text-xs tracking-wider block">
               Usuario
             </label>
             <Input
@@ -61,13 +61,13 @@ export function AuthForm() {
               placeholder="tu usuario"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-white"
+              className="bg-input border-border focus:border-primary/50 placeholder:text-muted-foreground text-foreground"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-zinc-400 uppercase text-xs tracking-wider block">
+            <label className="text-muted-foreground uppercase text-xs tracking-wider block">
               Contraseña
             </label>
             <Input
@@ -75,21 +75,21 @@ export function AuthForm() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-white"
+              className="bg-input border-border focus:border-primary/50 placeholder:text-muted-foreground text-foreground"
               required
             />
           </div>
 
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <p className="text-red-400 text-sm">{error}</p>
+            <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <p className="text-destructive text-sm">{error}</p>
             </div>
           )}
 
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 disabled:opacity-50 text-white font-medium shadow-glow hover:scale-[1.02] transition-transform"
+            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/80 hover:to-primary disabled:opacity-50 text-primary-foreground font-medium shadow-glow hover:scale-[1.02] transition-transform"
           >
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
           </Button>

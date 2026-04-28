@@ -20,7 +20,7 @@ export function ChatWorkspace({
 }: ChatWorkspaceProps) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-2 px-6 py-4 border-b border-zinc-800/50">
+      <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
         <Sparkles className="h-5 w-5 text-violet-400" />
         <h1 className="text-lg font-semibold text-foreground">Asesor Estratégico Gema</h1>
       </div>

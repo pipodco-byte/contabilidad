@@ -21,8 +21,8 @@ export function DataPanel({
   return (
     <div
       className={cn(
-        'w-[380px] h-full border-l border-zinc-800/50',
-        'bg-zinc-900/10 overflow-y-auto'
+        'w-[380px] h-full border-l border-border',
+        'bg-muted/10 overflow-y-auto'
       )}
     >
       <div className="p-4 space-y-6">

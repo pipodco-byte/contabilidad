@@ -39,14 +39,14 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-6 space-y-6">
+    <div className="bg-card backdrop-blur-md border border-border rounded-2xl p-6 space-y-6">
       <div>
-        <label className="block text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-medium mb-3">Año</label>
+        <label className="block text-[10px] uppercase tracking-widest text-muted-foreground font-medium mb-3">Año</label>
         <div className="flex items-center gap-3">
-          <button onClick={() => scroll(yearScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
-            <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+          <button onClick={() => scroll(yearScrollRef, 'left')} className="p-2 hover:bg-muted rounded-xl transition">
+            <ChevronLeft className="w-5 h-5 text-muted-foreground" />
           </button>
-          <div ref={yearScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 [&::-webkit-scrollbar]:hidden">
+          <div ref={yearScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden">
             {years.map((year) => (
               <button
                 key={year}
@@ -54,26 +54,26 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 className={`px-4 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedYear === year
                     ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-3px_rgba(139,92,246,0.4)] hover:shadow-[0_0_20px_-3px_rgba(139,92,246,0.5)] transition-all duration-300 border-t border-white/20'
-                    : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                    : 'bg-muted text-foreground hover:bg-muted/80'
                 }`}
               >
                 {year}
               </button>
             ))}
           </div>
-          <button onClick={() => scroll(yearScrollRef, 'right')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
-            <ChevronRight className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+          <button onClick={() => scroll(yearScrollRef, 'right')} className="p-2 hover:bg-muted rounded-xl transition">
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
       </div>
 
       <div>
-        <label className="block text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-medium mb-3">Mes</label>
+        <label className="block text-[10px] uppercase tracking-widest text-muted-foreground font-medium mb-3">Mes</label>
         <div className="flex items-center gap-3">
-          <button onClick={() => scroll(monthScrollRef, 'left')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
-            <ChevronLeft className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+          <button onClick={() => scroll(monthScrollRef, 'left')} className="p-2 hover:bg-muted rounded-xl transition">
+            <ChevronLeft className="w-5 h-5 text-muted-foreground" />
           </button>
-          <div ref={monthScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 [&::-webkit-scrollbar]:hidden">
+          <div ref={monthScrollRef} className="flex gap-2 overflow-x-auto scroll-smooth flex-1 pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden">
             {MONTHS.map(({ num, label }) => (
               <button
                 key={num}
@@ -81,15 +81,15 @@ export function FilterCarousel({ selectedYear, selectedMonth, onYearChange, onMo
                 className={`px-3 py-2 rounded-xl whitespace-nowrap font-semibold transition-all flex-shrink-0 ${
                   selectedMonth === num
                     ? 'bg-gradient-to-br from-violet-500 to-violet-600 text-white shadow-[0_0_15px_-3px_rgba(139,92,246,0.4)] hover:shadow-[0_0_20px_-3px_rgba(139,92,246,0.5)] transition-all duration-300 border-t border-white/20'
-                    : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                    : 'bg-muted text-foreground hover:bg-muted/80'
                 }`}
               >
                 {label}
               </button>
             ))}
           </div>
-          <button onClick={() => scroll(monthScrollRef, 'right')} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition">
-            <ChevronRight className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+          <button onClick={() => scroll(monthScrollRef, 'right')} className="p-2 hover:bg-muted rounded-xl transition">
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
       </div>

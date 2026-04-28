@@ -91,14 +91,14 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
       onSubmit={handleSubmit}
-      className="bg-zinc-950/80 backdrop-blur-md border border-zinc-800/50 rounded-xl p-6 space-y-5"
+      className="bg-card/80 backdrop-blur-md border border-border rounded-xl p-6 space-y-5"
     >
-      <h2 className="text-lg font-semibold text-zinc-100 mb-2">Nueva Transacción</h2>
+      <h2 className="text-lg font-semibold text-card-foreground mb-2">Nueva Transacción</h2>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Tipo</label>
-          <div className="flex rounded-lg overflow-hidden border border-zinc-800/50">
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Tipo</label>
+          <div className="flex rounded-lg overflow-hidden border border-border">
             <button
               type="button"
               onClick={() => {
@@ -110,7 +110,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
               className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
                 tipo === 'Ingreso'
                   ? 'bg-emerald-500/20 text-emerald-400 border-b-2 border-emerald-400'
-                  : 'bg-zinc-900/50 text-zinc-400 hover:text-zinc-300'
+                  : 'bg-secondary text-muted-foreground hover:text-foreground'
               }`}
             >
               Ingreso
@@ -126,7 +126,7 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
               className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
                 tipo === 'Egreso'
                   ? 'bg-rose-500/20 text-rose-400 border-b-2 border-rose-400'
-                  : 'bg-zinc-900/50 text-zinc-400 hover:text-zinc-300'
+                  : 'bg-secondary text-muted-foreground hover:text-foreground'
               }`}
             >
               Gasto
@@ -135,41 +135,41 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Fecha</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Fecha</label>
           <Input
             type="date"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
-            className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 text-zinc-100"
+            className="bg-input border-border focus:border-primary/50 text-foreground"
             required
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label className="text-zinc-400 uppercase text-xs tracking-wider block">Descripción</label>
+        <label className="text-muted-foreground uppercase text-xs tracking-wider block">Descripción</label>
         <Input
           type="text"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           placeholder="Descripción de la transacción"
-          className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-zinc-100"
+          className="bg-input border-border focus:border-primary/50 placeholder:text-muted-foreground text-foreground"
           required
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Categoría</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Categoría</label>
           <Select value={categoria} onValueChange={(val) => {
             setCategoria(val);
             const subs = categoriaObj[val as keyof typeof categoriaObj];
             setSubCategoria(subs[0]);
           }}>
-            <SelectTrigger className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 text-zinc-100">
+            <SelectTrigger className="bg-input border-border focus:border-primary/50 text-foreground">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800/50 text-zinc-100">
+            <SelectContent className="bg-popover border-border text-popover-foreground">
               {Object.keys(categoriaObj).map((cat) => (
                 <SelectItem key={cat} value={cat}>
                   {cat}
@@ -180,12 +180,12 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Sub-categoría</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Sub-categoría</label>
           <Select value={subCategoria} onValueChange={setSubCategoria}>
-            <SelectTrigger className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 text-zinc-100">
+            <SelectTrigger className="bg-input border-border focus:border-primary/50 text-foreground">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800/50 text-zinc-100">
+            <SelectContent className="bg-popover border-border text-popover-foreground">
               {subcategorias.map((sub) => (
                 <SelectItem key={sub} value={sub}>
                   {sub}
@@ -198,37 +198,37 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Monto</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Monto</label>
           <Input
             type="number"
             value={monto}
             onChange={(e) => setMonto(e.target.value)}
             placeholder="0.00"
-            className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-zinc-100 font-mono"
+            className="bg-input border-border focus:border-primary/50 placeholder:text-muted-foreground text-foreground font-mono"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Cantidad (opcional)</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Cantidad (opcional)</label>
           <Input
             type="number"
             value={cantidad}
             onChange={(e) => setCantidad(e.target.value)}
             placeholder="Ej: 5"
-            className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 placeholder:text-zinc-600 text-zinc-100"
+            className="bg-input border-border focus:border-primary/50 placeholder:text-muted-foreground text-foreground"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Medio de Pago</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Medio de Pago</label>
           <Select value={medioPago} onValueChange={setMedioPago}>
-            <SelectTrigger className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 text-zinc-100">
+            <SelectTrigger className="bg-input border-border focus:border-primary/50 text-foreground">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800/50 text-zinc-100">
+            <SelectContent className="bg-popover border-border text-popover-foreground">
               {MEDIOS_PAGO.map((medio) => (
                 <SelectItem key={medio} value={medio}>
                   {medio}
@@ -242,12 +242,12 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-zinc-400 uppercase text-xs tracking-wider block">Estado IVA</label>
+          <label className="text-muted-foreground uppercase text-xs tracking-wider block">Estado IVA</label>
           <Select value={estadoIva} onValueChange={setEstadoIva}>
-            <SelectTrigger className="bg-zinc-900/50 border-zinc-800/50 focus:border-violet-500/50 text-zinc-100">
+            <SelectTrigger className="bg-input border-border focus:border-primary/50 text-foreground">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-zinc-900 border-zinc-800/50 text-zinc-100">
+            <SelectContent className="bg-popover border-border text-popover-foreground">
               {ESTADOS_IVA.map((estado) => (
                 <SelectItem key={estado} value={estado}>
                   {estado}
@@ -259,13 +259,13 @@ export function TransaccionForm({ userId, onSuccess }: TransaccionFormProps) {
       </div>
 
       <div className="space-y-2">
-        <label className="text-zinc-400 uppercase text-xs tracking-wider block">Comentarios</label>
+        <label className="text-muted-foreground uppercase text-xs tracking-wider block">Comentarios</label>
         <textarea
           value={comentarios}
           onChange={(e) => setComentarios(e.target.value)}
           placeholder="Comentarios adicionales..."
           rows={2}
-          className="w-full rounded-md border border-zinc-800/50 bg-zinc-900/50 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 focus-visible:border-violet-500/50 resize-none"
+          className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-primary/50 resize-none"
         />
       </div>
 

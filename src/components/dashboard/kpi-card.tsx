@@ -73,9 +73,9 @@ export function KPICard({
     >
       <Card
         className={cn(
-          'border-l-4 bg-white dark:bg-zinc-950/80 border border-zinc-200/50 dark:border-zinc-800/50',
+          'border-l-4 bg-card border-border',
           'hover:border-violet-500/30 transition-all duration-300',
-          'hover:shadow-lg hover:shadow-black/20 dark:hover:shadow-black/40',
+          'hover:shadow-lg hover:shadow-foreground/20 dark:hover:shadow-foreground/40',
           styles.border,
           styles.glow
         )}
@@ -94,11 +94,15 @@ export function KPICard({
             {trend !== undefined && !isEmpty && (
               <p
                 className={cn(
-                  'text-xs mt-1',
+                  'text-xs mt-1 flex items-center gap-1',
                   trend >= 0 ? 'text-emerald-500' : 'text-rose-500'
                 )}
               >
-                {trend >= 0 ? '↗' : '↘'} {Math.abs(trend)}%
+                {trend >= 0 ? '↗' : '↘'}
+                <span className="sr-only">
+                  {trend >= 0 ? 'Aumento del' : 'Disminución del'} {Math.abs(trend)}%
+                </span>
+                <span aria-hidden="true">{Math.abs(trend)}%</span>
               </p>
             )}
           </div>

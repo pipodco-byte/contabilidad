@@ -83,7 +83,7 @@ export function StrategyVoiceButton({ disabled, onTranscript, onError }: Strateg
   const getStyles = () => {
     switch (state) {
       case 'recording':
-        return 'text-zinc-50 bg-zinc-800/50 animate-pulse scale-105';
+        return 'text-primary-foreground bg-primary/20 animate-pulse scale-105';
       case 'transcribing':
         return 'text-indigo-500';
       case 'success':
@@ -91,7 +91,7 @@ export function StrategyVoiceButton({ disabled, onTranscript, onError }: Strateg
       case 'error':
         return 'text-rose-400';
       default:
-        return 'text-zinc-400 hover:text-zinc-100';
+        return 'text-muted-foreground hover:text-foreground';
     }
   };
 

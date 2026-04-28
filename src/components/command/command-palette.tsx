@@ -42,17 +42,17 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="overflow-hidden p-0 shadow-2xl border border-white/10 bg-zinc-950/95 backdrop-blur-sm">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-zinc-400 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-14 [&_[cmdk-input]]:text-base [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-          <div className="flex items-center border-b border-white/10 px-3">
-            <Search className="mr-2 h-4 w-4 shrink-0 text-zinc-400" />
+      <DialogContent className="overflow-hidden p-0 shadow-2xl border border-border bg-card/95 backdrop-blur-sm">
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-14 [&_[cmdk-input]]:text-base [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+          <div className="flex items-center border-b border-border px-3">
+            <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
             <Command.Input
               placeholder="Buscar comandos..."
-              className="flex h-14 w-full rounded-md bg-transparent py-3 text-sm text-zinc-50 placeholder:text-zinc-500 outline-none"
+              className="flex h-14 w-full rounded-md bg-transparent py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none"
             />
           </div>
           <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden p-2">
-            <Command.Empty className="py-6 text-center text-sm text-zinc-500">
+            <Command.Empty className="py-6 text-center text-sm text-muted-foreground">
               No se encontraron comandos.
             </Command.Empty>
             <Command.Group heading="Navegación">
@@ -131,16 +131,16 @@ function CommandItem({ icon: Icon, label, shortcut, onSelect }: CommandItemProps
     <Command.Item
       onSelect={onSelect}
       className={cn(
-        "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-2.5 text-sm text-zinc-300 outline-none transition-colors",
+        "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-2.5 text-sm text-foreground outline-none transition-colors",
         "hover:bg-violet-950/50 hover:text-violet-300",
         "data-[selected=true]:bg-violet-500/20 data-[selected=true]:text-violet-300",
         "focus:bg-violet-950/50 focus:text-violet-300"
       )}
     >
-      <Icon className="mr-3 h-4 w-4 text-zinc-400" />
+      <Icon className="mr-3 h-4 w-4 text-muted-foreground" />
       <span className="flex-1">{label}</span>
       {shortcut && (
-        <kbd className="ml-auto text-xs text-zinc-500">{shortcut}</kbd>
+        <kbd className="ml-auto text-xs text-muted-foreground">{shortcut}</kbd>
       )}
     </Command.Item>
   )

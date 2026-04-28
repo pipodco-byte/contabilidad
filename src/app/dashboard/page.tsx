@@ -146,7 +146,7 @@ export default function Dashboard() {
             value={gemaInput}
             onChange={(e) => setGemaInput(e.target.value)}
             placeholder="Pega aquí el output de Gema de Contabilidad..."
-            className="flex-1 px-4 py-3 border rounded-lg resize-none bg-zinc-900 border-zinc-700 text-zinc-100"
+            className="flex-1 px-4 py-3 border rounded-lg resize-none bg-muted border-input text-foreground"
             rows={4}
           />
           <div className="flex flex-col gap-2">

@@ -56,12 +56,12 @@ export function BatchCard({
 
   if (showEmpty || transacciones.length === 0) {
     return (
-      <div className="border-2 border-dashed border-zinc-800 rounded-xl p-8 text-center">
-        <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-zinc-800/50 flex items-center justify-center">
-          <RotateCcw className="w-6 h-6 text-zinc-500" />
+      <div className="border-2 border-dashed border-border rounded-xl p-8 text-center">
+        <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+          <RotateCcw className="w-6 h-6 text-muted-foreground" />
         </div>
 
-        <p className="text-sm text-zinc-400 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           Lote descartado. El historial de este dictamen se ha limpiado para mantener tu contabilidad impecable.
         </p>
 
@@ -74,13 +74,13 @@ export function BatchCard({
           </button>
           <button
             onClick={() => {}}
-            className="w-full px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg text-sm font-medium transition-colors"
+            className="w-full px-4 py-2.5 bg-muted hover:bg-muted/80 text-foreground rounded-lg text-sm font-medium transition-colors"
           >
             Registro Manual
           </button>
           <button
             onClick={onCancel}
-            className="w-full px-4 py-2.5 text-zinc-500 hover:text-zinc-300 rounded-lg text-sm font-medium transition-colors"
+            className="w-full px-4 py-2.5 text-muted-foreground hover:text-foreground rounded-lg text-sm font-medium transition-colors"
           >
             Cerrar
           </button>
@@ -91,19 +91,19 @@ export function BatchCard({
 
   if (isLoading) {
     return (
-      <div className="bg-zinc-900/50 border border-indigo-500/30 rounded-xl p-4 animate-pulse">
-        <div className="h-6 bg-zinc-800 rounded w-24 mb-3" />
-        <div className="h-4 bg-zinc-800 rounded w-32 mb-2" />
-        <div className="h-4 bg-zinc-800 rounded w-20" />
+      <div className="bg-muted/50 border border-indigo-500/30 rounded-xl p-4 animate-pulse">
+        <div className="h-6 bg-muted rounded w-24 mb-3" />
+        <div className="h-4 bg-muted rounded w-32 mb-2" />
+        <div className="h-4 bg-muted rounded w-20" />
       </div>
     )
   }
 
   return (
-    <div className="bg-zinc-900 border border-indigo-500/30 rounded-xl overflow-hidden">
+    <div className="bg-card border border-indigo-500/30 rounded-xl overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-4 flex items-center justify-between hover:bg-zinc-800/30 transition-colors"
+        className="w-full p-4 flex items-center justify-between hover:bg-muted/30 transition-colors"
       >
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
@@ -114,27 +114,27 @@ export function BatchCard({
           </span>
         </div>
         {isExpanded ? (
-          <ChevronUp className="w-5 h-5 text-zinc-400" />
+          <ChevronUp className="w-5 h-5 text-muted-foreground" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-zinc-400" />
+          <ChevronDown className="w-5 h-5 text-muted-foreground" />
         )}
       </button>
 
       {!isExpanded && (
         <div className="px-4 pb-3">
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-muted-foreground">
             {transacciones.length} transacciones: {transacciones.filter((t) => t.tipo === 'Ingreso').length} ingresos, {transacciones.filter((t) => t.tipo === 'Egreso').length} egresos
           </p>
         </div>
       )}
 
       {isExpanded && (
-        <div className="border-t border-zinc-800">
+        <div className="border-t border-border">
           <div className="p-4 space-y-2 max-h-80 overflow-y-auto">
             {transacciones.map((t, i) => (
               <div
                 key={i}
-                className="group flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800/50 transition-colors"
+                className="group flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -151,8 +151,8 @@ export function BatchCard({
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-zinc-100 truncate">{t.descripcion}</p>
-                  <p className="text-xs text-zinc-500">{t.categoria || 'Sin categoría'}</p>
+                  <p className="text-sm font-medium text-foreground truncate">{t.descripcion}</p>
+                  <p className="text-xs text-muted-foreground">{t.categoria || 'Sin categoría'}</p>
                 </div>
 
                 <p
@@ -167,24 +167,24 @@ export function BatchCard({
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => handleEdit(i, t)}
-                    className="p-1.5 hover:bg-zinc-700 rounded transition-colors"
+                    className="p-1.5 hover:bg-muted rounded transition-colors"
                     aria-label="Editar"
                   >
-                    <Pencil className="w-4 h-4 text-zinc-400" />
+                    <Pencil className="w-4 h-4 text-muted-foreground" />
                   </button>
                   <button
                     onClick={() => handleDelete(i)}
-                    className="p-1.5 hover:bg-zinc-700 rounded transition-colors"
+                    className="p-1.5 hover:bg-muted rounded transition-colors"
                     aria-label="Eliminar"
                   >
-                    <X className="w-4 h-4 text-zinc-400" />
+                    <X className="w-4 h-4 text-muted-foreground" />
                   </button>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="p-4 border-t border-zinc-800 bg-zinc-900/50">
+          <div className="p-4 border-t border-border bg-muted/50">
             <div className="flex justify-between text-sm mb-3">
               <span className="text-emerald-400">Ingresos: {formatCurrency(totalIngresos)}</span>
               <span className="text-rose-400">Egresos: {formatCurrency(totalEgresos)}</span>
@@ -192,13 +192,13 @@ export function BatchCard({
             <button
               onClick={onConfirm}
               disabled={isLoading}
-              className="w-full px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-700 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors"
+              className="w-full px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:bg-muted disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium transition-colors"
             >
               Confirmar Todo ({transacciones.length})
             </button>
             <button
               onClick={handleCancel}
-              className="w-full mt-2 px-4 py-2 text-zinc-500 hover:text-zinc-300 rounded-lg text-sm font-medium transition-colors"
+              className="w-full mt-2 px-4 py-2 text-muted-foreground hover:text-foreground rounded-lg text-sm font-medium transition-colors"
             >
               Descartar Lote
             </button>

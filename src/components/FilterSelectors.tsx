@@ -34,10 +34,10 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedYear}
         onChange={(e) => onYearChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-transparent border border-white/10 text-zinc-300 hover:border-violet-500/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
+        className="px-3 py-2 bg-transparent border border-border text-foreground hover:border-primary/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
       >
         {years.map((year) => (
-          <option key={year} value={year} className="bg-zinc-900 text-zinc-100">
+          <option key={year} value={year} className="bg-background text-foreground">
             {year}
           </option>
         ))}
@@ -46,10 +46,10 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
       <select
         value={selectedMonth}
         onChange={(e) => onMonthChange(parseInt(e.target.value))}
-        className="px-3 py-2 bg-transparent border border-white/10 text-zinc-300 hover:border-violet-500/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
+        className="px-3 py-2 bg-transparent border border-border text-foreground hover:border-primary/40 backdrop-blur-sm rounded-lg text-sm font-medium transition-colors cursor-pointer dark:[color-scheme:dark]"
       >
         {MONTHS.map(({ num, label }) => (
-          <option key={num} value={num} className="bg-zinc-900 text-zinc-100">
+          <option key={num} value={num} className="bg-background text-foreground">
             {label}
           </option>
         ))}
@@ -57,7 +57,7 @@ export function FilterSelectors({ selectedYear, selectedMonth, onYearChange, onM
 
       <button
         onClick={onReset}
-        className="p-2 text-zinc-500 hover:text-zinc-200 hover:bg-white/5 rounded-lg transition-colors"
+        className="p-2 text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
         title="Restablecer filtros"
       >
         <RotateCcw className="w-4 h-4" />

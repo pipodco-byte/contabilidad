@@ -28,17 +28,17 @@ interface ReportsTabsProps {
 export function ReportsTabs({ userId, userRole }: ReportsTabsProps) {
   return (
     <Tabs defaultValue="mensual" className="w-full">
-      <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-1">
+      <div className="bg-muted border border-border rounded-xl p-1">
         <TabsList className="w-full bg-transparent">
           <TabsTrigger
             value="mensual"
-            className="ghost data-[state=active]:border-b-2 data-[state=active]:border-violet-500 data-[state=active]:text-violet-400 rounded-lg px-4 py-2"
+            className="ghost data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary rounded-lg px-4 py-2"
           >
             Mensual
           </TabsTrigger>
           <TabsTrigger
             value="anual"
-            className="ghost data-[state=active]:border-b-2 data-[state=active]:border-violet-500 data-[state=active]:text-violet-400 rounded-lg px-4 py-2"
+            className="ghost data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-primary rounded-lg px-4 py-2"
           >
             Anual
           </TabsTrigger>
@@ -60,8 +60,8 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
 
   if (loading) {
     return (
-      <Card className="border-zinc-800/50 bg-zinc-900/50">
-        <CardContent className="pt-6 text-center text-zinc-400">
+      <Card className="border-border bg-muted/50">
+        <CardContent className="pt-6 text-center text-muted-foreground">
           Cargando informe anual...
         </CardContent>
       </Card>
@@ -70,8 +70,8 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
 
   if (datosAnuales.length === 0) {
     return (
-        <Card className="border-zinc-800/50 bg-zinc-900/50">
-        <CardContent className="pt-6 text-center text-zinc-300 font-medium">
+        <Card className="border-border bg-muted/50">
+        <CardContent className="pt-6 text-center text-muted-foreground font-medium">
           No hay datos para mostrar el informe anual
         </CardContent>
       </Card>
@@ -157,7 +157,7 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
         </Card>
       </div>
 
-      <Card className="border-zinc-800/50 bg-zinc-900/50">
+      <Card className="border-border bg-card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Evolución Mensual</CardTitle>
@@ -174,24 +174,24 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={datosAnuales} margin={{ bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272a" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
               <XAxis
                 dataKey="mes"
                 angle={-45}
                 textAnchor="end"
                 height={80}
-                stroke="#64748b"
+                stroke="var(--muted-foreground)"
                 interval={0}
               />
-              <YAxis stroke="#64748b" tickFormatter={(value) => formatCurrencyCompact(value)} />
+              <YAxis stroke="var(--muted-foreground)" tickFormatter={(value) => formatCurrencyCompact(value)} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #334155',
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                 }}
                 formatter={(value) => formatCurrency(value as number)}
-                labelStyle={{ color: '#e2e8f0' }}
+                labelStyle={{ color: 'var(--foreground)' }}
               />
               <Legend />
               <Line
@@ -220,23 +220,23 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
         </CardContent>
       </Card>
 
-      <Card className="border-zinc-800/50 bg-zinc-900/50 overflow-hidden">
+      <Card className="border-border bg-card overflow-hidden">
         <CardHeader>
           <CardTitle>Detalle Mensual</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-zinc-900/80 border-b border-zinc-800/50">
+              <thead className="bg-muted border-b border-border">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-zinc-400">Mes</th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-zinc-400">
+                  <th className="px-6 py-3 text-left text-sm font-medium text-muted-foreground">Mes</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium text-muted-foreground">
                     Ingresos
                   </th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-zinc-400">
+                  <th className="px-6 py-3 text-right text-sm font-medium text-muted-foreground">
                     Egresos
                   </th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-zinc-400">
+                  <th className="px-6 py-3 text-right text-sm font-medium text-muted-foreground">
                     Balance
                   </th>
                 </tr>
@@ -245,11 +245,11 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
                 {datosAnuales.map((dato, index) => (
                   <tr
                     key={dato.mes}
-                    className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors ${
-                      index % 2 === 0 ? 'bg-zinc-900/50' : ''
+                    className={`border-b border-border hover:bg-muted/30 transition-colors ${
+                      index % 2 === 0 ? 'bg-muted/30' : ''
                     }`}
                   >
-                    <td className="px-6 py-4 text-sm text-zinc-300 font-medium">{dato.mes}</td>
+                    <td className="px-6 py-4 text-sm text-foreground font-medium">{dato.mes}</td>
                     <td className="px-6 py-4 text-sm text-right text-emerald-400 font-medium font-mono tabular-nums">
                       {formatCurrency(dato.ingresos)}
                     </td>
@@ -280,8 +280,8 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
 
   if (loading) {
     return (
-      <Card className="border-zinc-800/50 bg-zinc-900/50">
-        <CardContent className="pt-6 text-center text-zinc-400">
+      <Card className="border-border bg-card">
+        <CardContent className="pt-6 text-center text-muted-foreground">
           Cargando informe mensual...
         </CardContent>
       </Card>
@@ -311,12 +311,12 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-zinc-400">Mes:</label>
+          <label className="text-sm font-medium text-muted-foreground">Mes:</label>
           <input
             type="month"
             value={mes}
             onChange={(e) => setMes(e.target.value)}
-            className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500"
+            className="px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500"
           />
         </div>
         {userRole === 'admin' && (
@@ -390,7 +390,7 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
       </div>
 
       {datosMensuales.length > 0 ? (
-        <Card className="border-zinc-800/50 bg-zinc-900/50">
+        <Card className="border-border bg-card">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Ingresos vs Egresos por Categoría</CardTitle>
@@ -407,27 +407,27 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={datosMensuales} margin={{ bottom: 80 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272a" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                 <XAxis
                   dataKey="categoria"
                   angle={-45}
                   textAnchor="end"
                   height={80}
-                  stroke="#64748b"
+                  stroke="var(--muted-foreground)"
                   interval={0}
                 />
                 <YAxis
-                  stroke="#64748b"
+                  stroke="var(--muted-foreground)"
                   tickFormatter={(value) => formatCurrencyCompact(value)}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#1e293b',
-                    border: '1px solid #334155',
+                    backgroundColor: 'var(--card)',
+                    border: '1px solid var(--border)',
                     borderRadius: '8px',
                   }}
                   formatter={(value) => formatCurrency(value as number)}
-                  labelStyle={{ color: '#e2e8f0' }}
+                  labelStyle={{ color: 'var(--foreground)' }}
                 />
                 <Legend />
                 <Bar dataKey="ingresos" fill="#10b981" name="Ingresos" radius={[8, 8, 0, 0]} />
@@ -437,30 +437,30 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
           </CardContent>
         </Card>
       ) : (
-        <Card className="border-zinc-800/50 bg-zinc-900/50">
-          <CardContent className="pt-6 text-center text-zinc-300 font-medium">
+        <Card className="border-border bg-card">
+          <CardContent className="pt-6 text-center text-foreground font-medium">
             No hay datos para este mes
           </CardContent>
         </Card>
       )}
 
       {datosMensuales.length > 0 && (
-        <Card className="border-zinc-800/50 bg-zinc-900/50 overflow-hidden">
+        <Card className="border-border bg-card overflow-hidden">
           <CardHeader>
             <CardTitle>Detalle por Categoría</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-zinc-900/80 border-b border-zinc-800/50">
+                <thead className="bg-muted border-b border-border">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-zinc-400">
+                    <th className="px-6 py-3 text-left text-sm font-medium text-muted-foreground">
                       Categoría
                     </th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-zinc-400">
+                    <th className="px-6 py-3 text-right text-sm font-medium text-muted-foreground">
                       Ingresos
                     </th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-zinc-400">
+                    <th className="px-6 py-3 text-right text-sm font-medium text-muted-foreground">
                       Egresos
                     </th>
                   </tr>
@@ -469,11 +469,11 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
                   {datosMensuales.map((dato, index) => (
                     <tr
                       key={dato.categoria}
-                      className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors ${
-                        index % 2 === 0 ? 'bg-zinc-900/50' : ''
+                      className={`border-b border-border hover:bg-muted/30 transition-colors ${
+                        index % 2 === 0 ? 'bg-muted/30' : ''
                       }`}
                     >
-                      <td className="px-6 py-4 text-sm text-zinc-300 font-medium">
+                      <td className="px-6 py-4 text-sm text-foreground font-medium">
                         {dato.categoria}
                       </td>
                       <td className="px-6 py-4 text-sm text-right text-emerald-400 font-medium font-mono tabular-nums">
