@@ -106,6 +106,11 @@
 - [x] Chart #4: AreaChart premium con glow rose (bottom-left)
 - [x] Chart #4: Badge "Año Fiscal 2026" + "Performance Snapshot"
 
+### Chart Remaining Premium — Abril 2026
+- [x] Chart #3: PieChart donut con cornerRadius:6, innerRadius:105, glow indigo
+- [x] Chart #5: LineChart con gradient stroke green→red, activeDot shadow-2xl
+- [x] Chart #6: Tabla con TrendingUp/Down icons, delta badges, balance row highlight
+
 ---
 
 ## 🔲 En Progreso
@@ -192,7 +197,8 @@ openspec/changes/
 ├── chart-polish-hybrid/         ✅ COMPLETO (v4.2)
 ├── fix-legend-usechart-error/   ✅ COMPLETO (bug fix)
 ├── chart-visual-upgrade/        ✅ COMPLETO (BarChart premium)
-└── chart-area-premium/         ✅ COMPLETO (AreaCharts premium)
+├── chart-area-premium/         ✅ COMPLETO (AreaCharts premium)
+└── chart-remaining-premium/   ✅ COMPLETO (PieChart + LineChart + Tabla premium)
 ```
 
 ---

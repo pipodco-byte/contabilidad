@@ -88,6 +88,7 @@
 | `fix-legend-usechart-error` | SimpleLegendContent standalone (sin ChartContainer dependency) | ✅ 2026-04-28 |
 | `chart-visual-upgrade` | Primer chart premium: glassmorphism + spring animation + gradientes | ✅ 2026-04-28 |
 | `chart-area-premium` | Charts #2 y #4: AreaChart premium con glow + real-time indicator | ✅ 2026-04-28 |
+| `chart-remaining-premium` | Charts #3, #5, #6: PieChart donut + LineChart gradient + Tabla con Trending icons | ✅ 2026-04-28 |
 
 ## 📁 SDDs En Progreso
 

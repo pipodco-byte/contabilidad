@@ -8,6 +8,7 @@ import { MilestoneLine } from '@/components/MilestoneLine';
 import { FINANCIAL_PLAN } from '@/lib/strategy-constants';
 import { motion } from 'framer-motion';
 import { SimpleLegendContent } from '@/components/ui/chart';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import {
   BarChart,
   Bar,
@@ -57,9 +58,6 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       </div>
     );
   }
-
-  const axisStroke = 'hsl(var(--muted-foreground))';
-  const gridStroke = 'hsl(var(--border))';
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -326,33 +324,64 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-        className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 22,
+          delay: 0.2
+        }}
+        className="group relative bg-card/40 border border-border/50 backdrop-blur-2xl p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] overflow-hidden"
       >
-        <h3 className="text-lg font-bold text-foreground mb-4" id="chart-distribucion-title">
-          Distribución de Egresos
-        </h3>
-        <div role="img" aria-labelledby="chart-distribucion-title">
-          <ResponsiveContainer width="100%" height={400}>
+        <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-indigo-500/5 blur-[60px] pointer-events-none" />
+
+        <div className="mb-10">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold italic">Resource Allocation</span>
+          <h3 className="text-2xl font-semibold tracking-tight text-foreground mt-1" id="chart-distribucion-title">
+            Distribución de Egresos
+          </h3>
+        </div>
+
+        <div role="img" aria-labelledby="chart-distribucion-title" className="h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={datosPorCategoria.filter(d => d.egresos > 0)}
                 cx="50%"
-                cy="50%"
-                innerRadius={80}
+                cy="45%"
+                innerRadius={105}
                 outerRadius={140}
-                paddingAngle={2}
+                paddingAngle={5}
+                cornerRadius={6}
                 dataKey="egresos"
                 nameKey="categoria"
+                stroke="none"
+                animationBegin={200}
+                animationDuration={1800}
               >
                 {datosPorCategoria.filter(d => d.egresos > 0).map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={pieColors[index % pieColors.length]}
+                    className="hover:opacity-80 transition-opacity cursor-pointer outline-none"
+                  />
                 ))}
               </Pie>
-              <Tooltip content={<CustomTooltip />} />
-              <Legend content={<SimpleLegendContent />} />
+
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={false}
+              />
+
+              <Legend
+                verticalAlign="bottom"
+                align="center"
+                iconType="circle"
+                iconSize={8}
+                content={<SimpleLegendContent />}
+                wrapperStyle={{ paddingTop: '20px' }}
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -464,46 +493,104 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.4 }}
-        className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 25,
+          delay: 0.4
+        }}
+        className="group relative bg-card/40 border border-border/50 backdrop-blur-2xl p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
       >
-        <h3 className="text-lg font-bold text-foreground mb-4" id="chart-balance-title">
-          Balance Neto Mensual
-        </h3>
-        <div role="img" aria-labelledby="chart-balance-title">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={mesesOrdenados} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="mes" stroke={axisStroke} angle={-45} textAnchor="end" height={60} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+
+        <div className="flex justify-between items-start mb-10">
+          <div>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Financial Health</span>
+            <h3 className="text-2xl font-semibold tracking-tight text-foreground mt-1" id="chart-balance-title">
+              Balance Neto Mensual
+            </h3>
+          </div>
+          <div className="flex flex-col items-end">
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Status</span>
+            <span className="text-xs font-mono font-medium text-violet-500 bg-violet-500/10 px-2 py-0.5 rounded">
+              Live Analysis
+            </span>
+          </div>
+        </div>
+
+        <div role="img" aria-labelledby="chart-balance-title" className="h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={mesesOrdenados} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <defs>
+                <linearGradient id="balanceGradientUnique" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#10b981" />
+                  <stop offset="50%" stopColor="#10b981" />
+                  <stop offset="50%" stopColor="#fb7185" />
+                  <stop offset="100%" stopColor="#fb7185" />
+                </linearGradient>
+              </defs>
+
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="8 8"
+                stroke="hsl(var(--border))"
+                opacity={0.4}
+              />
+
+              <XAxis
+                dataKey="mes"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11, fontWeight: 500 }}
+                dy={15}
+              />
+
               <YAxis
-                stroke={axisStroke}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
                 tickFormatter={(value) => formatCurrencyCompact(value)}
                 domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
               />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend content={<SimpleLegendContent showBalance />} />
+
+              <Tooltip
+                cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1.5, strokeDasharray: '4 4' }}
+                content={<CustomTooltip />}
+              />
+
+              <Legend
+                verticalAlign="top"
+                align="right"
+                content={<SimpleLegendContent showBalance />}
+                wrapperStyle={{ paddingBottom: '20px' }}
+              />
+
               <ReferenceLine
                 y={0}
-                stroke="#8b5cf6"
-                strokeDasharray="5 5"
-                label={{
-                  value: 'Punto de equilibrio',
-                  position: 'insideTopRight',
-                  fill: '#8b5cf6',
-                  fontSize: 12,
-                }}
+                stroke="hsl(var(--foreground))"
+                strokeDasharray="4 4"
+                strokeWidth={1}
+                opacity={0.2}
               />
+
               <Line
                 type="monotone"
                 dataKey="balance"
-                stroke="#8b5cf6"
-                strokeWidth={3}
-                dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6 }}
+                stroke="url(#balanceGradientUnique)"
+                strokeWidth={4}
+                dot={false}
+                activeDot={{
+                  r: 6,
+                  strokeWidth: 0,
+                  fill: "hsl(var(--foreground))",
+                  className: "shadow-2xl"
+                }}
+                animationDuration={3000}
                 name="Balance"
               />
+
               <MilestoneLine type="fixed" />
               <MilestoneLine type="breakEven" />
               <MilestoneLine type="meta" />
@@ -514,46 +601,74 @@ export function Graficas({ userId, userRole }: GraficasProps) {
 
       {mesActual && mesAnterior && (
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          initial={{ opacity: 0, y: 15, scale: 0.99 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.5 }}
-          className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+          transition={{
+            type: "spring",
+            stiffness: 180,
+            damping: 22,
+            delay: 0.5
+          }}
+          className="group relative bg-card/40 border border-border/50 backdrop-blur-2xl p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
         >
-          <h3 className="text-lg font-bold text-foreground mb-4" id="table-comparativa-title">Comparativa Mensual</h3>
+          <div className="absolute top-0 left-10 w-20 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+
+          <div className="flex justify-between items-center mb-8">
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Data Snapshot</span>
+              <h3 className="text-2xl font-semibold tracking-tight text-foreground mt-1" id="table-comparativa-title">
+                Comparativa Mensual
+              </h3>
+            </div>
+            <div className="bg-secondary/30 px-3 py-1 rounded-full border border-border/50">
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Delta Analysis</span>
+            </div>
+          </div>
+
           <div className="overflow-x-auto">
             <table className="w-full text-sm" aria-labelledby="table-comparativa-title">
-              <caption className="sr-only">Comparación entre el mes anterior y el mes actual de ingresos, egresos y balance</caption>
               <thead>
-                <tr className="border-b border-border">
-                  <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">Concepto</th>
-                  <th scope="col" className="text-right py-3 px-4 font-semibold text-foreground">Mes Anterior</th>
-                  <th scope="col" className="text-right py-3 px-4 font-semibold text-foreground">Mes Actual</th>
-                  <th scope="col" className="text-right py-3 px-4 font-semibold text-foreground">Variación</th>
+                <tr className="border-b border-border/50">
+                  <th scope="col" className="text-left pb-4 px-2 font-medium text-muted-foreground uppercase tracking-widest text-[10px]">Concepto</th>
+                  <th scope="col" className="text-right pb-4 px-2 font-medium text-muted-foreground uppercase tracking-widest text-[10px]">Mes Anterior</th>
+                  <th scope="col" className="text-right pb-4 px-2 font-medium text-muted-foreground uppercase tracking-widest text-[10px]">Mes Actual</th>
+                  <th scope="col" className="text-right pb-4 px-2 font-medium text-muted-foreground uppercase tracking-widest text-[10px]">Variación</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr className="border-b border-border">
-                  <td className="py-3 px-4 text-muted-foreground">Ingresos</td>
-                  <td className="py-3 px-4 text-right text-foreground">{formatCurrency(mesAnterior.ingresos)}</td>
-                  <td className="py-3 px-4 text-right text-foreground">{formatCurrency(mesActual.ingresos)}</td>
-                  <td className={`py-3 px-4 text-right font-semibold ${mesActual.ingresos >= mesAnterior.ingresos ? 'text-emerald-500' : 'text-red-500'}`}>
-                    {mesAnterior.ingresos > 0 ? `${((mesActual.ingresos - mesAnterior.ingresos) / mesAnterior.ingresos * 100).toFixed(1)}%` : 'N/A'}
+              <tbody className="divide-y divide-border/30">
+                <tr className="group/row hover:bg-emerald-500/[0.02] transition-colors">
+                  <td className="py-5 px-2 text-foreground font-medium">Ingresos</td>
+                  <td className="py-5 px-2 text-right font-mono text-muted-foreground">{formatCurrency(mesAnterior.ingresos)}</td>
+                  <td className="py-5 px-2 text-right font-mono font-semibold text-foreground">{formatCurrency(mesActual.ingresos)}</td>
+                  <td className="py-5 px-2 text-right">
+                    <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-bold ${mesActual.ingresos >= mesAnterior.ingresos ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
+                      {mesActual.ingresos >= mesAnterior.ingresos ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                      {mesAnterior.ingresos > 0 ? `${((mesActual.ingresos - mesAnterior.ingresos) / mesAnterior.ingresos * 100).toFixed(1)}%` : 'N/A'}
+                    </div>
                   </td>
                 </tr>
-                <tr className="border-b border-border">
-                  <td className="py-3 px-4 text-muted-foreground">Egresos</td>
-                  <td className="py-3 px-4 text-right text-foreground">{formatCurrency(mesAnterior.egresos)}</td>
-                  <td className="py-3 px-4 text-right text-foreground">{formatCurrency(mesActual.egresos)}</td>
-                  <td className={`py-3 px-4 text-right font-semibold ${mesActual.egresos <= mesAnterior.egresos ? 'text-emerald-500' : 'text-red-500'}`}>
-                    {mesAnterior.egresos > 0 ? `${((mesActual.egresos - mesAnterior.egresos) / mesAnterior.egresos * 100).toFixed(1)}%` : 'N/A'}
+
+                <tr className="group/row hover:bg-red-500/[0.02] transition-colors">
+                  <td className="py-5 px-2 text-foreground font-medium">Egresos</td>
+                  <td className="py-5 px-2 text-right font-mono text-muted-foreground">{formatCurrency(mesAnterior.egresos)}</td>
+                  <td className="py-5 px-2 text-right font-mono font-semibold text-foreground">{formatCurrency(mesActual.egresos)}</td>
+                  <td className="py-5 px-2 text-right">
+                    <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-bold ${mesActual.egresos <= mesAnterior.egresos ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
+                      {mesActual.egresos <= mesAnterior.egresos ? <TrendingDown size={12} /> : <TrendingUp size={12} />}
+                      {mesAnterior.egresos > 0 ? `${((mesActual.egresos - mesAnterior.egresos) / mesAnterior.egresos * 100).toFixed(1)}%` : 'N/A'}
+                    </div>
                   </td>
                 </tr>
-                <tr>
-                  <td className="py-3 px-4 text-muted-foreground font-semibold">Balance</td>
-                  <td className="py-3 px-4 text-right text-foreground font-semibold">{formatCurrency(mesAnterior.balance)}</td>
-                  <td className="py-3 px-4 text-right text-foreground font-semibold">{formatCurrency(mesActual.balance)}</td>
-                  <td className={`py-3 px-4 text-right font-bold ${mesActual.balance >= mesAnterior.balance ? 'text-emerald-500' : 'text-red-500'}`}>
-                    {mesAnterior.balance !== 0 ? `${((mesActual.balance - mesAnterior.balance) / Math.abs(mesAnterior.balance) * 100).toFixed(1)}%` : 'N/A'}
+
+                <tr className="group/row bg-secondary/10">
+                  <td className="py-6 px-2 text-foreground font-bold">Balance Neto</td>
+                  <td className="py-6 px-2 text-right font-mono text-foreground/70">{formatCurrency(mesAnterior.balance)}</td>
+                  <td className="py-6 px-2 text-right font-mono font-bold text-foreground text-lg">{formatCurrency(mesActual.balance)}</td>
+                  <td className="py-6 px-2 text-right">
+                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black shadow-sm ${mesActual.balance >= mesAnterior.balance ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
+                      {mesActual.balance >= mesAnterior.balance ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                      {mesAnterior.balance !== 0 ? `${((mesActual.balance - mesAnterior.balance) / Math.abs(mesAnterior.balance) * 100).toFixed(1)}%` : 'N/A'}
+                    </span>
                   </td>
                 </tr>
               </tbody>
