@@ -125,62 +125,198 @@ export function Graficas({ userId, userRole }: GraficasProps) {
   return (
     <div className="space-y-6">
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          duration: 0.6
+        }}
+        className="relative group bg-card/50 border border-border/60 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
       >
-        <h3 className="text-lg font-bold text-foreground mb-4" id="chart-categoria-title">
-          Ingresos vs Egresos por Categoría
-        </h3>
-        <div role="img" aria-labelledby="chart-categoria-title">
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={datosPorCategoria} margin={{ top: 20, right: 30, left: 20, bottom: 100 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="categoria" angle={-45} textAnchor="end" height={80} stroke={axisStroke} />
-              <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend content={<SimpleLegendContent />} />
-              <Bar dataKey="ingresos" fill="#10b981" name="Ingresos" />
-              <Bar dataKey="egresos" fill="#fb7185" name="Egresos" />
+        <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-[0.2em] mb-1">
+            Análisis Operativo
+          </h3>
+          <p className="text-2xl font-semibold text-foreground tracking-tight" id="chart-categoria-title">
+            Ingresos vs Egresos
+          </p>
+        </div>
+
+        <div role="img" aria-labelledby="chart-categoria-title" className="mt-4">
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart
+              data={datosPorCategoria}
+              margin={{ top: 10, right: 10, left: -20, bottom: 20 }}
+              barGap={8}
+            >
+              <defs>
+                <linearGradient id="ingresosGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="egresosGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#fb7185" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#fb7185" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+
+              <CartesianGrid vertical={false} strokeDasharray="4 4" stroke="hsl(var(--border))" opacity={0.4} />
+
+              <XAxis
+                dataKey="categoria"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12, fontWeight: 500 }}
+                dy={15}
+              />
+
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+                tickFormatter={(value) => formatCurrencyCompact(value)}
+              />
+
+              <Tooltip
+                cursor={{ fill: 'hsl(var(--muted))', opacity: 0.4 }}
+                content={<CustomTooltip />}
+              />
+
+              <Legend
+                verticalAlign="top"
+                align="right"
+                iconType="circle"
+                content={<SimpleLegendContent />}
+              />
+
+              <Bar
+                dataKey="ingresos"
+                fill="url(#ingresosGradient)"
+                stroke="#10b981"
+                strokeWidth={1.5}
+                radius={[6, 6, 0, 0]}
+                barSize={24}
+              />
+              <Bar
+                dataKey="egresos"
+                fill="url(#egresosGradient)"
+                stroke="#fb7185"
+                strokeWidth={1.5}
+                radius={[6, 6, 0, 0]}
+                barSize={24}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-        className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 20,
+          delay: 0.1
+        }}
+        className="group relative bg-card/40 border border-border/50 backdrop-blur-2xl p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] overflow-hidden"
       >
-        <h3 className="text-lg font-bold text-foreground mb-4" id="chart-evolucion-title">
-          Evolución Temporal
-        </h3>
-        <div role="img" aria-labelledby="chart-evolucion-title">
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={datosAnuales} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/5 blur-[80px] pointer-events-none" />
+
+        <div className="flex justify-between items-start mb-10">
+          <div>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Time Analysis</span>
+            <h3 className="text-2xl font-semibold tracking-tight text-foreground mt-1" id="chart-evolucion-title">
+              Evolución Temporal
+            </h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest">Real-time Data</span>
+          </div>
+        </div>
+
+        <div role="img" aria-labelledby="chart-evolucion-title" className="h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={datosAnuales} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorIngresosGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                  <stop offset="40%" stopColor="#10b981" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorEgresosGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#fb7185" stopOpacity={0.2} />
+                  <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3} />
+                  <stop offset="40%" stopColor="#fb7185" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="mes" stroke={axisStroke} angle={-45} textAnchor="end" height={60} />
+
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="8 8"
+                stroke="hsl(var(--border))"
+                opacity={0.5}
+              />
+
+              <XAxis
+                dataKey="mes"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11, fontWeight: 500 }}
+                interval="preserveStartEnd"
+                dy={15}
+              />
+
               <YAxis
-                stroke={axisStroke}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
                 tickFormatter={(value) => formatCurrencyCompact(value)}
                 domain={[0, (dataMax: number) => Math.max(dataMax, FINANCIAL_PLAN.businessGoal * 1.2)]}
               />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend content={<SimpleLegendContent />} />
-              <Area type="monotone" dataKey="ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresosGrad)" name="Ingresos" />
-              <Area type="monotone" dataKey="egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresosGrad)" name="Egresos" />
+
+              <Tooltip
+                cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1.5, strokeDasharray: '4 4' }}
+                content={<CustomTooltip />}
+              />
+
+              <Legend
+                verticalAlign="top"
+                align="right"
+                content={<SimpleLegendContent />}
+                wrapperStyle={{ paddingTop: '0px', paddingBottom: '20px' }}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="ingresos"
+                stroke="#10b981"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorIngresosGrad)"
+                name="Ingresos"
+                animationDuration={2500}
+                activeDot={{ r: 6, strokeWidth: 0, fill: '#10b981', className: "shadow-lg" }}
+              />
+              <Area
+                type="monotone"
+                dataKey="egresos"
+                stroke="#fb7185"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorEgresosGrad)"
+                name="Egresos"
+                animationDuration={2500}
+                activeDot={{ r: 6, strokeWidth: 0, fill: '#fb7185', className: "shadow-lg" }}
+              />
+
               <MilestoneLine type="fixed" />
               <MilestoneLine type="breakEven" />
               <MilestoneLine type="meta" />
@@ -223,34 +359,105 @@ export function Graficas({ userId, userRole }: GraficasProps) {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        initial={{ opacity: 0, y: 15, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
-        className="bg-card border border-border backdrop-blur-md p-6 rounded-2xl shadow-sm"
+        transition={{
+          type: "spring",
+          stiffness: 180,
+          damping: 22,
+          delay: 0.3
+        }}
+        className="group relative bg-card/40 border border-border/50 backdrop-blur-2xl p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
       >
-        <h3 className="text-lg font-bold text-foreground mb-4" id="chart-mensual-title">
-          Evolución Mensual (Año Actual)
-        </h3>
-        <div role="img" aria-labelledby="chart-mensual-title">
-          <ResponsiveContainer width="100%" height={350}>
-            <AreaChart data={evolucionMensual} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-rose-500/5 blur-[80px] pointer-events-none" />
+
+        <div className="flex justify-between items-end mb-10">
+          <div>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-bold">Performance Snapshot</span>
+            <h3 className="text-2xl font-semibold tracking-tight text-foreground mt-1" id="chart-mensual-title">
+              Evolución Mensual
+            </h3>
+          </div>
+          <div className="text-right">
+            <span className="block text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Periodo</span>
+            <span className="text-xs font-medium bg-secondary/50 px-3 py-1 rounded-full border border-border/50">
+              Año Fiscal 2026
+            </span>
+          </div>
+        </div>
+
+        <div role="img" aria-labelledby="chart-mensual-title" className="h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={evolucionMensual} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorIngresosMensual" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                  <stop offset="40%" stopColor="#10b981" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorEgresosMensual" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#fb7185" stopOpacity={0.2} />
+                  <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3} />
+                  <stop offset="40%" stopColor="#fb7185" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#fb7185" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="mes" stroke={axisStroke} />
-              <YAxis stroke={axisStroke} tickFormatter={(value) => formatCurrencyCompact(value)} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend content={<SimpleLegendContent />} />
-              <Area type="monotone" dataKey="Ingresos" stroke="#10b981" fillOpacity={1} fill="url(#colorIngresosMensual)" name="Ingresos" />
-              <Area type="monotone" dataKey="Egresos" stroke="#fb7185" fillOpacity={1} fill="url(#colorEgresosMensual)" name="Egresos" />
+
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="8 8"
+                stroke="hsl(var(--border))"
+                opacity={0.4}
+              />
+
+              <XAxis
+                dataKey="mes"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11, fontWeight: 500 }}
+                dy={15}
+              />
+
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+                tickFormatter={(value) => formatCurrencyCompact(value)}
+              />
+
+              <Tooltip
+                cursor={{ stroke: 'hsl(var(--border))', strokeWidth: 1.5, strokeDasharray: '4 4' }}
+                content={<CustomTooltip />}
+              />
+
+              <Legend
+                verticalAlign="top"
+                align="right"
+                content={<SimpleLegendContent />}
+                wrapperStyle={{ paddingBottom: '30px' }}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="Ingresos"
+                stroke="#10b981"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorIngresosMensual)"
+                name="Ingresos"
+                animationDuration={2000}
+                activeDot={{ r: 6, strokeWidth: 0, fill: '#10b981' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="Egresos"
+                stroke="#fb7185"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorEgresosMensual)"
+                name="Egresos"
+                animationDuration={2000}
+                activeDot={{ r: 6, strokeWidth: 0, fill: '#fb7185' }}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>

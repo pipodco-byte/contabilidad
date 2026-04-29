@@ -92,6 +92,20 @@
 - [x] Actualizado Graficas.tsx: 5 legend usages reemplazadas
 - [x] Build pasa sin errores de useChart
 
+### Chart Visual Upgrade — Abril 2026
+- [x] Primer chart premium: glassmorphism card con backdrop-blur-xl
+- [x] Spring animation (stiffness: 260, damping: 20)
+- [x] Gradientes en barras (emerald/rose con opacity fade)
+- [x] Ejes minimalistas (axisLine:false, tickLine:false)
+- [x] Header con jerarquía tipográfica (label uppercase + title)
+
+### Chart Area Premium — Abril 2026
+- [x] Chart #2: AreaChart premium con glow emerald (top-right)
+- [x] Chart #2: Real-time indicator + "Time Analysis" label
+- [x] Chart #2: MilestoneLines con opacity reducido
+- [x] Chart #4: AreaChart premium con glow rose (bottom-left)
+- [x] Chart #4: Badge "Año Fiscal 2026" + "Performance Snapshot"
+
 ---
 
 ## 🔲 En Progreso
@@ -176,7 +190,9 @@ openspec/changes/
 ├── ia-strategy-visual-storytelling/ ✅ COMPLETO (v4.1)
 ├── visual-milestones-g3/         ✅ COMPLETO (v4.2)
 ├── chart-polish-hybrid/         ✅ COMPLETO (v4.2)
-└── fix-legend-usechart-error/   ✅ COMPLETO (bug fix)
+├── fix-legend-usechart-error/   ✅ COMPLETO (bug fix)
+├── chart-visual-upgrade/        ✅ COMPLETO (BarChart premium)
+└── chart-area-premium/         ✅ COMPLETO (AreaCharts premium)
 ```
 
 ---
