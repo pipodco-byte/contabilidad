@@ -43,7 +43,7 @@ const tools = {
 ### 2.2 Agregar logging detallado
 ```typescript
 const result = await generateText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(new Date()),
   messages,
   tools,

@@ -43,7 +43,7 @@ export const tools = {
 **ANTES:**
 ```typescript
 const result = await streamText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(),
   messages,
 })
@@ -54,7 +54,7 @@ const result = await streamText({
 import { tools } from '@/lib/assistant-tools'
 
 const result = await streamText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(),
   messages,
   tools,

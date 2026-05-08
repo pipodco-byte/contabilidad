@@ -22,7 +22,7 @@ import { tools } from '@/lib/assistant-tools'
 
 // En POST handler:
 const { text, toolResults } = await generateText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(),
   messages,
   tools,

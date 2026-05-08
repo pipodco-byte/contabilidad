@@ -18,7 +18,7 @@ npm install ai@latest
 ### route.ts
 ```diff
   const result = await streamText({
-    model: deepseek('deepseek-chat'),
+    model: deepseek('deepseek-v4-flash'),
     system: buildSystemPrompt(),
     messages,
     tools: tools as any,

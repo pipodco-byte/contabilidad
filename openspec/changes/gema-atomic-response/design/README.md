@@ -5,7 +5,7 @@
 ### Before (streamText - broken)
 ```typescript
 const result = await streamText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(),
   messages,
   // tools: tools as any,
@@ -21,7 +21,7 @@ import { generateText } from 'ai'
 import { tools } from '@/lib/assistant-tools'
 
 const { text, toolResults } = await generateText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(),
   messages,
   tools,

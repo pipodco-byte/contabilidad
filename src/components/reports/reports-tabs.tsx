@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -157,68 +158,92 @@ function InformeAnualContent({ userId, userRole }: { userId: string; userRole: s
         </Card>
       </div>
 
-      <Card className="border-border bg-card">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Evolución Mensual</CardTitle>
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-violet-500/50 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Exportar
-            </Button>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className="backdrop-blur-xl bg-card/60 border border-border/50 rounded-xl p-6"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Análisis Anual</span>
+            <CardTitle className="text-lg font-semibold mt-1">Evolución Mensual</CardTitle>
           </div>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={datosAnuales} margin={{ bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
-              <XAxis
-                dataKey="mes"
-                angle={-45}
-                textAnchor="end"
-                height={80}
-                stroke="var(--muted-foreground)"
-                interval={0}
-              />
-              <YAxis stroke="var(--muted-foreground)" tickFormatter={(value) => formatCurrencyCompact(value)} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'var(--card)',
-                  border: '1px solid var(--border)',
-                  borderRadius: '8px',
-                }}
-                formatter={(value) => formatCurrency(value as number)}
-                labelStyle={{ color: 'var(--foreground)' }}
-              />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="ingresos"
-                stroke="#10b981"
-                name="Ingresos"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="egresos"
-                stroke="#6366f1"
-                name="Egresos"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="balance"
-                stroke="#f59e0b"
-                name="Balance"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-violet-500/50 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Exportar
+          </Button>
+        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={datosAnuales} margin={{ bottom: 80 }}>
+            <defs>
+              <linearGradient id="informe-line-ingresos" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="100%" stopColor="#34d399" />
+              </linearGradient>
+              <linearGradient id="informe-line-egresos" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#6366f1" />
+                <stop offset="100%" stopColor="#818cf8" />
+              </linearGradient>
+              <linearGradient id="informe-line-balance" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#fbbf24" />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+            <XAxis
+              dataKey="mes"
+              angle={-45}
+              textAnchor="end"
+              height={80}
+              stroke="var(--muted-foreground)"
+              interval={0}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis stroke="var(--muted-foreground)" tickFormatter={(value) => formatCurrencyCompact(value)} axisLine={false} tickLine={false} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'var(--card)',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                boxShadow: '0 0 20px rgba(16, 185, 129, 0.15)',
+              }}
+              formatter={(value) => formatCurrency(value as number)}
+              labelStyle={{ color: 'var(--foreground)' }}
+            />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="ingresos"
+              stroke="url(#informe-line-ingresos)"
+              name="Ingresos"
+              strokeWidth={2}
+              activeDot={{ r: 8, strokeWidth: 0, style: { filter: 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.8))' } }}
+            />
+            <Line
+              type="monotone"
+              dataKey="egresos"
+              stroke="url(#informe-line-egresos)"
+              name="Egresos"
+              strokeWidth={2}
+              activeDot={{ r: 8, strokeWidth: 0, style: { filter: 'drop-shadow(0 0 12px rgba(99, 102, 241, 0.8))' } }}
+            />
+            <Line
+              type="monotone"
+              dataKey="balance"
+              stroke="url(#informe-line-balance)"
+              name="Balance"
+              strokeWidth={2}
+              activeDot={{ r: 8, strokeWidth: 0, style: { filter: 'drop-shadow(0 0 12px rgba(245, 158, 11, 0.8))' } }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </motion.div>
 
       <Card className="border-border bg-card overflow-hidden">
         <CardHeader>
@@ -390,52 +415,71 @@ function InformeMensualContent({ userId, userRole }: { userId: string; userRole:
       </div>
 
       {datosMensuales.length > 0 ? (
-        <Card className="border-border bg-card">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Ingresos vs Egresos por Categoría</CardTitle>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-violet-500/50 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Exportar
-              </Button>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="backdrop-blur-xl bg-card/60 border border-border/50 rounded-xl p-6"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Informe Mensual</span>
+              <CardTitle className="text-lg font-semibold mt-1">Ingresos vs Egresos por Categoría</CardTitle>
             </div>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={datosMensuales} margin={{ bottom: 80 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
-                <XAxis
-                  dataKey="categoria"
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                  stroke="var(--muted-foreground)"
-                  interval={0}
-                />
-                <YAxis
-                  stroke="var(--muted-foreground)"
-                  tickFormatter={(value) => formatCurrencyCompact(value)}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'var(--card)',
-                    border: '1px solid var(--border)',
-                    borderRadius: '8px',
-                  }}
-                  formatter={(value) => formatCurrency(value as number)}
-                  labelStyle={{ color: 'var(--foreground)' }}
-                />
-                <Legend />
-                <Bar dataKey="ingresos" fill="#10b981" name="Ingresos" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="egresos" fill="#6366f1" name="Egresos" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-violet-500/50 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Exportar
+            </Button>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={datosMensuales} margin={{ bottom: 80 }}>
+              <defs>
+                <linearGradient id="informe-bar-ingresos" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
+                </linearGradient>
+                <linearGradient id="informe-bar-egresos" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#6366f1" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0.4" />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+              <XAxis
+                dataKey="categoria"
+                angle={-45}
+                textAnchor="end"
+                height={80}
+                stroke="var(--muted-foreground)"
+                interval={0}
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis
+                stroke="var(--muted-foreground)"
+                tickFormatter={(value) => formatCurrencyCompact(value)}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '8px',
+                  boxShadow: '0 0 20px rgba(16, 185, 129, 0.15)',
+                }}
+                formatter={(value) => formatCurrency(value as number)}
+                labelStyle={{ color: 'var(--foreground)' }}
+              />
+              <Legend />
+              <Bar dataKey="ingresos" fill="url(#informe-bar-ingresos)" name="Ingresos" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="egresos" fill="url(#informe-bar-egresos)" name="Egresos" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
       ) : (
         <Card className="border-border bg-card">
           <CardContent className="pt-6 text-center text-foreground font-medium">

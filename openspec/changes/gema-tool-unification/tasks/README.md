@@ -44,7 +44,7 @@ const tools = {
 }
 
 const result = await generateText({
-  model: deepseek('deepseek-chat'),
+  model: deepseek('deepseek-v4-flash'),
   system: buildSystemPrompt(today),
   messages,
   tools,

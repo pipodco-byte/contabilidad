@@ -99,7 +99,7 @@ Usa estos datos reales para tu análisis. Si no hay transacciones (todo en 0), i
     messages.push({ role: 'user', content: message });
 
     const result = await streamText({
-      model: deepseek('deepseek-chat'),
+      model: deepseek('deepseek-v4-flash'),
       system: STRATEGY_ADVISOR_SYSTEM_PROMPT + financialContextMessage,
       messages: messages.filter(m => m.role !== 'system'),
     });

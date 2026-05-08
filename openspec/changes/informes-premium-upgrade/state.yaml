@@ -1,0 +1,21 @@
+name: informes-premium-upgrade
+version: 1.0.0
+created: 2026-04-28
+phase: apply
+
+dependencies: []
+
+artifacts:
+  proposal: openspec/changes/informes-premium-upgrade/proposal.md
+  spec: openspec/changes/informes-premium-upgrade/specs/ui/spec.md
+  design: openspec/changes/informes-premium-upgrade/design.md
+  tasks: openspec/changes/informes-premium-upgrade/tasks.md
+
+status:
+  proposal: done
+  spec: done
+  design: done
+  tasks: done
+  apply: done
+  verify: pending
+  archive: pending
