@@ -61,7 +61,7 @@ export default function Dashboard() {
           descripcion: descripcion?.trim() || '',
           categoria: categoria?.trim() || '',
           sub_categoria: sub_categoria?.trim() || '',
-          monto: parseFloat(monto) || 0,
+          monto: parseFloat(monto?.replace(/\./g, '').replace(',', '.')) || 0,
           tipo: tipo?.trim() || '',
           medio_pago: medio_pago?.trim() || '',
           estado_iva: estado_iva?.trim() || '',
