@@ -20,9 +20,10 @@ interface HeaderProps {
     nombre: string
     rol: string
   } | null
+  onSignOut?: () => void
 }
 
-export function Header({ onMenuClick, user }: HeaderProps) {
+export function Header({ onMenuClick, user, onSignOut }: HeaderProps) {
   const { tema, toggleTema } = useTema()
 
   return (
@@ -111,7 +112,10 @@ export function Header({ onMenuClick, user }: HeaderProps) {
                 Configuración
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
+              <DropdownMenuItem
+                className="text-destructive focus:text-destructive"
+                onClick={onSignOut}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar Sesión
               </DropdownMenuItem>

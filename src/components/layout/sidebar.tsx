@@ -197,8 +197,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  onClick={() => {
-                    localStorage.removeItem('auth_user');
+                  onClick={async () => {
+                    const { supabase } = await import('@/lib/supabase');
+                    await supabase.auth.signOut();
                     window.location.href = '/';
                   }}
                   className={cn(
@@ -214,8 +215,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             </Tooltip>
           ) : (
             <button
-              onClick={() => {
-                localStorage.removeItem('auth_user');
+              onClick={async () => {
+                const { supabase } = await import('@/lib/supabase');
+                await supabase.auth.signOut();
                 window.location.href = '/';
               }}
               className={cn(

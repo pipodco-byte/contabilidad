@@ -17,7 +17,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user, loading } = useAuth()
+  const { user, loading, signOut } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
@@ -86,7 +86,7 @@ export default function DashboardLayout({
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        <Header user={user} onMenuClick={() => setMobileOpen(true)} />
+        <Header user={user} onMenuClick={() => setMobileOpen(true)} onSignOut={signOut} />
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mx-auto max-w-7xl">{children}</div>
         </main>

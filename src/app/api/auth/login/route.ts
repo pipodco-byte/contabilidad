@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase-server';
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
@@ -40,20 +41,32 @@ export async function POST(request: Request) {
       );
     }
 
-    // Support both bcryptjs hashes and plain text for migration
     const isBcryptHash = user.password_hash.startsWith('$2')
     let isValidPassword = false
     
     if (isBcryptHash) {
       isValidPassword = await bcrypt.compare(password, user.password_hash)
     } else {
-      // Plain text fallback for migration
       isValidPassword = user.password_hash === password
     }
     
     if (!isValidPassword) {
       return NextResponse.json(
         { message: 'Usuario o contraseña incorrectos' },
+        { status: 401 }
+      );
+    }
+
+    const supabaseServer = createServerClient();
+    const { error: authError } = await supabaseServer.auth.signInWithPassword({
+      email: `${username}@pipod.co`,
+      password,
+    });
+
+    if (authError) {
+      console.error('Supabase Auth sign-in failed:', authError.message);
+      return NextResponse.json(
+        { message: 'Error de autenticación' },
         { status: 401 }
       );
     }
