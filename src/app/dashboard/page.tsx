@@ -69,7 +69,7 @@ export default function Dashboard() {
         }
       })
 
-      const bodyString = JSON.stringify({ transacciones, userId: user.id })
+      const bodyString = JSON.stringify({ transacciones })
 
       const controller = new AbortController()
       const id = setTimeout(() => controller.abort(), 10000)

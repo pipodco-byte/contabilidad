@@ -30,7 +30,7 @@ export default function ConfigPage() {
       const response = await fetch('/api/gema/import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: gemaInput, userId: user.id }),
+        body: JSON.stringify({ transacciones: gemaInput }),
         signal: controller.signal,
       })
 

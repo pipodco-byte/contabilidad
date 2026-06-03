@@ -1,10 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createServerClient } from '@/lib/supabase';
 
 export async function GET() {
   return NextResponse.json({ message: 'El endpoint existe' });
@@ -13,11 +8,19 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     console.log('[API] POST /api/gema/import - Iniciando');
+
+    const supabase = createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+    }
+
     const body = await request.json();
     console.log('[API] Body recibido:', JSON.stringify(body).substring(0, 200));
 
-    const { transacciones, userId } = body;
-    console.log('[API] Parsed:', { transactionCount: transacciones?.length, userId });
+    const { transacciones } = body;
+    console.log('[API] Parsed:', { transactionCount: transacciones?.length, userId: user.id });
 
     if (!Array.isArray(transacciones) || transacciones.length === 0) {
       console.log('[API] Error: transacciones no es array o está vacío');
@@ -28,7 +31,7 @@ export async function POST(request: NextRequest) {
     const dataToInsert = transacciones.map((t) => {
       console.log('[API] Transacción raw:', { fecha: t.fecha, monto: t.monto });
       return {
-        user_id: userId,
+        user_id: user.id,
         fecha: t.fecha,
         descripcion: t.descripcion,
         categoria: t.categoria,
