@@ -90,7 +90,7 @@ export function StrategyMessage({ message }: StrategyMessageProps) {
     >
       <div
         className={cn(
-          'max-w-[85%] rounded-2xl px-4 py-3 text-sm',
+          'max-w-[85%] rounded-2xl px-4 py-4 text-sm leading-relaxed',
           isUser
             ? 'bg-primary/20 text-foreground rounded-br-md border border-primary/30'
             : 'bg-secondary text-foreground rounded-bl-md border border-border/50'

@@ -1,0 +1,18 @@
+change_name: ia-strategy-minimalist-redesign
+status: tasks
+phases:
+  proposal: done
+  spec: done
+  design: done
+  tasks: done
+  apply: done
+  verify: pending
+  archive: pending
+dependencies: []
+
+notes:
+  - Rediseño minimalista tipo ChatGPT para IA Strategy
+  - Panel derecho preservado (DataPanel con métricas)
+  - Layout asimétrico 65% chat / 35% panel
+  - Input redondeado estilo ChatGPT
+  - Sin contenedor card en mensajes

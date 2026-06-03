@@ -6,7 +6,6 @@ import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
 import { Button } from '@/components/ui/button';
 import { StrategyMessage } from './StrategyMessage';
 import { StrategyVoiceButton } from './StrategyVoiceButton';
-import { StrategyMiniChart } from './StrategyMiniChart';
 import { toast } from 'sonner';
 
 interface StrategyChatProps {
@@ -128,8 +127,8 @@ export function StrategyChat({
   };
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between px-4 py-2">
         <h3 className="text-sm font-medium text-muted-foreground">Strategy Advisor</h3>
         {chatHistory.length > 0 && (
           <Button
@@ -143,13 +142,9 @@ export function StrategyChat({
         )}
       </div>
 
-      <div className="px-4 py-3 border-b border-border">
-        <StrategyMiniChart data={[]} />
-      </div>
-
-      <div className="bg-card border rounded-lg p-3 space-y-3 max-h-64 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto px-4 space-y-6 pb-4">
         {chatHistory.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-4">
+          <p className="text-sm text-muted-foreground text-center py-12">
             Pregunta sobre tu estrategia de negocio...
           </p>
         ) : (
@@ -158,7 +153,7 @@ export function StrategyChat({
               <StrategyMessage key={index} message={message} />
             ))}
             {isLoading && (
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-muted-foreground py-4">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <span className="text-sm">Pensando...</span>
               </div>
@@ -168,25 +163,32 @@ export function StrategyChat({
         )}
       </div>
 
-      <div className="flex gap-2">
-        <StrategyVoiceButton
-          disabled={isLoading}
-          onTranscript={handleVoiceTranscript}
-          onError={handleVoiceError}
-        />
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="¿Cuánto puedo gastar?"
-          disabled={isLoading}
-          rows={1}
-          className="flex-1 px-4 py-3 min-h-[44px] max-h-40 bg-input border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 disabled:opacity-50 transition-all resize-none overflow-y-auto"
-        />
-        <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
-          <Send className="h-4 w-4" />
-        </Button>
+      <div className="px-4 py-3">
+        <div className="flex items-end gap-2 rounded-2xl bg-muted/30 border border-border/20 p-2 focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+          <StrategyVoiceButton
+            disabled={isLoading}
+            onTranscript={handleVoiceTranscript}
+            onError={handleVoiceError}
+          />
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="¿Cuánto puedo gastar?"
+            disabled={isLoading}
+            rows={1}
+            className="flex-1 px-3 py-2 min-h-[44px] max-h-40 bg-transparent border-0 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0 disabled:opacity-50 transition-all resize-none overflow-y-auto"
+          />
+          <Button
+            onClick={handleSend}
+            disabled={isLoading || !input.trim()}
+            size="icon"
+            className="rounded-full h-9 w-9 shrink-0"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {showDeleteConfirm && (
