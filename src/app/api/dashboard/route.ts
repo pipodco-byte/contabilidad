@@ -11,6 +11,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
+    const userId = user.user_metadata.cont_usuario_id as string;
+
     const { searchParams } = new URL(request.url);
     const fechaInicio = searchParams.get('fechaInicio');
     const fechaFin = searchParams.get('fechaFin');
@@ -18,7 +20,7 @@ export async function GET(request: Request) {
     let query = supabase
       .from('cont_transacciones')
       .select('*')
-      .eq('user_id', user.id);
+      .eq('user_id', userId);
 
     if (fechaInicio) {
       query = query.gte('fecha', fechaInicio);

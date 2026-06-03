@@ -13,6 +13,8 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
+    const userId = user.user_metadata.cont_usuario_id as string;
+
     const { searchParams } = new URL(request.url);
     const limit = searchParams.get('limit') || '50';
     const offset = searchParams.get('offset') || '0';
@@ -20,7 +22,7 @@ export async function GET(request: Request) {
     const { data, error } = await supabase
       .from('cont_transacciones')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('fecha', { ascending: false })
       .range(parseInt(offset), parseInt(offset) + parseInt(limit) - 1);
 
@@ -44,12 +46,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
+    const userId = user.user_metadata.cont_usuario_id as string;
+
     // Guardar transacción principal
     const { data: transaccion, error } = await supabase
       .from('cont_transacciones')
       .insert({
         ...validatedData,
-        user_id: user.id,
+        user_id: userId,
         fecha: validatedData.fecha.toISOString().split('T')[0],
       })
       .select()
@@ -64,7 +68,7 @@ export async function POST(request: Request) {
       await supabase
         .from('cont_transacciones')
         .insert({
-          user_id: user.id,
+          user_id: userId,
           fecha: validatedData.fecha.toISOString().split('T')[0],
           descripcion: `Comisión Bold + Retenciones (CTT ${BOLD_COMMISSION}%)`,
           categoria: 'Egresos Negocio',
