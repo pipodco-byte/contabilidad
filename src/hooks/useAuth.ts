@@ -53,13 +53,9 @@ export function useAuth() {
       throw new Error(error.message);
     }
 
-    const { data: { session } } = await supabase.auth.getSession();
-    const authUser = extractUser(session);
-
-    if (authUser) {
-      setUser(authUser);
-      router.push('/dashboard');
-    }
+    const data = await response.json();
+    setUser(data);
+    router.push('/dashboard');
   };
 
   const signOut = async () => {
