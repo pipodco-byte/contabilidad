@@ -4,7 +4,7 @@ import { deepseek } from '@ai-sdk/deepseek';
 import { buildStrategyContextMessage, STRATEGY_ADVISOR_SYSTEM_PROMPT } from '@/lib/strategy-prompt';
 import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
 import { FINANCIAL_PLAN } from '@/lib/strategy-constants';
-import { createServerClient } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase-server';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;

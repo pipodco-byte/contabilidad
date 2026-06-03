@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { transaccionSchema } from '@/lib/validations';
-import { createServerClient } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase-server';
 import { BOLD_COMMISSION } from '@/lib/constants';
 
 export async function GET(request: Request) {
