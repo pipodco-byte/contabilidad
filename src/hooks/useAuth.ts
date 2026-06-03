@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import type { Session } from '@supabase/supabase-js';
 
 interface AuthUser {
   id: string;
@@ -10,35 +9,17 @@ interface AuthUser {
   rol: string;
 }
 
-function extractUser(session: Session | null): AuthUser | null {
-  if (!session) return null;
-  const meta = session.user.user_metadata;
-  return {
-    id: meta.cont_usuario_id as string,
-    username: meta.username as string,
-    nombre: meta.nombre as string,
-    rol: meta.rol as string,
-  };
-}
-
 export function useAuth() {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(extractUser(session));
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(extractUser(session));
-    });
-
-    return () => subscription.unsubscribe();
+    const stored = localStorage.getItem('auth_user');
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
+    setLoading(false);
   }, []);
 
   const signIn = async (username: string, password: string) => {
@@ -54,11 +35,13 @@ export function useAuth() {
     }
 
     const data = await response.json();
+    localStorage.setItem('auth_user', JSON.stringify(data));
     setUser(data);
     router.push('/dashboard');
   };
 
   const signOut = async () => {
+    localStorage.removeItem('auth_user');
     await supabase.auth.signOut();
     setUser(null);
     router.push('/');
