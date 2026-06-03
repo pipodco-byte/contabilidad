@@ -15,8 +15,8 @@ export async function POST(request: Request) {
     }
 
     const { data: user, error } = await supabase
-      .from('usuarios')
-      .select('id, username, password_hash, nombre, rol, activo, acceso_contabilidad')
+      .from('cont_usuarios')
+      .select('id, username, password_hash, nombre, rol, activo')
       .eq('username', username)
       .single();
 
@@ -30,13 +30,6 @@ export async function POST(request: Request) {
     if (!user.activo) {
       return NextResponse.json(
         { message: 'Usuario desactivado' },
-        { status: 401 }
-      );
-    }
-
-    if (!user.acceso_contabilidad) {
-      return NextResponse.json(
-        { message: 'Sin acceso a Contabilidad' },
         { status: 401 }
       );
     }
