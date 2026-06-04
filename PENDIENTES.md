@@ -105,6 +105,11 @@
 
 _(ninguno)_
 
+### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
+- Gastos Fijos: $12,149,400/mes
+- Break-even: $40,498,000
+- Meta Negocio Sano: $50,000,000 (15% utilidad neta)
+
 
 ---
 
