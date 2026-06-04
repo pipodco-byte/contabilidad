@@ -51,7 +51,7 @@ export default function IAStrategyPage() {
 
   return (
     <div className="flex h-full w-full">
-      <div className="flex-[0.65] min-w-0 flex flex-col">
+      <div className="flex-1 min-w-0 flex flex-col">
         <ChatWorkspace
           strategyData={strategyData}
           chatHistory={chatHistory}
@@ -60,11 +60,13 @@ export default function IAStrategyPage() {
         />
       </div>
 
-      <DataPanel
-        metrics={strategyData.calculatedMetrics}
-        goals={strategyData.goals}
-        historicalMargins={strategyData.calculatedMetrics.historicalMargins}
-      />
+      <div className="flex-shrink-0">
+        <DataPanel
+          metrics={strategyData.calculatedMetrics}
+          goals={strategyData.goals}
+          historicalMargins={strategyData.calculatedMetrics.historicalMargins}
+        />
+      </div>
     </div>
   )
 }
