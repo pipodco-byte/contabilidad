@@ -18,7 +18,6 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
         title="Burn Rate"
         value={`$${metrics.burnRate.toLocaleString('es-MX')}`}
         unit="/mes"
-        trend={metrics.marginTrend}
         icon={<Flame className="h-4 w-4" />}
       />
 

@@ -6,11 +6,12 @@ import { useAuth } from '@/hooks/useAuth'
 import { ChatWorkspace } from '@/components/strategy/ChatWorkspace'
 import { DataPanel } from '@/components/strategy/DataPanel'
 import { useStrategyData } from '@/hooks/useStrategyData'
+import { StrategyConfigData } from '@/components/strategy/StrategyConfig'
 import { StrategyChatMessage } from '@/lib/strategy-types'
 
 export default function IAStrategyPage() {
   const { user, loading } = useAuth()
-  const { strategyData } = useStrategyData()
+  const { strategyData, config, configLoading } = useStrategyData()
 
   const [chatHistory, setChatHistory] = React.useState<StrategyChatMessage[]>([])
   const [mounted, setMounted] = React.useState(false)
@@ -41,6 +42,15 @@ export default function IAStrategyPage() {
     setChatHistory([])
   }
 
+  const handleSaveConfig = async (newConfig: StrategyConfigData) => {
+    const response = await fetch('/api/config', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newConfig),
+    });
+    if (!response.ok) throw new Error('Error saving config');
+  }
+
   if (loading || !user) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -65,6 +75,12 @@ export default function IAStrategyPage() {
           metrics={strategyData.calculatedMetrics}
           goals={strategyData.goals}
           historicalMargins={strategyData.calculatedMetrics.historicalMargins}
+          saldoInicial={config?.saldo_inicial || 0}
+          fechaSaldo={config?.fecha_saldo || ''}
+          costosFijos={config?.costos_fijos || []}
+          margenObjetivo={config?.margen_objetivo || 18}
+          onSaveConfig={handleSaveConfig}
+          configLoading={configLoading}
         />
       </div>
     </div>

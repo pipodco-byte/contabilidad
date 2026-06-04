@@ -18,10 +18,20 @@ const STRATEGY_STORAGE_KEY = 'pipod_strategy';
 const MAX_CHAT_MESSAGES = 40;
 const CURRENT_VERSION = 1;
 
+export interface StrategyConfig {
+  saldo_inicial: number;
+  fecha_saldo: string | null;
+  costos_fijos: Array<{ label: string; amount: number }>;
+  margen_objetivo: number;
+}
+
 interface UseStrategyDataReturn {
   strategyData: StrategyData;
   chatHistory: StrategyChatMessage[];
   isLoading: boolean;
+  config: StrategyConfig | null;
+  configLoading: boolean;
+  cashEstimado: number;
   updateManualInputs: (inputs: Partial<ManualInputs>) => void;
   addGoal: (goal: Omit<Goal, 'id'>) => void;
   updateGoal: (id: string, updates: Partial<Goal>) => void;
@@ -71,6 +81,8 @@ export function useStrategyData(): UseStrategyDataReturn {
   const [storedData, setStoredData] = useState<StoredStrategyData>(DEFAULT_STORED_DATA);
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<Transaccion[]>([]);
+  const [config, setConfig] = useState<StrategyConfig | null>(null);
+  const [configLoading, setConfigLoading] = useState(true);
 
   useEffect(() => {
     const loaded = loadFromLocalStorage();
@@ -109,22 +121,58 @@ export function useStrategyData(): UseStrategyDataReturn {
     fetchTransactions();
   }, []);
 
+  useEffect(() => {
+    async function fetchConfig() {
+      try {
+        setConfigLoading(true);
+        const response = await fetch('/api/config');
+        if (response.ok) {
+          const data = await response.json();
+          if (data && !data.error) {
+            setConfig(data);
+          }
+        }
+      } catch (err) {
+        console.error('[StrategyData] Fetch config error:', err);
+      } finally {
+        setConfigLoading(false);
+      }
+    }
+    fetchConfig();
+  }, []);
+
+  const cashEstimado = useMemo(() => {
+    if (!config || !config.saldo_inicial || !config.fecha_saldo) return 0;
+    const desde = config.fecha_saldo;
+    const ingresosDesde = transactions
+      .filter((t) => t.tipo === 'Ingreso' && t.fecha >= desde)
+      .reduce((sum, t) => sum + t.monto, 0);
+    const egresosDesde = transactions
+      .filter((t) => t.tipo === 'Egreso' && t.fecha >= desde)
+      .reduce((sum, t) => sum + t.monto, 0);
+    return config.saldo_inicial + ingresosDesde - egresosDesde;
+  }, [config, transactions]);
+
+  const fixedCosts = config?.costos_fijos || storedData.manualInputs.fixedCosts;
+  const currentCash = cashEstimado || storedData.manualInputs.currentCash;
+  const targetMargin = config?.margen_objetivo || storedData.manualInputs.targetMargin;
+
   const calculatedMetrics: CalculatedMetrics = useMemo(() => {
     if (storedData.calculatedMetrics && transactions.length === 0) {
       return storedData.calculatedMetrics;
     }
     return calculateMetrics({
       transactions,
-      fixedCosts: storedData.manualInputs.fixedCosts,
-      currentCash: storedData.manualInputs.currentCash,
-      targetMargin: storedData.manualInputs.targetMargin,
+      fixedCosts,
+      currentCash,
+      targetMargin,
       burnRateMonths: storedData.settings.burnRateMonths,
     });
   }, [
     transactions,
-    storedData.manualInputs.fixedCosts,
-    storedData.manualInputs.currentCash,
-    storedData.manualInputs.targetMargin,
+    fixedCosts,
+    currentCash,
+    targetMargin,
     storedData.settings.burnRateMonths,
     storedData.calculatedMetrics,
     isLoading,
@@ -214,6 +262,9 @@ export function useStrategyData(): UseStrategyDataReturn {
     strategyData,
     chatHistory: storedData.chatHistory,
     isLoading,
+    config,
+    configLoading,
+    cashEstimado,
     updateManualInputs,
     addGoal,
     updateGoal,
