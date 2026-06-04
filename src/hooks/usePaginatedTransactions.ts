@@ -35,8 +35,8 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
   const [endDate, setEndDate] = useState(getDefaultDateRange().endDate);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const selectedYear = new Date(startDate).getFullYear();
-  const selectedMonth = new Date(startDate).getMonth() + 1;
+  const selectedYear = parseInt(startDate.split('-')[0]);
+  const selectedMonth = parseInt(startDate.split('-')[1]);
 
   useEffect(() => {
     if (!userId || userId.length < 5) {
@@ -96,15 +96,15 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
     endDate,
     showingLast30Days: true,
     setSelectedYear: (year: number) => {
-      const currentDate = new Date(startDate);
-      const newDate = new Date(year, currentDate.getMonth(), 1);
+      const currentMonth = parseInt(startDate.split('-')[1]);
+      const newDate = new Date(year, currentMonth - 1, 1, 12, 0, 0);
       setStartDate(newDate.toISOString().split('T')[0]);
       setCurrentPage(1);
     },
     setSelectedMonth: (month: number) => {
-      const year = new Date(startDate).getFullYear();
-      const firstDay = new Date(year, month - 1, 1);
-      const lastDay = new Date(year, month, 0);
+      const year = parseInt(startDate.split('-')[0]);
+      const firstDay = new Date(year, month - 1, 1, 12, 0, 0);
+      const lastDay = new Date(year, month, 0, 12, 0, 0);
       setStartDate(firstDay.toISOString().split('T')[0]);
       setEndDate(lastDay.toISOString().split('T')[0]);
       setCurrentPage(1);

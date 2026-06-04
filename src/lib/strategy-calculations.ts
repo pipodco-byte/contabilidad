@@ -21,18 +21,34 @@ export interface CalculatedMetrics {
   historicalMargins: Array<{ month: string; margin: number }>;
 }
 
-function getLastNMonths(n: number): string[] {
+function parseFechaStr(fechaStr: string): { year: number; month: number } {
+  const parts = fechaStr.split('-').map(Number);
+  return { year: parts[0], month: parts[1] };
+}
+
+function getLastNMonths(n: number, transactions: Transaccion[]): string[] {
   const months: string[] = [];
-  const now = new Date();
+
+  let maxYear = new Date().getFullYear();
+  let maxMonth = new Date().getMonth() + 1;
+
+  if (transactions.length > 0) {
+    const dates = transactions.map((t) => new Date(t.fecha + 'T12:00:00').getTime());
+    const maxDate = new Date(Math.max(...dates));
+    maxYear = maxDate.getFullYear();
+    maxMonth = maxDate.getMonth() + 1;
+  }
+
   for (let i = n - 1; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const d = new Date(maxYear, maxMonth - 1 - i, 1);
     months.push(d.toLocaleString('es-MX', { year: 'numeric', month: 'short' }));
   }
   return months;
 }
 
-function getMonthKey(date: Date): string {
-  return date.toLocaleString('es-MX', { year: 'numeric', month: 'short' });
+function getMonthKey(fechaStr: string): string {
+  const { year, month } = parseFechaStr(fechaStr);
+  return new Date(year, month - 1, 1).toLocaleString('es-MX', { year: 'numeric', month: 'short' });
 }
 
 interface MonthlyData {
@@ -58,8 +74,7 @@ function extractMonthlyData(
   }
 
   for (const t of transactions) {
-    const tDate = new Date(t.fecha);
-    const monthKey = getMonthKey(tDate);
+    const monthKey = getMonthKey(t.fecha);
 
     if (monthlyMap.has(monthKey)) {
       const data = monthlyMap.get(monthKey)!;
@@ -98,10 +113,10 @@ export function calculateMetrics(input: CalculationInput): CalculatedMetrics {
     };
   }
 
-  const months = getLastNMonths(6);
+  const months = getLastNMonths(6, transactions);
   const monthlyData = extractMonthlyData(transactions, months);
 
-  const monthsForBurnRate = getLastNMonths(burnRateMonths);
+  const monthsForBurnRate = getLastNMonths(burnRateMonths, transactions);
   const burnRateData = extractMonthlyData(transactions, monthsForBurnRate);
 
   let totalExpensesForBurn = 0;
