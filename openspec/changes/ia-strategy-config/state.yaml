@@ -1,0 +1,16 @@
+change_name: ia-strategy-config
+status: tasks
+phases:
+  proposal: done
+  spec: done
+  tasks: done
+  apply: pending
+  verify: pending
+  archive: pending
+dependencies: []
+
+notes:
+  - Fix trend repetido en todas las tarjetas de métricas (solo Profit Margin debe mostrarlo)
+  - Crear StrategyConfig: formulario de costos fijos + cash actual + margen objetivo
+  - Conectar a useStrategyData.updateManualInputs() para persistencia
+  - Usuario tiene costos fijos reales en archivo local "REPORTE PRESUPUESTO PIPOD"
