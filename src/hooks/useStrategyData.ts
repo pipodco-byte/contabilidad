@@ -90,10 +90,13 @@ export function useStrategyData(): UseStrategyDataReturn {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
+        const contUsuarioId = user.user_metadata?.cont_usuario_id as string;
+        if (!contUsuarioId) return;
+
         const { data, error } = await supabase
           .from('cont_transacciones')
           .select('*')
-          .eq('user_id', user.id)
+          .eq('user_id', contUsuarioId)
           .order('fecha', { ascending: false })
           .limit(1000);
 
