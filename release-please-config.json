@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schema.json",
+  "packages": {},
+  "release-as": null,
+  "draft": false,
+  "prerelease": false,
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "only-package-peers": false,
+  "bootstrap-sha": null,
+  "bump-minor-pre-major": false,
+  "bump-patch-for-minor-pre-major": false,
+  "changelog-sections": {
+    "features": "Features",
+    "fixes": "Bug Fixes",
+    "perf": "Performance Improvements",
+    "reverts": "Reverts",
+    "docs": "Documentation",
+    "refactor": "Code Refactoring",
+    "test": "Tests",
+    "build": "Build System",
+    "ci": "Continuous Integration",
+    "chore": "Chores",
+    "releases": "Releases"
+  }
+}
