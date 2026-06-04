@@ -32,6 +32,7 @@ interface UseStrategyDataReturn {
   config: StrategyConfig | null;
   configLoading: boolean;
   cashEstimado: number;
+  refreshConfig: () => Promise<void>;
   updateManualInputs: (inputs: Partial<ManualInputs>) => void;
   addGoal: (goal: Omit<Goal, 'id'>) => void;
   updateGoal: (id: string, updates: Partial<Goal>) => void;
@@ -121,25 +122,26 @@ export function useStrategyData(): UseStrategyDataReturn {
     fetchTransactions();
   }, []);
 
-  useEffect(() => {
-    async function fetchConfig() {
-      try {
-        setConfigLoading(true);
-        const response = await fetch('/api/config');
-        if (response.ok) {
-          const data = await response.json();
-          if (data && !data.error) {
-            setConfig(data);
-          }
+  const refreshConfig = useCallback(async () => {
+    try {
+      setConfigLoading(true);
+      const response = await fetch('/api/config');
+      if (response.ok) {
+        const data = await response.json();
+        if (data && !data.error) {
+          setConfig(data);
         }
-      } catch (err) {
-        console.error('[StrategyData] Fetch config error:', err);
-      } finally {
-        setConfigLoading(false);
       }
+    } catch (err) {
+      console.error('[StrategyData] Fetch config error:', err);
+    } finally {
+      setConfigLoading(false);
     }
-    fetchConfig();
   }, []);
+
+  useEffect(() => {
+    refreshConfig();
+  }, [refreshConfig]);
 
   const cashEstimado = useMemo(() => {
     if (!config || !config.saldo_inicial || !config.fecha_saldo) return 0;
@@ -265,6 +267,7 @@ export function useStrategyData(): UseStrategyDataReturn {
     config,
     configLoading,
     cashEstimado,
+    refreshConfig,
     updateManualInputs,
     addGoal,
     updateGoal,

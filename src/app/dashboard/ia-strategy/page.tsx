@@ -11,7 +11,7 @@ import { StrategyChatMessage } from '@/lib/strategy-types'
 
 export default function IAStrategyPage() {
   const { user, loading } = useAuth()
-  const { strategyData, config, configLoading } = useStrategyData()
+  const { strategyData, config, configLoading, refreshConfig } = useStrategyData()
 
   const [chatHistory, setChatHistory] = React.useState<StrategyChatMessage[]>([])
   const [mounted, setMounted] = React.useState(false)
@@ -49,6 +49,7 @@ export default function IAStrategyPage() {
       body: JSON.stringify(newConfig),
     });
     if (!response.ok) throw new Error('Error saving config');
+    await refreshConfig();
   }
 
   if (loading || !user) {

@@ -63,7 +63,7 @@ export function StrategyConfig({
 
   const [localSaldo, setLocalSaldo] = React.useState(saldoInicial);
   const [localFecha, setLocalFecha] = React.useState(
-    fechaSaldo ? fechaSaldo.split('T')[0] : ''
+    fechaSaldo ? fechaSaldo.split('T')[0] : new Date().toISOString().split('T')[0]
   );
   const [localMargen, setLocalMargen] = React.useState(margenObjetivo);
   const [localCostos, setLocalCostos] = React.useState<FixedCostItem[]>(
