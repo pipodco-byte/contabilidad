@@ -132,7 +132,8 @@ export const DEFAULT_STORED_DATA: StoredStrategyData = {
 };
 
 export function getRunwayBadge(runway: number): { color: 'success' | 'warning' | 'danger'; label: string; emoji: string } {
-  if (runway > 6) return { color: 'success', label: 'SALUDABLE', emoji: '🟢' };
-  if (runway >= 3) return { color: 'warning', label: 'CUIDADO', emoji: '🟡' };
+  if (runway > 12) return { color: 'success', label: 'SALUDABLE', emoji: '🟢' };
+  if (runway >= 6) return { color: 'warning', label: 'CUIDADO', emoji: '🟡' };
+  if (runway >= 3) return { color: 'warning', label: 'RIESGO', emoji: '🟠' };
   return { color: 'danger', label: 'CRÍTICO', emoji: '🔴' };
 }

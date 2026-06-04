@@ -19,6 +19,20 @@ export function TrendChart({ data }: TrendChartProps) {
     );
   }
 
+  const zeroMonths = data.filter((d) => d.margin === 0).length;
+  if (zeroMonths / data.length > 0.5) {
+    return (
+      <div className="bg-card border rounded-lg p-4">
+        <p className="text-sm text-muted-foreground text-center">
+          Datos insuficientes para mostrar tendencia
+        </p>
+        <p className="text-[11px] text-muted-foreground text-center mt-1">
+          Se necesitan mas meses con transacciones registradas
+        </p>
+      </div>
+    );
+  }
+
   const maxMargin = Math.max(...data.map((d) => Math.abs(d.margin)), 1);
 
   const trend = data[data.length - 1].margin - data[data.length - 2].margin;
@@ -47,7 +61,7 @@ export function TrendChart({ data }: TrendChartProps) {
                   'w-full rounded-sm transition-all',
                   isPositive ? 'bg-emerald-500/60' : 'bg-red-500/60'
                 )}
-                style={{ height: `${Math.max(heightPercent, 5)}%` }}
+                style={{ height: `${Math.max(heightPercent, 10)}%` }}
               />
               <span className="text-[10px] text-muted-foreground truncate w-full text-center">
                 {item.month.split(' ')[0].slice(0, 3)}
