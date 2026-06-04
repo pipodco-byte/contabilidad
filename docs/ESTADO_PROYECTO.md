@@ -1,7 +1,7 @@
 # 📋 Estado del Proyecto — Pipod Contabilidad
 
-**Última actualización:** Abril 2026
-**Versión:** 4.2
+**Última actualización:** Junio 2026
+**Versión:** 4.3
 
 ---
 
@@ -111,6 +111,40 @@
 - [x] Chart #5: LineChart con gradient stroke green→red, activeDot shadow-2xl
 - [x] Chart #6: Tabla con TrendingUp/Down icons, delta badges, balance row highlight
 
+### IA Strategy Redesign + Config (v4.3) — Mayo-Junio 2026
+- [x] IA-R1: Rediseño minimalista ChatGPT-style: layout asimétrico 65/35, header centrado
+- [x] IA-R2: Pill input con botón circular de enviar, mensajes aireados (space-y-6)
+- [x] IA-R3: DataPanel más suave (bg-muted/5, sin border-l), eliminado StrategyMiniChart
+- [x] IA-R4: Dead space fix (flex-1 + flex-shrink-0 wrapper)
+- [x] IA-R5: Month filter rollover bug corregido (setMonth → Date constructor)
+
+### Auth & Data Flow Fixes — Mayo 2026
+- [x] AF-1: Supabase session persistence en browser (setSession via localStorage)
+- [x] AF-2: useStrategyData usa cont_usuario_id (user_metadata) en vez de auth UUID
+- [x] AF-3: Login API devuelve access_token + refresh_token para setSession()
+
+### IA Strategy Config Panel — Mayo-Junio 2026
+- [x] IA-C1: Panel de configuración colapsable (StrategyConfig component)
+- [x] IA-C2: Cash estimado automático: saldo_inicial + Σ(ingresos) - Σ(egresos)
+- [x] IA-C3: 16 costos fijos precargados desde REPORTE PRESUPUESTO PIPOD (~$18M)
+- [x] IA-C4: Tabla Supabase cont_configuracion creada (RLS deshabilitado)
+- [x] IA-C5: API /api/config GET/PUT con Supabase auth
+- [x] IA-C6: RefreshConfig después de guardar (métricas recalculan)
+- [x] IA-C7: Runway y Break-even muestran valores reales
+- [x] IA-C8: Runway badge thresholds: 🟢>12 / 🟡6-12 / 🟠3-6 / 🔴<3
+
+### Bug Fixes Críticos — Junio 2026
+- [x] BF-1: Timezone bug — `new Date("YYYY-MM-DD")` parsea como UTC, desplaza mes en -5
+- [x] BF-2: TrendChart vacío — getLastNMonths usaba Date frágil; ahora parseFechaStr
+- [x] BF-3: Chat roto — streamText devolvía SSE pero cliente esperaba JSON
+- [x] BF-4: Model ID inválido `deepseek-v4-flash` → cambiado a `deepseek-chat`
+- [x] BF-5: Selector de mes mostraba "Mayo" en vez de "Junio" (off-by-one timezone)
+- [x] BF-6: TrendChart placeholder con >=50% zeros, barras sólidas, min altura 15%
+
+### Tooling — Junio 2026
+- [x] TO-1: dotenv devDependency agregada
+- [x] TO-2: Release-please config (.github/workflows/release-please.yml)
+
 ---
 
 ## 🔲 En Progreso
@@ -198,7 +232,9 @@ openspec/changes/
 ├── fix-legend-usechart-error/   ✅ COMPLETO (bug fix)
 ├── chart-visual-upgrade/        ✅ COMPLETO (BarChart premium)
 ├── chart-area-premium/         ✅ COMPLETO (AreaCharts premium)
-└── chart-remaining-premium/   ✅ COMPLETO (PieChart + LineChart + Tabla premium)
+├── chart-remaining-premium/   ✅ COMPLETO (PieChart + LineChart + Tabla premium)
+├── ia-strategy-minimalist-redesign/ ✅ COMPLETO (v4.3, ChatGPT-style)
+└── ia-strategy-config/         ✅ COMPLETO (v4.3, cash/runway config)
 ```
 
 ---
@@ -207,8 +243,8 @@ openspec/changes/
 
 | Branch | Status | Last Update |
 |--------|--------|-------------|
-| `main` | Producción | F1+F2+F5 merged |
-| `develop` | Desarrollo | Bugs B5+B6 corregidos ✅ |
+| `main` | Producción | v4.3 — Junio 2026 |
+| `develop` | Desarrollo | v4.3 en curso |
 
 ---
 
@@ -265,9 +301,11 @@ Colores según design system:
 └─────────┴────────────────────────────────┴──────────────┘
 ```
 
-Componentes nuevos:
+Componentes nuevos (v4.3):
 - `ChatWorkspace.tsx` - Wrapper del chat central
-- `DataPanel.tsx` - Panel derecho (380px)
+- `DataPanel.tsx` - Panel derecho (380px, collapsible config)
+- `StrategyConfig.tsx` - Config panel (saldo, costos, margen)
+- `TrendChart.tsx` - Gráfico de tendencia mensual
 
 ---
 
@@ -278,6 +316,7 @@ Componentes nuevos:
 |-------|-----|
 | `cont_transacciones` | Transacciones financieras (principal) |
 | `cont_usuarios` | Usuarios relacionados con transacciones |
+| `cont_configuracion` | Config IA Strategy (saldo, costos, margen) |
 | `usuarios` | Tabla de autenticación (auth) |
 
 ### UUIDs Importantes
@@ -290,7 +329,10 @@ Componentes nuevos:
 |-------|-------|----------|
 | `invalid input syntax for type uuid: ""` | Query con userId vacío | Guard clause `if (!userId \|\| userId.length < 5)` |
 | Tabla no existe / datos vacíos | Nombre incorrecto de tabla | Usar `cont_transacciones` |
+| `new Date("YYYY-MM-DD")` mes incorrecto | Parseo UTC → local desplaza fecha | `parseFechaStr()` o `new Date(year, month-1, 1)` |
+| Error 42501 (RLS violation) | RLS habilitado en tabla sin política | Deshabilitar RLS o crear políticas |
+| Chat devuelve "hubo un error" | Model ID inválido o cliente espera JSON vs SSE | Usar `deepseek-chat` + `generateText` + JSON |
 
 ---
 
-_Ultima actualizacion: Chart Polish Híbrido (v4.2) + Visual Milestones G3 (Abril 2026)_
+_Ultima actualizacion: v4.3 — Bug fixes timezone, chat, trendchart + Config Panel IA Strategy (Junio 2026)_

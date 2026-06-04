@@ -1,17 +1,23 @@
 # ⏳ Pendientes — Pipod Contabilidad
 
-**Última actualización:** Abril 2026
-**Versión:** 4.2
+**Última actualización:** Junio 2026
+**Versión:** 4.3
 **Fuente de verdad:** Este archivo + `ESTADO_PROYECTO.md`
 
 ---
 
-## 🔧 Bugs Críticos Corregidos (Abril 2026)
+## 🔧 Bugs Críticos Corregidos (Mayo-Junio 2026)
 
 | Item | Descripción | Status |
 |------|-------------|--------|
 | B5 | Tabla incorrecta `transacciones` → `cont_transacciones` (18 archivos) | ✅ Corregido |
 | B6 | Query con userId vacío causa error UUID (datos desaparecen) | ✅ Corregido |
+| B7 | Month filter rollover (setMonth → Date constructor) | ✅ Corregido |
+| B8 | Supabase session no persistía en browser | ✅ Corregido |
+| B9 | Timezone: `new Date("YYYY-MM-DD")` desplazaba mes en UTC-5 | ✅ Corregido |
+| B10 | Chat roto: streamText SSE vs cliente esperaba JSON | ✅ Corregido |
+| B11 | Model ID inválido `deepseek-v4-flash` | ✅ Corregido |
+| B12 | TrendChart vacío: getLastNMonths frágil con timestamps | ✅ Corregido |
 
 ---
 
@@ -64,14 +70,17 @@
 
 ---
 
-## ⚠️ IA Strategy — Completado
+## ⚠️ IA Strategy — Completado v4.3 (Junio 2026)
 
 | Item | Descripción | Status |
 |------|-------------|--------|
-| T16 | Configurar datos de entrada (costos fijos, cash) | ✅ Implementado |
-| UX | Markdown, Textarea, Delete Modal, Hybrid Scroll | ✅ Implementado |
-| Voice | Zinc minimalist mic button | ✅ Implementado |
-| Visual Storytelling | MiniComboChart + Captain's Log Narrative | ✅ Implementado |
+| Rediseño | ChatGPT-style: layout 65/35, pill input, header minimalista | ✅ |
+| Config Panel | saldo_inicial, costos fijos, margen objetivo | ✅ |
+| Cash Estimado | Automático: saldo + Σ(ingresos) - Σ(egresos) | ✅ |
+| Runway/Break-even | Métricas reales con badges de color | ✅ |
+| Chat | DeepSeek-chat via generateText (JSON) | ✅ |
+| Timezone Fix | parseFechaStr() en vez de new Date() | ✅ |
+| TrendChart | Placeholder, barras sólidas, min altura 15% | ✅ |
 
 ---
 
@@ -89,15 +98,13 @@
 | `chart-visual-upgrade` | Primer chart premium: glassmorphism + spring animation + gradientes | ✅ 2026-04-28 |
 | `chart-area-premium` | Charts #2 y #4: AreaChart premium con glow + real-time indicator | ✅ 2026-04-28 |
 | `chart-remaining-premium` | Charts #3, #5, #6: PieChart donut + LineChart gradient + Tabla con Trending icons | ✅ 2026-04-28 |
+| `ia-strategy-minimalist-redesign` | ChatGPT-style redesign | ✅ 2026-06 |
+| `ia-strategy-config` | Config panel con cash/runway/break-even reales | ✅ 2026-06 |
 
 ## 📁 SDDs En Progreso
 
 _(ninguno)_
 
-### Datos del Plan (PLAN_FINANCIERO_PIPOD_2026.md)
-- Gastos Fijos: $12,149,400/mes
-- Break-even: $40,498,000
-- Meta Negocio Sano: $50,000,000 (15% utilidad neta)
 
 ---
 
@@ -106,13 +113,11 @@ _(ninguno)_
 ### 🔴 Alta
 - F3: Edición inline transacciones
 - F4: Batch actions
-- T16: Configurar datos de entrada IA Strategy
 
 ### 🟡 Media
-- G3-G6: Gráficos de métricas ( Burn Rate, Runway, etc.)
-- T15: Prompt Hardening
-- T17: Settings modal
+- G4-G6: Gráficos de métricas (Profit Margin, Burn Rate, Runway)
 - L2: Verificar botones indigo
+- AF1: Historial persistente entre dispositivos (Supabase)
 
 ### 🟢 Baja
 - L1: Eliminar useRadarData.ts
@@ -128,4 +133,4 @@ Para ver el contexto completo (histórico, arquitectura, SDD), consulta `ESTADO_
 
 ---
 
-_Ultima actualizacion: Abril 2026 (v4.2 - Chart Polish + Milestones G3)_
+_Ultima actualizacion: v4.3 (Junio 2026)_
