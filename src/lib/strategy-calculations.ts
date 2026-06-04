@@ -33,10 +33,10 @@ function getLastNMonths(n: number, transactions: Transaccion[]): string[] {
   let maxMonth = new Date().getMonth() + 1;
 
   if (transactions.length > 0) {
-    const dates = transactions.map((t) => new Date(t.fecha + 'T12:00:00').getTime());
-    const maxDate = new Date(Math.max(...dates));
-    maxYear = maxDate.getFullYear();
-    maxMonth = maxDate.getMonth() + 1;
+    const maxFecha = transactions.reduce((max, t) => t.fecha > max ? t.fecha : max, transactions[0].fecha);
+    const { year, month } = parseFechaStr(maxFecha);
+    maxYear = year;
+    maxMonth = month;
   }
 
   for (let i = n - 1; i >= 0; i--) {
