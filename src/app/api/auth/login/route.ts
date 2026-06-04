@@ -51,13 +51,13 @@ export async function POST(request: Request) {
     }
 
     const supabaseServer = createServerClient();
-    const { error: authError } = await supabaseServer.auth.signInWithPassword({
+    const { data: authData, error: authError } = await supabaseServer.auth.signInWithPassword({
       email: `${username}@pipod.co`,
       password,
     });
 
-    if (authError) {
-      console.error('Supabase Auth sign-in failed:', authError.message);
+    if (authError || !authData.session) {
+      console.error('Supabase Auth sign-in failed:', authError?.message);
       return NextResponse.json(
         { message: 'Error de autenticación' },
         { status: 401 }
@@ -69,6 +69,10 @@ export async function POST(request: Request) {
       username: user.username,
       nombre: user.nombre,
       rol: user.rol,
+      session: {
+        access_token: authData.session.access_token,
+        refresh_token: authData.session.refresh_token,
+      },
     });
   } catch (error) {
     console.error('Error en login:', error);

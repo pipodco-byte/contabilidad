@@ -35,8 +35,17 @@ export function useAuth() {
     }
 
     const data = await response.json();
-    localStorage.setItem('auth_user', JSON.stringify(data));
-    setUser(data);
+
+    if (data.session) {
+      await supabase.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      });
+    }
+
+    const userData = { id: data.id, username: data.username, nombre: data.nombre, rol: data.rol };
+    localStorage.setItem('auth_user', JSON.stringify(userData));
+    setUser(userData);
     router.push('/dashboard');
   };
 
