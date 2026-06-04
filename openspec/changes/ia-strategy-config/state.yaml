@@ -10,7 +10,11 @@ phases:
 dependencies: []
 
 notes:
-  - Fix trend repetido en todas las tarjetas de métricas (solo Profit Margin debe mostrarlo)
-  - Crear StrategyConfig: formulario de costos fijos + cash actual + margen objetivo
-  - Conectar a useStrategyData.updateManualInputs() para persistencia
-  - Usuario tiene costos fijos reales en archivo local "REPORTE PRESUPUESTO PIPOD"
+  - Fix trend repetido (solo Profit Margin muestra marginTrend)
+  - StrategyConfig collapsible dentro de DataPanel con estilo minimalista
+  - Cash estimado: saldo_inicial + ingresos - egresos (Opción D)
+  - Advertencia visual "Cash estimado basado en saldo inicial + transacciones"
+  - Persistencia en Supabase (cont_configuracion) por cliente
+  - Costos fijos precargados del REPORTE PRESUPUESTO PIPOD (~$18M, 16 conceptos)
+  - Margen objetivo default: 18% (del reporte)
+  - 8 tareas definidas
