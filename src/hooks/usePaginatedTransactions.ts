@@ -96,16 +96,15 @@ export function usePaginatedTransactions(userId: string, userRole: string, searc
     endDate,
     showingLast30Days: true,
     setSelectedYear: (year: number) => {
-      const newDate = new Date(startDate);
-      newDate.setFullYear(year);
+      const currentDate = new Date(startDate);
+      const newDate = new Date(year, currentDate.getMonth(), 1);
       setStartDate(newDate.toISOString().split('T')[0]);
       setCurrentPage(1);
     },
     setSelectedMonth: (month: number) => {
-      const newDate = new Date(startDate);
-      newDate.setMonth(month - 1);
-      const firstDay = new Date(newDate.getFullYear(), newDate.getMonth(), 1);
-      const lastDay = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0);
+      const year = new Date(startDate).getFullYear();
+      const firstDay = new Date(year, month - 1, 1);
+      const lastDay = new Date(year, month, 0);
       setStartDate(firstDay.toISOString().split('T')[0]);
       setEndDate(lastDay.toISOString().split('T')[0]);
       setCurrentPage(1);
