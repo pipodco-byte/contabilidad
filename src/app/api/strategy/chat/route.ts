@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { streamText } from 'ai';
+import { generateText } from 'ai';
 import { deepseek } from '@ai-sdk/deepseek';
 import { buildStrategyContextMessage, STRATEGY_ADVISOR_SYSTEM_PROMPT } from '@/lib/strategy-prompt';
 import { StrategyData, StrategyChatMessage } from '@/lib/strategy-types';
@@ -98,13 +98,13 @@ Usa estos datos reales para tu análisis. Si no hay transacciones (todo en 0), i
 
     messages.push({ role: 'user', content: message });
 
-    const result = await streamText({
-      model: deepseek('deepseek-v4-flash'),
+    const result = await generateText({
+      model: deepseek('deepseek-chat'),
       system: STRATEGY_ADVISOR_SYSTEM_PROMPT + financialContextMessage,
       messages: messages.filter(m => m.role !== 'system'),
     });
 
-    return result.toTextStreamResponse();
+    return NextResponse.json({ response: result.text });
   } catch (error) {
     console.error('[/api/strategy/chat] Error:', error);
     return NextResponse.json(
